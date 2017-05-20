@@ -7,33 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */; };
+		930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */; };
+		93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A8669D1ED0CF1C0074BDD6 /* NewRouteViewController.swift */; };
+		93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A8669F1ED0D3730074BDD6 /* POIViewCell.swift */; };
+		93A866A31ED0D54C0074BDD6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A866A21ED0D54C0074BDD6 /* MapKit.framework */; };
 		93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */; };
 		93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150E1ED02DDD00DCA53E /* ViewController.swift */; };
 		93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315101ED02DDD00DCA53E /* Main.storyboard */; };
 		93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B315131ED02DDD00DCA53E /* Assets.xcassets */; };
 		93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */; };
-		93B315221ED02DDD00DCA53E /* TrekkingfyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315211ED02DDD00DCA53E /* TrekkingfyTests.swift */; };
-		93B3152D1ED02DDD00DCA53E /* TrekkingfyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3152C1ED02DDD00DCA53E /* TrekkingfyUITests.swift */; };
+		93B315401ED030D800DCA53E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3153F1ED030D800DCA53E /* Route.swift */; };
+		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		93B3151E1ED02DDD00DCA53E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93B315011ED02DDD00DCA53E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 93B315081ED02DDD00DCA53E;
-			remoteInfo = Trekkingfy;
-		};
-		93B315291ED02DDD00DCA53E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93B315011ED02DDD00DCA53E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 93B315081ED02DDD00DCA53E;
-			remoteInfo = Trekkingfy;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		3284D532E7E4EDAF65032CFB /* Pods-TrekkingfyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyTests/Pods-TrekkingfyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		62F8E212FA6EB66025B2A243 /* Pods_TrekkingfyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekkingfyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88B9987B31FEA495267E0093 /* Pods_TrekkingfyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekkingfyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trekkingfy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorFromHEX.swift"; path = "Views/UI/UIColor+ColorFromHEX.swift"; sourceTree = "<group>"; };
+		93A8669D1ED0CF1C0074BDD6 /* NewRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewRouteViewController.swift; path = Views/ViewController/NewRouteViewController.swift; sourceTree = "<group>"; };
+		93A8669F1ED0D3730074BDD6 /* POIViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = POIViewCell.swift; path = Views/UI/POIViewCell.swift; sourceTree = "<group>"; };
+		93A866A21ED0D54C0074BDD6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		93B315091ED02DDD00DCA53E /* Trekkingfy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trekkingfy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B3150E1ED02DDD00DCA53E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -41,12 +37,17 @@
 		93B315131ED02DDD00DCA53E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93B315161ED02DDD00DCA53E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93B315181ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekkingfyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B315211ED02DDD00DCA53E /* TrekkingfyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekkingfyTests.swift; sourceTree = "<group>"; };
 		93B315231ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekkingfyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B3152C1ED02DDD00DCA53E /* TrekkingfyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekkingfyUITests.swift; sourceTree = "<group>"; };
 		93B3152E1ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93B3153F1ED030D800DCA53E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Route.swift; path = Models/Route.swift; sourceTree = "<group>"; };
+		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
+		B53A0C13E9095067DC88E6C7 /* Pods-TrekkingfyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyUITests/Pods-TrekkingfyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		CF0A44EFB1739375CBBC5B83 /* Pods-TrekkingfyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyTests/Pods-TrekkingfyTests.release.xcconfig"; sourceTree = "<group>"; };
+		D71A62749D98FC1D809AA0B8 /* Pods-Trekkingfy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trekkingfy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy.release.xcconfig"; sourceTree = "<group>"; };
+		E61483E2C932FA5792656F16 /* Pods-TrekkingfyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyUITests/Pods-TrekkingfyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F06F62AC6B7DB98D4F94F5FF /* Pods-Trekkingfy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trekkingfy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,26 +55,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93B3151A1ED02DDD00DCA53E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93B315251ED02DDD00DCA53E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				93A866A31ED0D54C0074BDD6 /* MapKit.framework in Frameworks */,
+				643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93A866A11ED0D54C0074BDD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93A866A21ED0D54C0074BDD6 /* MapKit.framework */,
+				8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */,
+				62F8E212FA6EB66025B2A243 /* Pods_TrekkingfyTests.framework */,
+				88B9987B31FEA495267E0093 /* Pods_TrekkingfyUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		93B315001ED02DDD00DCA53E = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +81,8 @@
 				93B315201ED02DDD00DCA53E /* TrekkingfyTests */,
 				93B3152B1ED02DDD00DCA53E /* TrekkingfyUITests */,
 				93B3150A1ED02DDD00DCA53E /* Products */,
+				93A866A11ED0D54C0074BDD6 /* Frameworks */,
+				BEE0805236D5764C0CF18875 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,8 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				93B315091ED02DDD00DCA53E /* Trekkingfy.app */,
-				93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */,
-				93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,11 +97,9 @@
 		93B3150B1ED02DDD00DCA53E /* Trekkingfy */ = {
 			isa = PBXGroup;
 			children = (
-				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
-				93B3150E1ED02DDD00DCA53E /* ViewController.swift */,
-				93B315101ED02DDD00DCA53E /* Main.storyboard */,
+				93B3153B1ED0303800DCA53E /* Class */,
+				93B3153A1ED0302A00DCA53E /* Views */,
 				93B315131ED02DDD00DCA53E /* Assets.xcassets */,
-				93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */,
 				93B315181ED02DDD00DCA53E /* Info.plist */,
 			);
 			path = Trekkingfy;
@@ -125,6 +123,74 @@
 			path = TrekkingfyUITests;
 			sourceTree = "<group>";
 		};
+		93B3153A1ED0302A00DCA53E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				93B315421ED0324C00DCA53E /* UI */,
+				93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */,
+				93B315101ED02DDD00DCA53E /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		93B3153B1ED0303800DCA53E /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				93B315411ED030E000DCA53E /* Controller */,
+				93B3153E1ED0308000DCA53E /* Model */,
+				93B3153C1ED0304800DCA53E /* Base */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		93B3153C1ED0304800DCA53E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		93B3153E1ED0308000DCA53E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				93B3153F1ED030D800DCA53E /* Route.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		93B315411ED030E000DCA53E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				93B3150E1ED02DDD00DCA53E /* ViewController.swift */,
+				93A8669D1ED0CF1C0074BDD6 /* NewRouteViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		93B315421ED0324C00DCA53E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				93B315431ED0328D00DCA53E /* RouteViewCell.swift */,
+				93A8669F1ED0D3730074BDD6 /* POIViewCell.swift */,
+				9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		BEE0805236D5764C0CF18875 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F06F62AC6B7DB98D4F94F5FF /* Pods-Trekkingfy.debug.xcconfig */,
+				D71A62749D98FC1D809AA0B8 /* Pods-Trekkingfy.release.xcconfig */,
+				3284D532E7E4EDAF65032CFB /* Pods-TrekkingfyTests.debug.xcconfig */,
+				CF0A44EFB1739375CBBC5B83 /* Pods-TrekkingfyTests.release.xcconfig */,
+				B53A0C13E9095067DC88E6C7 /* Pods-TrekkingfyUITests.debug.xcconfig */,
+				E61483E2C932FA5792656F16 /* Pods-TrekkingfyUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93B315311ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "Trekkingfy" */;
 			buildPhases = (
+				B16C0300BDDA824A9D305BEE /* 📦 Check Pods Manifest.lock */,
 				93B315051ED02DDD00DCA53E /* Sources */,
 				93B315061ED02DDD00DCA53E /* Frameworks */,
 				93B315071ED02DDD00DCA53E /* Resources */,
+				BAB65258AC7A964F2177B60D /* 📦 Embed Pods Frameworks */,
+				F30B9E2401B4C627D94DC0C3 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -144,42 +213,6 @@
 			productName = Trekkingfy;
 			productReference = 93B315091ED02DDD00DCA53E /* Trekkingfy.app */;
 			productType = "com.apple.product-type.application";
-		};
-		93B3151C1ED02DDD00DCA53E /* TrekkingfyTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 93B315341ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyTests" */;
-			buildPhases = (
-				93B315191ED02DDD00DCA53E /* Sources */,
-				93B3151A1ED02DDD00DCA53E /* Frameworks */,
-				93B3151B1ED02DDD00DCA53E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				93B3151F1ED02DDD00DCA53E /* PBXTargetDependency */,
-			);
-			name = TrekkingfyTests;
-			productName = TrekkingfyTests;
-			productReference = 93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		93B315271ED02DDD00DCA53E /* TrekkingfyUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 93B315371ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyUITests" */;
-			buildPhases = (
-				93B315241ED02DDD00DCA53E /* Sources */,
-				93B315251ED02DDD00DCA53E /* Frameworks */,
-				93B315261ED02DDD00DCA53E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				93B3152A1ED02DDD00DCA53E /* PBXTargetDependency */,
-			);
-			name = TrekkingfyUITests;
-			productName = TrekkingfyUITests;
-			productReference = 93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -194,19 +227,8 @@
 					93B315081ED02DDD00DCA53E = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = RKD82WWETR;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
-					};
-					93B3151C1ED02DDD00DCA53E = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = RKD82WWETR;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 93B315081ED02DDD00DCA53E;
-					};
-					93B315271ED02DDD00DCA53E = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = RKD82WWETR;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 93B315081ED02DDD00DCA53E;
 					};
 				};
 			};
@@ -224,8 +246,6 @@
 			projectRoot = "";
 			targets = (
 				93B315081ED02DDD00DCA53E /* Trekkingfy */,
-				93B3151C1ED02DDD00DCA53E /* TrekkingfyTests */,
-				93B315271ED02DDD00DCA53E /* TrekkingfyUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,62 +261,72 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93B3151B1ED02DDD00DCA53E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93B315261ED02DDD00DCA53E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B16C0300BDDA824A9D305BEE /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BAB65258AC7A964F2177B60D /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F30B9E2401B4C627D94DC0C3 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		93B315051ED02DDD00DCA53E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93B315401ED030D800DCA53E /* Route.swift in Sources */,
 				93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */,
+				930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */,
+				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,
+				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93B315191ED02DDD00DCA53E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93B315221ED02DDD00DCA53E /* TrekkingfyTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93B315241ED02DDD00DCA53E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93B3152D1ED02DDD00DCA53E /* TrekkingfyUITests.swift in Sources */,
+				93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		93B3151F1ED02DDD00DCA53E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 93B315081ED02DDD00DCA53E /* Trekkingfy */;
-			targetProxy = 93B3151E1ED02DDD00DCA53E /* PBXContainerItemProxy */;
-		};
-		93B3152A1ED02DDD00DCA53E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 93B315081ED02DDD00DCA53E /* Trekkingfy */;
-			targetProxy = 93B315291ED02DDD00DCA53E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		93B315101ED02DDD00DCA53E /* Main.storyboard */ = {
@@ -413,6 +443,7 @@
 		};
 		93B315321ED02DDE00DCA53E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F06F62AC6B7DB98D4F94F5FF /* Pods-Trekkingfy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RKD82WWETR;
@@ -426,6 +457,7 @@
 		};
 		93B315331ED02DDE00DCA53E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D71A62749D98FC1D809AA0B8 /* Pods-Trekkingfy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RKD82WWETR;
@@ -434,64 +466,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.Trekkingfy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		93B315351ED02DDE00DCA53E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = RKD82WWETR;
-				INFOPLIST_FILE = TrekkingfyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trekkingfy.app/Trekkingfy";
-			};
-			name = Debug;
-		};
-		93B315361ED02DDE00DCA53E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = RKD82WWETR;
-				INFOPLIST_FILE = TrekkingfyTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trekkingfy.app/Trekkingfy";
-			};
-			name = Release;
-		};
-		93B315381ED02DDE00DCA53E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = RKD82WWETR;
-				INFOPLIST_FILE = TrekkingfyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = Trekkingfy;
-			};
-			name = Debug;
-		};
-		93B315391ED02DDE00DCA53E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = RKD82WWETR;
-				INFOPLIST_FILE = TrekkingfyUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = Trekkingfy;
 			};
 			name = Release;
 		};
@@ -514,22 +488,7 @@
 				93B315331ED02DDE00DCA53E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		93B315341ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93B315351ED02DDE00DCA53E /* Debug */,
-				93B315361ED02DDE00DCA53E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		93B315371ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93B315381ED02DDE00DCA53E /* Debug */,
-				93B315391ED02DDE00DCA53E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

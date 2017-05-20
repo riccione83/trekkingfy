@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */; };
+		93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150E1ED02DDD00DCA53E /* ViewController.swift */; };
+		93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315101ED02DDD00DCA53E /* Main.storyboard */; };
+		93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B315131ED02DDD00DCA53E /* Assets.xcassets */; };
+		93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */; };
+		93B315221ED02DDD00DCA53E /* TrekkingfyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315211ED02DDD00DCA53E /* TrekkingfyTests.swift */; };
+		93B3152D1ED02DDD00DCA53E /* TrekkingfyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3152C1ED02DDD00DCA53E /* TrekkingfyUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93B3151E1ED02DDD00DCA53E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93B315011ED02DDD00DCA53E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93B315081ED02DDD00DCA53E;
+			remoteInfo = Trekkingfy;
+		};
+		93B315291ED02DDD00DCA53E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93B315011ED02DDD00DCA53E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93B315081ED02DDD00DCA53E;
+			remoteInfo = Trekkingfy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		93B315091ED02DDD00DCA53E /* Trekkingfy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trekkingfy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		93B3150E1ED02DDD00DCA53E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		93B315111ED02DDD00DCA53E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		93B315131ED02DDD00DCA53E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		93B315161ED02DDD00DCA53E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		93B315181ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekkingfyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93B315211ED02DDD00DCA53E /* TrekkingfyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekkingfyTests.swift; sourceTree = "<group>"; };
+		93B315231ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrekkingfyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93B3152C1ED02DDD00DCA53E /* TrekkingfyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekkingfyUITests.swift; sourceTree = "<group>"; };
+		93B3152E1ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		93B315061ED02DDD00DCA53E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B3151A1ED02DDD00DCA53E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B315251ED02DDD00DCA53E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		93B315001ED02DDD00DCA53E = {
+			isa = PBXGroup;
+			children = (
+				93B3150B1ED02DDD00DCA53E /* Trekkingfy */,
+				93B315201ED02DDD00DCA53E /* TrekkingfyTests */,
+				93B3152B1ED02DDD00DCA53E /* TrekkingfyUITests */,
+				93B3150A1ED02DDD00DCA53E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		93B3150A1ED02DDD00DCA53E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				93B315091ED02DDD00DCA53E /* Trekkingfy.app */,
+				93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */,
+				93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		93B3150B1ED02DDD00DCA53E /* Trekkingfy */ = {
+			isa = PBXGroup;
+			children = (
+				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
+				93B3150E1ED02DDD00DCA53E /* ViewController.swift */,
+				93B315101ED02DDD00DCA53E /* Main.storyboard */,
+				93B315131ED02DDD00DCA53E /* Assets.xcassets */,
+				93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */,
+				93B315181ED02DDD00DCA53E /* Info.plist */,
+			);
+			path = Trekkingfy;
+			sourceTree = "<group>";
+		};
+		93B315201ED02DDD00DCA53E /* TrekkingfyTests */ = {
+			isa = PBXGroup;
+			children = (
+				93B315211ED02DDD00DCA53E /* TrekkingfyTests.swift */,
+				93B315231ED02DDD00DCA53E /* Info.plist */,
+			);
+			path = TrekkingfyTests;
+			sourceTree = "<group>";
+		};
+		93B3152B1ED02DDD00DCA53E /* TrekkingfyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				93B3152C1ED02DDD00DCA53E /* TrekkingfyUITests.swift */,
+				93B3152E1ED02DDD00DCA53E /* Info.plist */,
+			);
+			path = TrekkingfyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		93B315081ED02DDD00DCA53E /* Trekkingfy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93B315311ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "Trekkingfy" */;
+			buildPhases = (
+				93B315051ED02DDD00DCA53E /* Sources */,
+				93B315061ED02DDD00DCA53E /* Frameworks */,
+				93B315071ED02DDD00DCA53E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trekkingfy;
+			productName = Trekkingfy;
+			productReference = 93B315091ED02DDD00DCA53E /* Trekkingfy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		93B3151C1ED02DDD00DCA53E /* TrekkingfyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93B315341ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyTests" */;
+			buildPhases = (
+				93B315191ED02DDD00DCA53E /* Sources */,
+				93B3151A1ED02DDD00DCA53E /* Frameworks */,
+				93B3151B1ED02DDD00DCA53E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				93B3151F1ED02DDD00DCA53E /* PBXTargetDependency */,
+			);
+			name = TrekkingfyTests;
+			productName = TrekkingfyTests;
+			productReference = 93B3151D1ED02DDD00DCA53E /* TrekkingfyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		93B315271ED02DDD00DCA53E /* TrekkingfyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93B315371ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyUITests" */;
+			buildPhases = (
+				93B315241ED02DDD00DCA53E /* Sources */,
+				93B315251ED02DDD00DCA53E /* Frameworks */,
+				93B315261ED02DDD00DCA53E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				93B3152A1ED02DDD00DCA53E /* PBXTargetDependency */,
+			);
+			name = TrekkingfyUITests;
+			productName = TrekkingfyUITests;
+			productReference = 93B315281ED02DDD00DCA53E /* TrekkingfyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		93B315011ED02DDD00DCA53E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Riccardo Rizzo";
+				TargetAttributes = {
+					93B315081ED02DDD00DCA53E = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = RKD82WWETR;
+						ProvisioningStyle = Automatic;
+					};
+					93B3151C1ED02DDD00DCA53E = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = RKD82WWETR;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 93B315081ED02DDD00DCA53E;
+					};
+					93B315271ED02DDD00DCA53E = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = RKD82WWETR;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 93B315081ED02DDD00DCA53E;
+					};
+				};
+			};
+			buildConfigurationList = 93B315041ED02DDD00DCA53E /* Build configuration list for PBXProject "Trekkingfy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 93B315001ED02DDD00DCA53E;
+			productRefGroup = 93B3150A1ED02DDD00DCA53E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				93B315081ED02DDD00DCA53E /* Trekkingfy */,
+				93B3151C1ED02DDD00DCA53E /* TrekkingfyTests */,
+				93B315271ED02DDD00DCA53E /* TrekkingfyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		93B315071ED02DDD00DCA53E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */,
+				93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */,
+				93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B3151B1ED02DDD00DCA53E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B315261ED02DDD00DCA53E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		93B315051ED02DDD00DCA53E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */,
+				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B315191ED02DDD00DCA53E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93B315221ED02DDD00DCA53E /* TrekkingfyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93B315241ED02DDD00DCA53E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93B3152D1ED02DDD00DCA53E /* TrekkingfyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		93B3151F1ED02DDD00DCA53E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93B315081ED02DDD00DCA53E /* Trekkingfy */;
+			targetProxy = 93B3151E1ED02DDD00DCA53E /* PBXContainerItemProxy */;
+		};
+		93B3152A1ED02DDD00DCA53E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93B315081ED02DDD00DCA53E /* Trekkingfy */;
+			targetProxy = 93B315291ED02DDD00DCA53E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		93B315101ED02DDD00DCA53E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93B315111ED02DDD00DCA53E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93B315161ED02DDD00DCA53E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		93B3152F1ED02DDE00DCA53E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		93B315301ED02DDE00DCA53E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		93B315321ED02DDE00DCA53E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = Trekkingfy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.Trekkingfy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		93B315331ED02DDE00DCA53E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = Trekkingfy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.Trekkingfy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		93B315351ED02DDE00DCA53E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = TrekkingfyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trekkingfy.app/Trekkingfy";
+			};
+			name = Debug;
+		};
+		93B315361ED02DDE00DCA53E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = TrekkingfyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trekkingfy.app/Trekkingfy";
+			};
+			name = Release;
+		};
+		93B315381ED02DDE00DCA53E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = TrekkingfyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Trekkingfy;
+			};
+			name = Debug;
+		};
+		93B315391ED02DDE00DCA53E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = RKD82WWETR;
+				INFOPLIST_FILE = TrekkingfyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.TrekkingfyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Trekkingfy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		93B315041ED02DDD00DCA53E /* Build configuration list for PBXProject "Trekkingfy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93B3152F1ED02DDE00DCA53E /* Debug */,
+				93B315301ED02DDE00DCA53E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93B315311ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "Trekkingfy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93B315321ED02DDE00DCA53E /* Debug */,
+				93B315331ED02DDE00DCA53E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		93B315341ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93B315351ED02DDE00DCA53E /* Debug */,
+				93B315361ED02DDE00DCA53E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		93B315371ED02DDE00DCA53E /* Build configuration list for PBXNativeTarget "TrekkingfyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93B315381ED02DDE00DCA53E /* Debug */,
+				93B315391ED02DDE00DCA53E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 93B315011ED02DDD00DCA53E /* Project object */;
+}

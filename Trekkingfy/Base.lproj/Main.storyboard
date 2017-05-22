@@ -120,20 +120,36 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3R-pZ-uv7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3D-HN-605">
+                                        <rect key="frame" x="174" y="22" width="67" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="SOS">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0093617555427760735" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lxo-4C-BqM">
+                                        <rect key="frame" x="8" y="22" width="158" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="&lt;&lt; Return and Save"/>
+                                        <connections>
+                                            <action selector="returnToMainAndSave:" destination="Jml-Uq-Iph" eventType="touchUpInside" id="FnS-VT-nIf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="YoN-Wj-ShU"/>
                                 </constraints>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="neN-yp-O4S">
-                                <rect key="frame" x="0.0" y="59" width="414" height="383"/>
+                                <rect key="frame" x="0.0" y="59" width="414" height="323"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-4L-cwC">
-                                <rect key="frame" x="0.0" y="440" width="414" height="199"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="199" id="97o-j9-lsf"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="380" width="414" height="179"/>
+                                <color key="backgroundColor" red="0.19997376203536987" green="0.20001503825187683" blue="0.19997116923332214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Xu-aC-KBY">
                                     <size key="itemSize" width="80" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -159,7 +175,7 @@
                                                 </button>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="850-oP-PD5" firstAttribute="centerY" secondItem="hxx-ID-kJZ" secondAttribute="centerY" constant="-6" id="Mka-at-ikF"/>
                                             <constraint firstItem="850-oP-PD5" firstAttribute="centerX" secondItem="hxx-ID-kJZ" secondAttribute="centerX" id="RZa-N9-Ykj"/>
@@ -172,14 +188,15 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cub-qv-4xZ">
-                                <rect key="frame" x="0.0" y="637" width="414" height="99"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="557" width="414" height="179"/>
+                                <color key="backgroundColor" red="0.199973762" green="0.2000150383" blue="0.19997116919999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1jV-se-Lvw" firstAttribute="top" secondItem="cub-qv-4xZ" secondAttribute="bottom" id="3dC-RS-6ol"/>
                             <constraint firstAttribute="trailing" secondItem="cub-qv-4xZ" secondAttribute="trailing" id="6Mg-lP-Or3"/>
+                            <constraint firstItem="neN-yp-O4S" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="1.8" id="6zd-pv-yTT"/>
                             <constraint firstItem="cub-qv-4xZ" firstAttribute="top" secondItem="Tg8-4L-cwC" secondAttribute="bottom" constant="-2" id="866-bg-Ave"/>
                             <constraint firstItem="neN-yp-O4S" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="9VY-fa-Ohy"/>
                             <constraint firstItem="cub-qv-4xZ" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="BBu-gE-sMQ"/>
@@ -192,7 +209,7 @@
                             <constraint firstAttribute="trailing" secondItem="w3R-pZ-uv7" secondAttribute="trailing" id="Vhf-D7-VpG"/>
                             <constraint firstItem="w3R-pZ-uv7" firstAttribute="top" secondItem="lKm-Ia-ofa" secondAttribute="top" id="a4A-QQ-cpr"/>
                             <constraint firstAttribute="trailing" secondItem="Tg8-4L-cwC" secondAttribute="trailing" id="c2d-t4-j41"/>
-                            <constraint firstItem="cub-qv-4xZ" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="0.5" id="f9S-8w-gcM"/>
+                            <constraint firstItem="cub-qv-4xZ" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" id="f9S-8w-gcM"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="top" secondItem="neN-yp-O4S" secondAttribute="bottom" constant="-2" id="fyo-yU-3vl"/>
                             <constraint firstItem="w3R-pZ-uv7" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="iNj-te-uUP"/>
                             <constraint firstItem="1jV-se-Lvw" firstAttribute="top" secondItem="cub-qv-4xZ" secondAttribute="bottom" id="s4I-2r-eM4"/>
@@ -200,6 +217,7 @@
                     </view>
                     <connections>
                         <outlet property="graphView" destination="cub-qv-4xZ" id="Kyl-5x-ToW"/>
+                        <outlet property="mapView" destination="neN-yp-O4S" id="EVv-QZ-8eO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uq-2A-ii6" userLabel="First Responder" sceneMemberID="firstResponder"/>

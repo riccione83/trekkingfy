@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 class Route:NSObject {
     
     var Images: [UIImage] = []
     var ImagesPositions: [String] = []
-    var Positions: [String] = []
-    var Altitudes: [String] = []
+    var Positions: [CLLocationCoordinate2D] = []
+    var Altitudes: [Double] = []
 
 }

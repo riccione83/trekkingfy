@@ -13,7 +13,7 @@
 		93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A8669F1ED0D3730074BDD6 /* POIViewCell.swift */; };
 		93A866A31ED0D54C0074BDD6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A866A21ED0D54C0074BDD6 /* MapKit.framework */; };
 		93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */; };
-		93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150E1ED02DDD00DCA53E /* ViewController.swift */; };
+		93B3150F1ED02DDD00DCA53E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3150E1ED02DDD00DCA53E /* MainViewController.swift */; };
 		93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315101ED02DDD00DCA53E /* Main.storyboard */; };
 		93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B315131ED02DDD00DCA53E /* Assets.xcassets */; };
 		93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */; };
@@ -32,7 +32,7 @@
 		93A866A21ED0D54C0074BDD6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		93B315091ED02DDD00DCA53E /* Trekkingfy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trekkingfy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		93B3150E1ED02DDD00DCA53E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		93B3150E1ED02DDD00DCA53E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		93B315111ED02DDD00DCA53E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93B315131ED02DDD00DCA53E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93B315161ED02DDD00DCA53E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -126,9 +126,9 @@
 		93B3153A1ED0302A00DCA53E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				93B315421ED0324C00DCA53E /* UI */,
 				93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */,
 				93B315101ED02DDD00DCA53E /* Main.storyboard */,
+				93B315421ED0324C00DCA53E /* UI */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 		93B315411ED030E000DCA53E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				93B3150E1ED02DDD00DCA53E /* ViewController.swift */,
+				93B3150E1ED02DDD00DCA53E /* MainViewController.swift */,
 				93A8669D1ED0CF1C0074BDD6 /* NewRouteViewController.swift */,
 			);
 			name = Controller;
@@ -317,7 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93B315401ED030D800DCA53E /* Route.swift in Sources */,
-				93B3150F1ED02DDD00DCA53E /* ViewController.swift in Sources */,
+				93B3150F1ED02DDD00DCA53E /* MainViewController.swift in Sources */,
 				930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */,
 				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,
 				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,

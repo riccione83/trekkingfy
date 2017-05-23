@@ -10,10 +10,18 @@ import UIKit
 import ScrollableGraphView
 import MapKit
 
+protocol RouteSaveExtension {
+    
+    func saveNewRoute(route:Route)
+    
+}
+
 class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet var graphView: UIView!
     @IBOutlet var mapView: MKMapView!
+    
+    var mainView:RouteSaveExtension? = nil
     
     let updateLocationInterval = 5  //5 secs
     var timerUpdateLocation:Timer? = nil
@@ -34,12 +42,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
             self.dismiss(animated: true) { 
                 self.locationManager.stopUpdatingLocation()
                 self.timerUpdateLocation = nil
+                if(self.mainView != nil) {
+                    self.mainView?.saveNewRoute(route: self.currentRoute!)
+                }
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-       // currentRoute = Route()
         
         // Do any additional setup after loading the view.
         setupUI()
@@ -72,6 +81,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
         
         if(currentRoute == nil) {
             currentRoute = Route()
+            currentRoute!.ID = -1
             let data: [Double] = [0]
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
             
@@ -86,6 +96,15 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
             if(currentRoute!.Altitudes.count > 0) {
                 graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
             }
+            var loc:CLLocation = CLLocation()
+            for p in currentRoute!.Positions {
+                loc = CLLocation(latitude: p.lat!, longitude: p.lon!)
+                updateLines(newPoint: loc)
+            }
+            let region = MKCoordinateRegionMake(loc.coordinate, MKCoordinateSpanMake(0.002, 0.002))
+            
+            mapView.setRegion(region, animated: true)
+            mapView.setCenter(loc.coordinate, animated: true)
         }
         
         self.graphView.addSubview(graphBarView)
@@ -104,11 +123,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
         mapView.setCenter(locations.last!.coordinate, animated: true)
         updateLines(newPoint: locations.last!)
         
-#if (arch(arm))
-        currentRoute?.Altitudes.append(locations.last!.altitude)
-#else
-        currentRoute?.Altitudes.append(Double(arc4random()).truncatingRemainder(dividingBy: 1000))
-#endif
+        if(currentRoute?.Positions.last?.lat != locations.last!.coordinate.latitude || currentRoute?.Positions.last?.lon != locations.last!.coordinate.longitude) {
+            
+            currentRoute?.Positions.append(Point(val: locations.last!.coordinate))
+            currentRoute?.Altitudes.append(locations.last!.altitude)
+        }
+        
+//        currentRoute?.Altitudes.append(Double(arc4random()).truncatingRemainder(dividingBy: 1000))
         if(altitudeBarLoaded) {
             updateAltimeterGraph()
         }
@@ -126,9 +147,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func updateLines(newPoint: CLLocation) {
-        
-        currentRoute?.Positions.append(newPoint.coordinate)
-        let route = MKPolyline(coordinates: currentRoute!.Positions, count: currentRoute!.Positions.count)
+    
+        currentRoute?.Positions.append(Point(val: newPoint.coordinate))
+        let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: currentRoute!.Positions.count)
         mapView.add(route)
     }
     

@@ -16,11 +16,12 @@ protocol RouteSaveExtension {
     
 }
 
-class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
+class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet var graphView: UIView!
     @IBOutlet var mapView: MKMapView!
     
+    @IBOutlet var imagePositionGrid: UICollectionView!
     var mainView:RouteSaveExtension? = nil
     
     let updateLocationInterval = 5  //5 secs
@@ -28,29 +29,43 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
     
     var currentRoute:Route?
     var altitudeBarLoaded = false
-    let locationManager:CLLocationManager = CLLocationManager()
+    //private var locationManager = AppDelegate().locationManager
+    
+    var locationManager = CLLocationManager()
     
     var graphBarView = ScrollableGraphView()
     var graphConstraints = [NSLayoutConstraint]()
     var label = UILabel()
     var labelConstraints = [NSLayoutConstraint]()
     
-    var numberOfDataItems = 1
-    
-    
     @IBAction func returnToMainAndSave(_ sender: Any) {
             self.dismiss(animated: true) { 
                 self.locationManager.stopUpdatingLocation()
                 self.timerUpdateLocation = nil
+                UIApplication.shared.isIdleTimerDisabled = false
                 if(self.mainView != nil) {
                     self.mainView?.saveNewRoute(route: self.currentRoute!)
                 }
         }
     }
     
+    
+    @IBAction func btnSOSClicked(_ sender: Any) {
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
+        vc.endPoint = currentRoute!.Positions.first
+        locationManager.stopUpdatingLocation()
+        //locationManager = nil
+        
+        self.present(vc, animated: false, completion: nil)
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
         // Do any additional setup after loading the view.
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         setupUI()
         
         timerUpdateLocation = Timer.scheduledTimer(timeInterval: TimeInterval(updateLocationInterval), target: self, selector: #selector(self.updateNewLocationTimer), userInfo: nil, repeats: true)
@@ -101,29 +116,51 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
                 loc = CLLocation(latitude: p.lat!, longitude: p.lon!)
                 updateLines(newPoint: loc)
             }
-            let region = MKCoordinateRegionMake(loc.coordinate, MKCoordinateSpanMake(0.002, 0.002))
+
             
+            let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat!)!, longitude: (currentRoute?.Positions.first?.lon!)!)
+            setInitialPoint(start_point: startPoint)
+            
+            let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat!)!, longitude: (currentRoute?.Positions.last?.lon!)!)
+            setFinalPoint(start_point: finalPoint)
+            
+            let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
             mapView.setRegion(region, animated: true)
-            mapView.setCenter(loc.coordinate, animated: true)
+            //mapView.setCenter(loc.coordinate, animated: true)
+            
         }
         
         self.graphView.addSubview(graphBarView)
         
         setupConstraints()
         altitudeBarLoaded = true
-    
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let region = MKCoordinateRegionMake(locations.last!.coordinate, MKCoordinateSpanMake(0.002, 0.002))
+        //let region = MKCoordinateRegionMake(locations.last!.coordinate, MKCoordinateSpanMake(0.002, 0.002))
+        let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 100, 100)
+        
+        
+        
         
         mapView.setRegion(region, animated: true)
         mapView.setCenter(locations.last!.coordinate, animated: true)
         updateLines(newPoint: locations.last!)
         
-        if(currentRoute?.Positions.last?.lat != locations.last!.coordinate.latitude || currentRoute?.Positions.last?.lon != locations.last!.coordinate.longitude) {
+        if(currentRoute!.Positions.count>0) {
+       
+            let lastPoint = CLLocation(latitude: (currentRoute!.Positions.last?.lat)!, longitude: (currentRoute!.Positions.last?.lon)!)
+        
+            let distance = locations.last?.distance(from: lastPoint)
+            
+            if(distance! >= 10.0) {
+            
+                currentRoute?.Positions.append(Point(val: locations.last!.coordinate))
+                currentRoute?.Altitudes.append(locations.last!.altitude)
+            }
+        }
+        else {
             
             currentRoute?.Positions.append(Point(val: locations.last!.coordinate))
             currentRoute?.Altitudes.append(locations.last!.altitude)
@@ -146,9 +183,27 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
+    func setInitialPoint(start_point:CLLocation) {
+        
+        let point = MKPointAnnotation()
+        point.coordinate = start_point.coordinate
+        point.title = "Start"
+        mapView.addAnnotation(point)
+        //mapView.selectAnnotation(point, animated: true)
+    }
+
+    func setFinalPoint(start_point:CLLocation) {
+        
+        let point = MKPointAnnotation()
+        point.coordinate = start_point.coordinate
+        point.title = "Stop"
+        mapView.addAnnotation(point)
+        mapView.selectAnnotation(point, animated: true)
+    }
+
     func updateLines(newPoint: CLLocation) {
     
-        currentRoute?.Positions.append(Point(val: newPoint.coordinate))
+        //currentRoute?.Positions.append(Point(val: newPoint.coordinate))
         let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: currentRoute!.Positions.count)
         mapView.add(route)
     }
@@ -292,199 +347,52 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate {
         
         return graphView
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-/*
-
--(void) setInitialPoint:(CLLocation*)start_loc {
-    MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-    point.coordinate = start_loc.coordinate;
-    point.title = NSLocalizedString(@"Start",nil);
-    firstPoint = start_loc;
-    startPoint = point;
-    [myMap addAnnotation:point];
-    [myMap selectAnnotation:point animated:TRUE];
-}
-
--(void) setFinalPoint{
-    MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-    point.coordinate = lastPoint.coordinate;
-    point.title = NSLocalizedString(@"End",nil);;
-    endPoint = point;
-    [myMap addAnnotation:point];
     
-    [myMap selectAnnotation:point animated:TRUE];
-}
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    
-    float const kph = 3.6;
-    float const mph = 2.23693629;
-    float speed = 0.0;
-    
-    NSString *unit = @"";
-    
-    pos = [locations lastObject];
-    
-    MKCoordinateRegion reg = MKCoordinateRegionMake(pos.coordinate, MKCoordinateSpanMake(0.002, 0.002));
-    
-    if(!regionCreated) {
-        [myMap setRegion:reg];
-        regionCreated = true;
-    }
-    
-    [myMap setCenterCoordinate:pos.coordinate];
-    
-    if(RUNNING) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        [myMap setCenterCoordinate:pos.coordinate];
-        [self updateLines:pos];
-        
-        if(firstPoint==nil)
-        {
-            firstPoint = pos;
-            [self setInitialPoint:firstPoint];
-        }
-        else
-        lastPoint = pos;
-        
-        
-        if(pos.verticalAccuracy<=100.0)
-        {
-            if(![statusLabel.text isEqualToString:NSLocalizedString(@"Running...",nil)])
-            statusLabel.text =NSLocalizedString(@"Running...",nil);
+        if(indexPath.row == currentRoute!.ImagesPositions.count) {
             
-            gpsLabel.textColor = [UIColor greenColor];
+            self.currentRoute?.ImagesPositions.append(Point(val: self.locationManager.location!.coordinate))
             
-            if(timeTimer==nil)
-            {
-                timeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timer) userInfo:nil repeats:YES];
-                
-                backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-                    NSLog(@"Background handle called, Not running background task anymore");
-                    [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
-                    backgroundTask = UIBackgroundTaskInvalid;
-                    }];
-            }
-            
-            
-            if(oldPos!=nil)
-            {
-                CLLocationDistance meters = [pos distanceFromLocation:oldPos];
-                distanceInMeters += meters;
-            }
-            oldPos = pos;
-            
-            distanceInKM = distanceInMeters/1000;
-            if(distanceInMeters<1000)
-            {
-                unit = @"mt";
-                lblDistance.text = [NSString stringWithFormat:@"%.01f %@",distanceInMeters,unit];
-                
-            }
-            else
-            {
-                unit = @"km";
-                lblDistance.text = [NSString stringWithFormat:@"%.02f %@",distanceInKM,unit];
-            }
-            
-            if(distanceInMeters<1000)
-            iseDistance = distanceInMeters;
-            else
-            iseDistance = distanceInKM;
-            
-            
-            if(isKmh) {
-                speed = pos.speed * kph;
-            }
-            else {
-                speed = pos.speed * mph;
-            }
-            
-            if(speed<0) speed=0.0;
-            
-            lastSpeed = speed;
-            lblAltitude.text = [NSString stringWithFormat:@"%.0f mt",pos.altitude];
-            lblSpeed.text = [NSString stringWithFormat:@"%.0f", speed];
-            
-            
-            //DA VERIFICARE se il codice sotto è valido
-            iseAltitude = pos.altitude;
-            /*if(iseAltitude==0)
-             {
-             iseAltitude = pos.altitude;
-             }
-             else if(pos.altitude>iseAltitude)
-             {
-             iseAltitude = pos.altitude;
-             }
-             */
-            
-            //Verifica la velocità attuale e cambia il massimo
-            //per rappresentarlo in basso nella UI
-            if(speed<=50)
-            viewSpeed.maxValue = 50;
-            else if(speed>50 && speed<=100)
-            viewSpeed.maxValue = 100;
-            else if(speed>100 && speed<=200)
-            viewSpeed.maxValue = 200;
-            else if(speed>200)
-            viewSpeed.maxValue = 400;
-            
-            //Viene verificato se la velocità attuale è > della velocità massima
-            //se è così viene aggiornata la variabile
-            if(iseMaxSpeed==0)
-            iseMaxSpeed = speed;
-            else if(speed>iseMaxSpeed)
-            {
-                iseMaxSpeed = speed;
-            }
-            
-            viewSpeed.percent = speed;
-            [viewSpeed setNeedsDisplay];
-            
-            //Calcolo del ritmo medio
-            lblRitmoMedio.text = [self calcRitmoMedio];
-            
-            //Calcolo della velocità media
-            num_of_point++;
-            tempAvgSpeed += speed;
-            iseAvgSpeed = (tempAvgSpeed/num_of_point);
-            
-            
-            //Visualizza le calorie bruciate
-            [self getCalorieForSession];
+            collectionView.performBatchUpdates({
+                let indexSet = IndexSet(integer: 0)
+                self.imagePositionGrid.reloadSections(indexSet)
+            }, completion: nil)
             
         }
-        else
-        {
-            gpsLabel.textColor = [UIColor redColor];
-            statusLabel.text =NSLocalizedString(@"Waiting for a better gps signal...",nil);
-            [self speechText:NSLocalizedString(@"Waiting for a better gps signal...", nil)];
-            [timeTimer invalidate];
-            timeTimer = nil;
-            if(backgroundTask != UIBackgroundTaskInvalid) {
-                [[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
-                backgroundTask = UIBackgroundTaskInvalid;
-            }
-            
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if(currentRoute?.ImagesPositions == nil) {
+            return 1
+        }
+        else {
+            return currentRoute!.ImagesPositions.count + 1
         }
     }
     
-}
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: POIViewCell
+        
+        if(currentRoute == nil || indexPath.row == currentRoute!.ImagesPositions.count) {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
+        }
+        else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
+        }
+        
+        cell.contentView.layer.cornerRadius = 2.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        return cell
+        
+    }
 
-*/
+}
 
 extension NewRouteViewController: MKMapViewDelegate {
     
@@ -503,28 +411,3 @@ extension NewRouteViewController: MKMapViewDelegate {
     
 }
 
-extension NewRouteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfDataItems
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell: POIViewCell
-        
-        if(indexPath.row == numberOfDataItems - 1) {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
-        }
-        else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
-        }
-        
-        cell.contentView.layer.cornerRadius = 2.0
-        cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
-        cell.contentView.layer.masksToBounds = true
-        return cell
-        
-    }
-}

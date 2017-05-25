@@ -33,10 +33,20 @@ class ViewController: UIViewController, RouteSaveExtension {
     func saveNewRoute(route:Route) {
         print("Save new Route!!")
         if(route.ID! > -1) {
-            return
+            var i=0;
+            for r in routes {
+                if(r.ID == route.ID)
+                {
+                    routes[i]=route
+                    break
+                }
+                i = i + 1
+            }
         }
-        route.ID = routes.count
-        routes.append(route)
+        else {
+            route.ID = routes.count
+            routes.append(route)
+        }
         let userDefaults = UserDefaults.standard
         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: routes)
         userDefaults.set(encodedData, forKey: "routes")

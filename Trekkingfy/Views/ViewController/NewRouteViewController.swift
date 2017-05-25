@@ -55,7 +55,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
         vc.endPoint = currentRoute!.Positions.first
         locationManager.stopUpdatingLocation()
-        //locationManager = nil
         
         self.present(vc, animated: false, completion: nil)
         

@@ -43,6 +43,10 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     var y:Double? = 0.0
     var z:Double? = 0.0
     
+    @IBAction func btnReturn(_ sender: Any) {
+    
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +54,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view.
         mapView.delegate = self
         mapView.showsUserLocation = true
+        mapView.userTrackingMode = MKUserTrackingMode.follow
         mapView.showsCompass = true
         
         let endP:CLLocation = CLLocation(latitude: endPoint!.lat!, longitude: endPoint!.lon!)
@@ -95,19 +100,30 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Use the true heading if it is valid.
+      
         let direction = -newHeading.magneticHeading / 180.0 * Double.pi
         
-        let strAccuracy = "\(newHeading.headingAccuracy)"
-        lblX.text = "Accuracy: \(strAccuracy)"
+        let currPoint = Point(val: (locationManager.location?.coordinate)!)
+        
+        
+        let degree = getDegrees(startPoint: currPoint, endPoint: endPoint!, headX: direction.radiansToDegrees)
+
+        
+       // let strAccuracy = "\(newHeading.headingAccuracy)"
+        lblX.text = "degree: \(degree)"
         lblY.text = "Direction: \(direction)"
         
         let arrowImage = UIImage(named: "Arrow-Free-Download-PNG.png")
-        imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: CGFloat(direction.radiansToDegrees))
+      
+        //  imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: CGFloat(direction.radiansToDegrees))
+        
+        imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: -CGFloat(degree))
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        /*if(endPoint != nil && currentHEADValue != nil) {
+   /*     if(endPoint != nil && currentHEADValue != nil) {
             
             currentHEADValue = locations.last?.course
             let currPoint = Point(val: locations.last!.coordinate)

@@ -7,27 +7,33 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController, RouteSaveExtension {
+class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDelegate,UIGestureRecognizerDelegate {
     
     @IBOutlet var routesGrid: UICollectionView!
     
+    @IBOutlet var imgWeather1: UIImageView!
+    
+    @IBOutlet var imgWeather2: UIImageView!
+    
+    @IBOutlet var imgWeather3: UIImageView!
+    
+    @IBOutlet var imgWeather4: UIImageView!
+    
+    @IBOutlet var imgWeather5: UIImageView!
+    
+    @IBOutlet var imgWeather6: UIImageView!
+    
+    @IBOutlet var txtWeather: UILabel!
+    
     var routes: [Route] = []
     var deleteModeActive = false
+    var locationManager = CLLocationManager()
     
     @IBOutlet var btnDelete: UIButton!
     
     @IBAction func btnTrashModeClicked(_ sender: Any) {
-        deleteModeActive = !deleteModeActive
-        
-        if(deleteModeActive) {
-            btnDelete.setTitle("Done", for: UIControlState.normal)
-        }
-        else {
-            btnDelete.setTitle("Delete", for: UIControlState.normal)
-        }
-        
-        routesGrid.reloadData()
     }
     
     func saveNewRoute(route:Route) {
@@ -81,13 +87,154 @@ class ViewController: UIViewController, RouteSaveExtension {
         // Do any additional setup after loading the view, typically from a nib.
         
         routes = loadRoutes()
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
+        let touchr = UITapGestureRecognizer(target: self, action: #selector(self.handleShortPress(gestureReconizer:)))
+        
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        lpgr.delegate = self
+        self.routesGrid.addGestureRecognizer(lpgr)
+        self.routesGrid.addGestureRecognizer(touchr)
     }
+    
+    func handleShortPress(gestureReconizer: UITapGestureRecognizer) {
+        if gestureReconizer.state != UIGestureRecognizerState.ended {
+            return
+        }
+        let p = gestureReconizer.location(in: self.routesGrid)
+        let indexPath = self.routesGrid.indexPathForItem(at: p)
+        
+        if(indexPath == nil) {
+            if(deleteModeActive) {
+                deleteModeActive = false
+                routesGrid.reloadData()
+            }
+            return
+        }
+        
+        if(deleteModeActive) {
+            deleteModeActive = false
+            if((indexPath?.row)! < routes.count) {
+                routes.remove(at: (indexPath?.row)!)
+                saveRoutes()
+            }
+            routesGrid.reloadData()
+        }
+        else {
+            if(!deleteModeActive) {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
+                vc.mainView = self
+                if(indexPath?.row == routes.count || (routes.count-1) == -1) {
+                    vc.currentRoute = nil
+                }
+                else {
+                    vc.currentRoute = routes[(indexPath?.row)!]
+                }
+                
+                self.present(vc, animated: false, completion: nil)
+            }
+        }
+
+    }
+    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state != UIGestureRecognizerState.ended {
+            return
+        }
+    
+        let p = gestureReconizer.location(in: self.routesGrid)
+        let indexPath = self.routesGrid.indexPathForItem(at: p)
+        
+        if let index = indexPath {
+      //      var cell = self.routesGrid.cellForItem(at: index)
+            // do stuff with your cell, for example print the indexPath
+            deleteModeActive = true
+            routesGrid.reloadData()
+
+        } else {
+            print("Could not find index path")
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ReviewSegue") {
-/*            let reviewView = segue.destination as! ReviewViewController
-            reviewView.userInfo = userInfos!
-            reviewView.delegate = self  */
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
+        
+        let lat = latestLocation.coordinate.latitude
+        let lon = latestLocation.coordinate.longitude
+        
+        // Put together a URL With lat and lon
+        let path = "https://api.darksky.net/forecast/0700af8905319f26ca64fe4593680056/\(lat),\(lon)?lang=it&units=si"
+        print(path)
+        
+        let url = NSURL(string: path)
+        
+        let task = URLSession.shared.dataTask(with: url! as URL) { (data, response, error) in
+            DispatchQueue.main.async(execute: {
+                if(data != nil) {
+                    self.extractData(weatherData: data! as NSData)
+                    self.locationManager.stopUpdatingLocation()
+                }
+            })
+        }
+        
+        task.resume()
+    }
+    
+    func extractData(weatherData: NSData)  {
+        
+        var temperature = ""
+        var weatherIcon:[String]? = []
+        
+        let json = try? JSONSerialization.jsonObject(with: weatherData as Data, options: []) as! NSDictionary
+        
+        if json != nil {
+            if let min = json!["hourly"] as? NSDictionary {
+                if let desc = min["summary"] as? String {
+                    let icon = min["icon"] as? String
+                    txtWeather.text = desc
+                    imgWeather1.image = UIImage(named: icon!)
+                }
+                if let data = min["data"] as? NSArray {
+                    for i in 0...5 {
+                        if let min = data[i] as? NSDictionary {
+                            weatherIcon?.append(min["icon"] as! String)
+                        }
+                    }
+                    imgWeather2.image = UIImage(named: (weatherIcon?[0])!)
+                    imgWeather3.image = UIImage(named: (weatherIcon?[1])!)
+                    imgWeather4.image = UIImage(named: (weatherIcon?[2])!)
+                    imgWeather5.image = UIImage(named: (weatherIcon?[3])!)
+                    imgWeather6.image = UIImage(named: (weatherIcon?[4])!)
+                }
+            }
+            
+            if let main = json!["currently"] as? NSDictionary {
+                if let temp = main["temperature"] as? Double {
+                    temperature = String(format: "%.0f", temp)
+                    txtWeather.text = txtWeather.text! + " (\(temperature)°C)"
+                }
+            }
+            
+            if let min = json!["hourly"] as? NSDictionary {
+                if let desc = min["summary"] as? String {
+                    // locationName = name
+                    txtWeather.text = desc
+                }
+            }
+
+        }
+       // return (locationName,temperature)
     }
     
     private func loadFooData() {

@@ -32,6 +32,7 @@
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
 		93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */; };
+		93CC6F521ED82F1A002DB6D8 /* pol.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93CC6F511ED82F1A002DB6D8 /* pol.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
 		93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Free-Download-PNG.png"; sourceTree = "<group>"; };
+		93CC6F511ED82F1A002DB6D8 /* pol.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pol.wav; sourceTree = "<group>"; };
 		B53A0C13E9095067DC88E6C7 /* Pods-TrekkingfyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyUITests/Pods-TrekkingfyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0A44EFB1739375CBBC5B83 /* Pods-TrekkingfyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyTests/Pods-TrekkingfyTests.release.xcconfig"; sourceTree = "<group>"; };
 		D71A62749D98FC1D809AA0B8 /* Pods-Trekkingfy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trekkingfy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy.release.xcconfig"; sourceTree = "<group>"; };
@@ -157,7 +159,7 @@
 		93B3150B1ED02DDD00DCA53E /* Trekkingfy */ = {
 			isa = PBXGroup;
 			children = (
-				930217D41ED6C65F00B24269 /* Img */,
+				93CC6F4F1ED82EEC002DB6D8 /* Assets */,
 				93B3153B1ED0303800DCA53E /* Class */,
 				93B3153A1ED0302A00DCA53E /* Views */,
 				93B315131ED02DDD00DCA53E /* Assets.xcassets */,
@@ -239,6 +241,23 @@
 				9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		93CC6F4F1ED82EEC002DB6D8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				93CC6F501ED82F11002DB6D8 /* Snd */,
+				930217D41ED6C65F00B24269 /* Img */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		93CC6F501ED82F11002DB6D8 /* Snd */ = {
+			isa = PBXGroup;
+			children = (
+				93CC6F511ED82F1A002DB6D8 /* pol.wav */,
+			);
+			name = Snd;
 			sourceTree = "<group>";
 		};
 		BEE0805236D5764C0CF18875 /* Pods */ = {
@@ -325,6 +344,7 @@
 				937ED9781ED6DBFE0062A1C5 /* fog.png in Resources */,
 				93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */,
 				937ED97A1ED6DBFE0062A1C5 /* partly-cloudy-night.png in Resources */,
+				93CC6F521ED82F1A002DB6D8 /* pol.wav in Resources */,
 				937ED9791ED6DBFE0062A1C5 /* partly-cloudy-day.png in Resources */,
 				93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */,
 				937ED97D1ED6DBFE0062A1C5 /* snow.png in Resources */,

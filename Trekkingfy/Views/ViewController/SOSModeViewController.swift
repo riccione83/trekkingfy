@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreMotion
+import AVFoundation
 
 extension Int {
     var degreesToRadians: Double { return Double(self) * .pi / 180 }
@@ -18,34 +19,189 @@ extension FloatingPoint {
     var radiansToDegrees: Self { return self * 180 / .pi }
 }
 
-class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
+extension Double {
+    /// Rounds the double to decimal places value
+    func roundTo(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
 
+class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
-    @IBOutlet var lblX: UILabel!
+    @IBOutlet var lblDistance: UILabel!
+    @IBOutlet var lblGPSPosition: UILabel!
     
-    @IBOutlet var lblY: UILabel!
-    
-    @IBOutlet var lblZ: UILabel!
-    
-    @IBOutlet var lblDegree: UILabel!
-    
+    @IBOutlet var btnSOS: UIButton!
+    @IBOutlet var btnSound: UIButton!
+    @IBOutlet var btnLight: UIButton!
     @IBOutlet var imgArrow: UIImageView!
-    
     @IBOutlet var mapView: MKMapView!
-    
-   // private let locationManager = AppDelegate().locationManager
     
     let locationManager = CLLocationManager()
     var endPoint: Point? = nil
 
-    var currentHEADValue: Double? = nil
-    var x:Double? = 0.0
+    var degrees = 0.0
+   /* var x:Double? = 0.0
     var y:Double? = 0.0
-    var z:Double? = 0.0
+    var z:Double? = 0.0*/
+    private var SOSBlinkMode = false
+    private var FlashMode = false
+    private var SoundMode = false
+    
+    var player: AVAudioPlayer?
+    
+    /// Short signal duration (LED on)
+    private static let shortInterval = 0.2
+    /// Long signal duration (LED on)
+    private static let longInterval = 0.4
+    /// Pause between signals (LED off)
+    private static let pauseInterval = 0.2
+    /// Pause between the whole SOS sequences (LED off)
+    private static let sequencePauseInterval = 2.0
+    
+    private let sequenceIntervals = [
+        shortInterval, pauseInterval, shortInterval, pauseInterval, shortInterval, pauseInterval,
+        longInterval, pauseInterval, longInterval, pauseInterval, longInterval, pauseInterval,
+        shortInterval, pauseInterval, shortInterval, pauseInterval, shortInterval, sequencePauseInterval
+    ]
+    
+    /// Current index in the SOS `sequence`
+    private var index: Int = 0
+    
+    /// Non repeatable timer, because time interval varies
+    private weak var timer: Timer?
+    private weak var soundTimer: Timer?
+    
+    @objc private func soundTimerTick() {
+        playSound()
+    }
+    
+    func stopSound() {
+        if((player) != nil) {
+            player?.stop()
+        }
+        soundTimer?.invalidate()
+    }
+    
+    func playSound() {
+        guard let url = Bundle.main.url(forResource: "pol", withExtension: "wav") else {
+            print("error")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+    private func turnFlashlight(on: Bool) {
+        
+        if let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo), device.hasTorch {
+            do {
+                try device.lockForConfiguration()
+                if(on) {
+                    device.torchMode = .on
+                    try device.setTorchModeOnWithLevel(1.0)
+
+                }
+                else {
+                    device.torchMode = .off
+                }
+                device.unlockForConfiguration()
+            } catch {
+                print("error")
+            }
+        }
+
+    }
+    
+    private func scheduleTimer() {
+        
+        timer = Timer.scheduledTimer(timeInterval: sequenceIntervals[index], target: self, selector: #selector(self.timerTick), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func timerTick() {
+        // Increase sequence index, at the end?
+        index = index + 1
+        if index == sequenceIntervals.count {
+            // Start from the beginning
+            index = 0
+        }
+        // Alternate flashlight status based on current index
+        // index % 2 == 0 -> is index even number? 0, 2, 4, 6, ...
+        turnFlashlight(on: index % 2 == 0)
+        scheduleTimer()
+    }
+    
+    func startFlashSOSMode() {
+        index = 0
+        turnFlashlight(on: true)
+        scheduleTimer()
+    }
+    
+    func stopFlashSOSMode() {
+        timer?.invalidate()
+        turnFlashlight(on: false)
+    }
+    
     
     @IBAction func btnReturn(_ sender: Any) {
     
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func btnLightClicked(_ sender: Any) {
+
+        FlashMode = !FlashMode
+        turnFlashlight(on: FlashMode)
+        if(!FlashMode) {
+                    btnLight.setTitle("Light ON", for: UIControlState.normal)
+        }
+        else {
+                    btnLight.setTitle("Light OFF", for: UIControlState.normal)
+        }
+        
+    }
+    
+    
+    @IBAction func btnSoundClicked(_ sender: Any) {
+
+        if(!SoundMode) {
+            soundTimer = Timer.scheduledTimer(timeInterval:  2.0, target: self, selector: #selector(self.soundTimerTick), userInfo: nil, repeats: true)
+            
+            btnSound.setTitle("Sound OFF", for: UIControlState.normal)
+        }
+        else {
+            stopSound()
+            btnSound.setTitle("Sound ON", for: UIControlState.normal)
+        }
+        SoundMode = !SoundMode
+    }
+    
+    
+    @IBAction func btnSOSClicked(_ sender: Any) {
+        
+        if(!SOSBlinkMode) {
+            SOSBlinkMode = true
+            startFlashSOSMode()
+            btnSOS.setTitle("SOS Light OFF", for: UIControlState.normal)
+        }
+        else {
+            SOSBlinkMode = false
+            stopFlashSOSMode()
+            btnSOS.setTitle("SOS Light ON", for: UIControlState.normal)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -71,98 +227,37 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingHeading()
         
     }
-
-    func getDegrees(startPoint:Point,endPoint:Point, headX: Double) -> Double {
-        
-        var lat1:Double = startPoint.lat!
-        let lon1:Double = startPoint.lon!
-        
-        var lat2:Double = endPoint.lat!
-        let lon2:Double = endPoint.lon!
-        
-       // var dLat = Double(lat2 - lat1).degreesToRadians
-        let dLon = Double(lon2 - lon1).degreesToRadians
-        
-        lat1 = lat1.degreesToRadians
-        lat2 = lat2.degreesToRadians
-        
-        let y = sin(dLon) * cos(lat2)
-        let x = cos(lat1) * sin(lat2) - sin(lat1)*cos(lat2)*cos(dLon)
-        
-        var brng = atan2(y, x).radiansToDegrees
-        
-        if(brng < 0) {
-            brng = 360 - abs(brng)
+    
+    func calculateUserAngle(current: CLLocationCoordinate2D) -> CGFloat {
+        var x = 0.0
+        var y = 0.0
+        var deg = 0.0
+        var delLon = 0.0
+    
+        delLon = endPoint!.lon! - current.longitude;
+        y = sin(delLon) * cos(endPoint!.lat!);
+        x = cos(current.latitude) * sin(endPoint!.lat!) - sin(current.latitude) * cos(endPoint!.lat!) * cos(delLon);
+        deg = (atan2(y, x)).radiansToDegrees;
+    
+        if(deg<0){
+                deg = -deg;
+        } else {
+                deg = 360 - deg;
         }
-        
-        return brng - headX
+        return CGFloat(deg);
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Use the true heading if it is valid.
-      
-        let direction = -newHeading.magneticHeading / 180.0 * Double.pi
         
-        let currPoint = Point(val: (locationManager.location?.coordinate)!)
-        
-        
-        let degree = getDegrees(startPoint: currPoint, endPoint: endPoint!, headX: direction.radiansToDegrees)
-
-        
-       // let strAccuracy = "\(newHeading.headingAccuracy)"
-        lblX.text = "degree: \(degree)"
-        lblY.text = "Direction: \(direction)"
-        
-        let arrowImage = UIImage(named: "Arrow-Free-Download-PNG.png")
-      
-        //  imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: CGFloat(direction.radiansToDegrees))
-        
-        imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: -CGFloat(degree))
-        
+        imgArrow.transform = CGAffineTransform(rotationAngle: CGFloat((degrees-newHeading.trueHeading) * M_PI / 180))
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-   /*     if(endPoint != nil && currentHEADValue != nil) {
-            
-            currentHEADValue = locations.last?.course
-            let currPoint = Point(val: locations.last!.coordinate)
-        
-
-            let degree = getDegrees(startPoint: currPoint, endPoint: endPoint!, headX: currentHEADValue!)
-            
-            lblDegree.text = "Degree: \(degree)"
-            lblX.text = "X: \(x!)"
-            lblY.text = "Y: \(y!)"
-            lblZ.text = "Z: \(z!)"
-            
-            let arrowImage = UIImage(named: "Arrow-Free-Download-PNG.png")
-            
-            imgArrow.image = imageRotatedByDegrees(oldImage: arrowImage!, deg: CGFloat(degree))
-        }*/
+        let here = locations.last?.coordinate
+        degrees = Double(self.calculateUserAngle(current: here!))
     }
-    
-    func imageRotatedByDegrees(oldImage: UIImage, deg degrees: CGFloat) -> UIImage {
-        //Calculate the size of the rotated view's containing box for our drawing space
-        let rotatedViewBox: UIView = UIView(frame: CGRect(x: 0, y: 0, width: oldImage.size.width, height: oldImage.size.height))
-        let t: CGAffineTransform = CGAffineTransform(rotationAngle: degrees * CGFloat.pi / 180)
-        rotatedViewBox.transform = t
-        let rotatedSize: CGSize = rotatedViewBox.frame.size
-        //Create the bitmap context
-        UIGraphicsBeginImageContext(rotatedSize)
-        let bitmap: CGContext = UIGraphicsGetCurrentContext()!
-        //Move the origin to the middle of the image so we will rotate and scale around the center.
-        bitmap.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
-        //Rotate the image context
-        bitmap.rotate(by: (degrees * CGFloat.pi / 180))
-        //Now, draw the rotated/scaled image into the context
-        bitmap.scaleBy(x: 1.0, y: -1.0)
-        bitmap.draw(oldImage.cgImage!, in: CGRect(x: -oldImage.size.width / 2, y: -oldImage.size.height / 2, width: oldImage.size.width, height: oldImage.size.height))
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-
     
     func setPointOnMap(start_point:CLLocation) {
         
@@ -170,7 +265,6 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         point.coordinate = start_point.coordinate
         point.title = "End"
         mapView.addAnnotation(point)
-        //mapView.selectAnnotation(point, animated: true)
     }
     
 }

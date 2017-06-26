@@ -38,13 +38,17 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var imgArrow: UIImageView!
     @IBOutlet var mapView: MKMapView!
     
+    @IBOutlet var navigationBarSos: UINavigationBar!
+    
+    
     let locationManager = CLLocationManager()
     var endPoint: Point? = nil
 
     var degrees = 0.0
-   /* var x:Double? = 0.0
-    var y:Double? = 0.0
-    var z:Double? = 0.0*/
+    var currentHeading = CLHeading()
+    
+    var userLocation: CLLocationCoordinate2D!
+    
     private var SOSBlinkMode = false
     private var FlashMode = false
     private var SoundMode = false
@@ -207,10 +211,11 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        navigationBarSos.topItem?.title = "SMS Mode"
         // Do any additional setup after loading the view.
         mapView.delegate = self
         mapView.showsUserLocation = true
-        mapView.userTrackingMode = MKUserTrackingMode.follow
         mapView.showsCompass = true
         
         let endP:CLLocation = CLLocation(latitude: endPoint!.lat!, longitude: endPoint!.lon!)
@@ -225,38 +230,76 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
-        
+    
     }
     
-    func calculateUserAngle(current: CLLocationCoordinate2D) -> CGFloat {
-        var x = 0.0
-        var y = 0.0
-        var deg = 0.0
-        var delLon = 0.0
-    
+
+    func calculateUserAngle(current: CLLocationCoordinate2D) {
+        
+        var x:Double = 0, y:Double = 0 , deg:Double = 0, delLon:Double = 0;
         delLon = endPoint!.lon! - current.longitude;
         y = sin(delLon) * cos(endPoint!.lat!);
         x = cos(current.latitude) * sin(endPoint!.lat!) - sin(current.latitude) * cos(endPoint!.lat!) * cos(delLon);
-        deg = (atan2(y, x)).radiansToDegrees;
+        
+        deg = atan2(y, x).radiansToDegrees;
     
         if(deg<0){
                 deg = -deg;
         } else {
-                deg = 360 - deg;
+            deg = 360 - deg;
         }
-        return CGFloat(deg);
+        degrees = deg;
+    }
+    
+    func setLatLonForDistanceAndAngle(userLocation: CLLocation) -> Double
+    {
+        let lat1 = userLocation.coordinate.latitude.degreesToRadians
+        let lon1 = userLocation.coordinate.longitude.degreesToRadians
+    
+        let lat2 = endPoint?.lat?.degreesToRadians
+        let lon2 = endPoint?.lon?.degreesToRadians
+        let dLon = lon2! - lon1
+    
+        let y = sin(dLon) * cos(lat2!)
+        let x = cos(lat1) * sin(lat2!) - sin(lat1) * cos(lat2!) * cos(dLon)
+        
+        var radiansBearing = atan2(y, x);
+        if(radiansBearing < 0.0) {
+            radiansBearing += 2*M_PI;
+        }
+        return radiansBearing
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Use the true heading if it is valid.
         
-        imgArrow.transform = CGAffineTransform(rotationAngle: CGFloat((degrees-newHeading.trueHeading) * M_PI / 180))
+        
+        //imgArrow.transform = CGAffineTransform(rotationAngle: CGFloat((degrees-newHeading.trueHeading) * Double.pi / 180))
+        let direction = -newHeading.trueHeading;
+        imgArrow.transform = CGAffineTransform(rotationAngle:CGFloat((direction * M_PI / 180) + degrees))
+
+        
+        mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let here = locations.last?.coordinate
-        degrees = Double(self.calculateUserAngle(current: here!))
+        degrees = setLatLonForDistanceAndAngle(userLocation: locations.last!)
+        print("Degrees: \(degrees)")
+        let coordinate₀ = CLLocation(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
+        let coordinate₁ = CLLocation(latitude: endPoint!.lat!, longitude: endPoint!.lon!)
+        
+        let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+        
+        if(distanceInMeters < 1000) {
+            lblDistance.text = "Distance: \(distanceInMeters.roundTo(places: 0)) mt"
+        }
+        else {
+            lblDistance.text = "Distance \((distanceInMeters/1000).roundTo(places: 2)) km"
+        }
+        
+        lblGPSPosition.text = "GPS: \(locations.last!.coordinate.latitude.roundTo(places: 5)) - \(locations.last!.coordinate.longitude.roundTo(places: 5))"
     }
     
     func setPointOnMap(start_point:CLLocation) {
@@ -271,6 +314,11 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
 
 
 extension SOSModeViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let latitudineDelta = Float(mapView.region.span.latitudeDelta)
+
+    }
     
 }
 

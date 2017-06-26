@@ -32,7 +32,11 @@
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
 		93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */; };
+		93C55E211EE000CB0087E2DE /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E201EE000CB0087E2DE /* close.png */; };
+		93C55E231EE000D00087E2DE /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E221EE000D00087E2DE /* camera.png */; };
+		93C55E251EE001ED0087E2DE /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E241EE001ED0087E2DE /* ok.png */; };
 		93CC6F521ED82F1A002DB6D8 /* pol.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93CC6F511ED82F1A002DB6D8 /* pol.wav */; };
+		93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CC6F531ED83A6C002DB6D8 /* PhotoCameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,7 +74,11 @@
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
 		93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Free-Download-PNG.png"; sourceTree = "<group>"; };
+		93C55E201EE000CB0087E2DE /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		93C55E221EE000D00087E2DE /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = PNG/camera.png; sourceTree = "<group>"; };
+		93C55E241EE001ED0087E2DE /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
 		93CC6F511ED82F1A002DB6D8 /* pol.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pol.wav; sourceTree = "<group>"; };
+		93CC6F531ED83A6C002DB6D8 /* PhotoCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCameraViewController.swift; sourceTree = "<group>"; };
 		B53A0C13E9095067DC88E6C7 /* Pods-TrekkingfyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyUITests/Pods-TrekkingfyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0A44EFB1739375CBBC5B83 /* Pods-TrekkingfyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekkingfyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrekkingfyTests/Pods-TrekkingfyTests.release.xcconfig"; sourceTree = "<group>"; };
 		D71A62749D98FC1D809AA0B8 /* Pods-Trekkingfy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trekkingfy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trekkingfy/Pods-Trekkingfy.release.xcconfig"; sourceTree = "<group>"; };
@@ -94,6 +102,9 @@
 		930217D41ED6C65F00B24269 /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				93C55E241EE001ED0087E2DE /* ok.png */,
+				93C55E221EE000D00087E2DE /* camera.png */,
+				93C55E201EE000CB0087E2DE /* close.png */,
 				937ED8D41ED6D6A60062A1C5 /* Clima */,
 				93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */,
 			);
@@ -229,6 +240,7 @@
 				93B3150E1ED02DDD00DCA53E /* MainViewController.swift */,
 				93A8669D1ED0CF1C0074BDD6 /* NewRouteViewController.swift */,
 				93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */,
+				93CC6F531ED83A6C002DB6D8 /* PhotoCameraViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -338,6 +350,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				937ED9761ED6DBFE0062A1C5 /* clear-night.png in Resources */,
+				93C55E251EE001ED0087E2DE /* ok.png in Resources */,
+				93C55E231EE000D00087E2DE /* camera.png in Resources */,
 				937ED9771ED6DBFE0062A1C5 /* cloudy.png in Resources */,
 				937ED97E1ED6DBFE0062A1C5 /* wind.png in Resources */,
 				937ED9751ED6DBFE0062A1C5 /* clear-day.png in Resources */,
@@ -347,6 +361,7 @@
 				93CC6F521ED82F1A002DB6D8 /* pol.wav in Resources */,
 				937ED9791ED6DBFE0062A1C5 /* partly-cloudy-day.png in Resources */,
 				93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */,
+				93C55E211EE000CB0087E2DE /* close.png in Resources */,
 				937ED97D1ED6DBFE0062A1C5 /* snow.png in Resources */,
 				93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */,
 				93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */,
@@ -416,6 +431,7 @@
 				938FC52D1ED622420024B980 /* UserLocation.swift in Sources */,
 				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,
 				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,
+				93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
 				93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */,
 				93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */,

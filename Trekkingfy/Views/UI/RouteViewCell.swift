@@ -10,5 +10,6 @@ import UIKit
 
 class RouteViewCell: UICollectionViewCell {
     
+    @IBOutlet var imgClose: UIImageView!
     
 }

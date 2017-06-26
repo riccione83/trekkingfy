@@ -16,12 +16,16 @@ protocol RouteSaveExtension {
     
 }
 
-class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
+class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UICollectionViewDelegate, UICollectionViewDataSource, PhotoShootDelegate {
 
     @IBOutlet var graphView: UIView!
     @IBOutlet var mapView: MKMapView!
     
     @IBOutlet var imagePositionGrid: UICollectionView!
+    
+    @IBOutlet var navigationBar: UINavigationBar!
+    
+    
     var mainView:RouteSaveExtension? = nil
     
     let updateLocationInterval = 5  //5 secs
@@ -49,6 +53,70 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
     }
     
+    func compressImage(image:UIImage) -> NSData {
+        // Reducing file size to a 10th
+        
+        var actualHeight : CGFloat = image.size.height
+        var actualWidth : CGFloat = image.size.width
+        let maxHeight : CGFloat = 1136.0
+        let maxWidth : CGFloat = 640.0
+        var imgRatio : CGFloat = actualWidth/actualHeight
+        let maxRatio : CGFloat = maxWidth/maxHeight
+        var compressionQuality : CGFloat = 0.5
+        
+        if (actualHeight > maxHeight || actualWidth > maxWidth){
+            if(imgRatio < maxRatio){
+                //adjust width according to maxHeight
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = imgRatio * actualWidth;
+                actualHeight = maxHeight;
+            }
+            else if(imgRatio > maxRatio){
+                //adjust height according to maxWidth
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = imgRatio * actualHeight;
+                actualWidth = maxWidth;
+            }
+            else{
+                actualHeight = maxHeight;
+                actualWidth = maxWidth;
+                compressionQuality = 1;
+            }
+        }
+        let rect = CGRect(x: 0.0, y: 0.0, width: actualWidth, height: actualHeight)
+
+        UIGraphicsBeginImageContext(rect.size);
+        image.draw(in: rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext();
+        let imageData = UIImageJPEGRepresentation(img!, compressionQuality);
+        UIGraphicsEndImageContext();
+        
+        return imageData! as NSData
+    }
+        
+        
+    func setPhoto(image:UIImage, id:Int, note:String) {
+        
+        if(id == -1) {              //new point
+            
+            let compressedImage = compressImage(image: image)
+            var compressed_image = UIImage(data: compressedImage as Data)
+            
+            currentRoute?.Images.append(compressed_image!)
+            currentRoute?.ImageDescriptions?.append(note)
+            currentRoute?.ImagesPositions.append(Point(val: locationManager.location!.coordinate))
+        }
+        else {
+            if(id <= currentRoute!.Images.count) {
+                if(currentRoute?.Images[id] != nil) {
+                    currentRoute?.Images[id] = image
+                    currentRoute?.ImageDescriptions?[id] = note
+                    currentRoute?.ImagesPositions[id] = Point(val: locationManager.location!.coordinate)
+                }
+            }
+        }
+        imagePositionGrid.reloadData()
+    }
     
     @IBAction func btnSOSClicked(_ sender: Any) {
         
@@ -79,7 +147,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     private func updateAltimeterGraph() {
         
         let data:[Double] = Array(currentRoute!.Altitudes.suffix(5))
-        if(currentRoute!.Altitudes.count > 0) {
+        if((currentRoute!.Altitudes.count) > 0) {
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
         }
         
@@ -89,6 +157,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         mapView.showsUserLocation = true
         mapView.delegate = self
+        
+        navigationBar.topItem?.title = "Route"
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
@@ -107,7 +177,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
         else {
             let data:[Double] = Array(currentRoute!.Altitudes)
-            if(currentRoute!.Altitudes.count > 0) {
+            if((currentRoute!.Altitudes.count) > 0) {
                 graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
             }
             var loc:CLLocation = CLLocation()
@@ -117,10 +187,10 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             }
 
             
-            let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat!)!, longitude: (currentRoute?.Positions.first?.lon!)!)
+            let startPoint = CLLocation(latitude: (currentRoute!.Positions.first?.lat!)!, longitude: (currentRoute?.Positions.first?.lon!)!)
             setInitialPoint(start_point: startPoint)
             
-            let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat!)!, longitude: (currentRoute?.Positions.last?.lon!)!)
+            let finalPoint = CLLocation(latitude: (currentRoute!.Positions.last?.lat!)!, longitude: (currentRoute?.Positions.last?.lon!)!)
             setFinalPoint(start_point: finalPoint)
             
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
@@ -137,17 +207,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        //let region = MKCoordinateRegionMake(locations.last!.coordinate, MKCoordinateSpanMake(0.002, 0.002))
         let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 100, 100)
-        
-        
-        
-        
+    
         mapView.setRegion(region, animated: true)
         mapView.setCenter(locations.last!.coordinate, animated: true)
         updateLines(newPoint: locations.last!)
         
-        if(currentRoute!.Positions.count>0) {
+        if((currentRoute?.Positions.count)!>0) {
        
             let lastPoint = CLLocation(latitude: (currentRoute!.Positions.last?.lat)!, longitude: (currentRoute!.Positions.last?.lon)!)
         
@@ -165,7 +231,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             currentRoute?.Altitudes.append(locations.last!.altitude)
         }
         
-//        currentRoute?.Altitudes.append(Double(arc4random()).truncatingRemainder(dividingBy: 1000))
         if(altitudeBarLoaded) {
             updateAltimeterGraph()
         }
@@ -203,7 +268,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     func updateLines(newPoint: CLLocation) {
     
         //currentRoute?.Positions.append(Point(val: newPoint.coordinate))
-        let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: currentRoute!.Positions.count)
+        let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: (currentRoute!.Positions.count))
         mapView.add(route)
     }
     
@@ -226,6 +291,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         self.view.insertSubview(label, aboveSubview: graphView)
         self.view.addConstraints([rightConstraint, topConstraint, heightConstraint, widthConstraint])
     }
+    
     func didTap(_ gesture: UITapGestureRecognizer) {
     
     }
@@ -305,7 +371,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         var labels = [String]()
         
         for i in 0 ..< numberOfItems {
-            labels.append("mt: \(texts[i])")
+            labels.append("mt: \(texts[i].roundTo(places: 0))")
         }
         
         return labels
@@ -349,16 +415,19 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if(indexPath.row == currentRoute!.ImagesPositions.count) {
-            
-            self.currentRoute?.ImagesPositions.append(Point(val: self.locationManager.location!.coordinate))
-            
-            collectionView.performBatchUpdates({
-                let indexSet = IndexSet(integer: 0)
-                self.imagePositionGrid.reloadSections(indexSet)
-            }, completion: nil)
-            
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "cameraStoryboard") as! PhotoCameraViewController
+        
+        if(indexPath.row == currentRoute!.Images.count) {
+            vc.currentID = -1
         }
+        else {
+            vc.currentID = indexPath.row
+            if(!(currentRoute!.ImageDescriptions?[indexPath.row].isEmpty)!) {
+                vc.txtNote.text = currentRoute!.ImageDescriptions?[indexPath.row]
+            }
+        }
+        vc.mainViewDelegate = self
+        self.present(vc, animated: false, completion: nil)
         
     }
     
@@ -368,7 +437,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             return 1
         }
         else {
-            return currentRoute!.ImagesPositions.count + 1
+            return currentRoute!.Images.count + 1
         }
     }
     
@@ -376,11 +445,34 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let cell: POIViewCell
         
-        if(currentRoute == nil || indexPath.row == currentRoute!.ImagesPositions.count) {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
+        
+        if(currentRoute != nil) {
+          if(!currentRoute!.Images.isEmpty) {
+            if(indexPath.row < currentRoute!.Images.count ) {
+                if (currentRoute?.Images[indexPath.row] != nil) {
+                    cell.imageView.image = currentRoute?.Images[indexPath.row]
+                    cell.strTitle = currentRoute!.ImageDescriptions![indexPath.row]
+                    cell.strDescription = ""
+                    cell.lblPlus.isHidden = true
+                }
+            }
+            else
+            {
+                cell.imageView.image = nil
+                cell.strTitle = "Add a point"
+                cell.strDescription = "click here"
+                cell.lblPlus.isHidden = false
+            }
+        }
+          else {
+            cell.strTitle = "Add a point"
+            cell.strDescription = "click here"
+            }
         }
         else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
+                cell.strTitle = "Add a point"
+                cell.strDescription = "click here"
         }
         
         cell.contentView.layer.cornerRadius = 2.0
@@ -388,9 +480,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         cell.contentView.layer.borderColor = UIColor.clear.cgColor
         cell.contentView.layer.masksToBounds = true
         return cell
-        
     }
-
 }
 
 extension NewRouteViewController: MKMapViewDelegate {

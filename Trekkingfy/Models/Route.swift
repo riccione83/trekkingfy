@@ -38,10 +38,13 @@ class Route:NSObject, NSCoding {
     var ID: Int? = 0
     var Images: [UIImage] = []
     var ImagesPositions: [Point] = []
+    var ImageDescriptions: [String]? = []
     var Positions: [Point] = []
     var Altitudes: [Double] = []
     
     override init() {
+        self.ID = -1
+        super.init()
         
     }
     
@@ -83,7 +86,7 @@ class Route:NSObject, NSCoding {
         self.ImagesPositions = aDecoder.decodeObject(forKey: "imagespositions") as! [Point]
         self.Positions = aDecoder.decodeObject(forKey: "positions") as! [Point]
         self.Altitudes = aDecoder.decodeObject(forKey: "altitudes") as! [Double]
-
+        self.ImageDescriptions = (aDecoder.decodeObject(forKey: "imagesdescriptions") as? [String])
     }
     
     func encode(with aCoder: NSCoder) {
@@ -92,6 +95,7 @@ class Route:NSObject, NSCoding {
         aCoder.encode(ImagesPositions, forKey: "imagespositions")
         aCoder.encode(Positions, forKey: "positions")
         aCoder.encode(Altitudes, forKey: "altitudes")
+        aCoder.encode(ImageDescriptions, forKey: "imagesdescriptions")
     }
 
 }

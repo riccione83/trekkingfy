@@ -37,7 +37,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func saveNewRoute(route:Route) {
-        print("Save new Route!!")
+
         if(route.ID! > -1) {
             var i=0;
             for r in routes {
@@ -59,6 +59,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         userDefaults.synchronize()
         
         routesGrid.reloadData()
+        print("Save new Route!!")
     }
     
     func saveRoutes() {
@@ -118,11 +119,14 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             return
         }
         
-        if(deleteModeActive) {
-            deleteModeActive = false
+        if(deleteModeActive && routes.count > 0) {
+           
             if((indexPath?.row)! < routes.count) {
                 routes.remove(at: (indexPath?.row)!)
                 saveRoutes()
+                if(routes.count == 0) {
+                    deleteModeActive = false
+                }
             }
             routesGrid.reloadData()
         }
@@ -152,8 +156,6 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         let indexPath = self.routesGrid.indexPathForItem(at: p)
         
         if let index = indexPath {
-      //      var cell = self.routesGrid.cellForItem(at: index)
-            // do stuff with your cell, for example print the indexPath
             deleteModeActive = true
             routesGrid.reloadData()
 
@@ -294,10 +296,35 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "routeCellIdentifier", for: indexPath) as! RouteViewCell
             
             if(deleteModeActive) {
+                cell.imgClose.isHidden = false
                 cell.backgroundColor = UIColor.red
+                
+                cell.contentView.layer.cornerRadius = 10
+                cell.contentView.layer.borderWidth = 1
+                cell.contentView.layer.borderColor = UIColor.clear.cgColor
+                cell.contentView.layer.masksToBounds = true
+                
+                cell.layer.shadowColor = UIColor.lightGray.cgColor
+                cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+                cell.layer.shadowRadius = 2.0
+                cell.layer.shadowOpacity = 1.0
+                cell.layer.masksToBounds = false
+                cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+                
+                
+                let transformAnim  = CAKeyframeAnimation(keyPath:"transform")
+                transformAnim.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(0.04, 0.0, 0.0, 1.0)),NSValue(caTransform3D: CATransform3DMakeRotation(-0.04 , 0, 0, 1))]
+                transformAnim.autoreverses = true
+                let dur = Double(indexPath.row).truncatingRemainder(dividingBy: 2.0)
+                transformAnim.duration  = dur == 0 ?   0.115 : 0.105
+                transformAnim.repeatCount = Float.infinity
+                cell.layer.add(transformAnim, forKey: "transform")
+                
             }
             else {
+                cell.imgClose.isHidden = true
                 cell.backgroundColor = UIColor.clear
+                cell.layer.shadowColor = UIColor.clear.cgColor
             }
         }
         

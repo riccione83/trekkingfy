@@ -443,9 +443,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: POIViewCell
+        let cell: POIViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
         
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
         
         if(currentRoute != nil) {
           if(!currentRoute!.Images.isEmpty) {
@@ -465,10 +464,11 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 cell.lblPlus.isHidden = false
             }
         }
-          else {
+          
+        else {
             cell.strTitle = "Add a point"
             cell.strDescription = "click here"
-            }
+        }
         }
         else {
                 cell.strTitle = "Add a point"

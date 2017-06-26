@@ -49,7 +49,6 @@ class PhotoCameraViewController: UIViewController {
         }
     }
     
-    
     @IBAction func takePhoto(_ sender: Any) {
         if let videoConnection = stillImageOutput!.connection(withMediaType: AVMediaTypeVideo) {
             
@@ -57,7 +56,7 @@ class PhotoCameraViewController: UIViewController {
                 
                 if sampleBuffer != nil {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                    let dataProvider = CGDataProvider(data: imageData as! CFData)
+                    let dataProvider = CGDataProvider(data: imageData! as CFData)
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                     
                     let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)

@@ -193,9 +193,16 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             let finalPoint = CLLocation(latitude: (currentRoute!.Positions.last?.lat!)!, longitude: (currentRoute?.Positions.last?.lon!)!)
             setFinalPoint(start_point: finalPoint)
             
+            let cnt = 0
+            for point in (currentRoute?.ImagesPositions)! {
+                let coord = CLLocation(latitude: point.lat!, longitude: point.lon!)
+                addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions?[cnt])!)
+            }
+            
+            
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
             mapView.setRegion(region, animated: true)
-            //mapView.setCenter(loc.coordinate, animated: true)
+            
             
         }
         
@@ -245,6 +252,16 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
         
         locationManager.stopUpdatingLocation()
+    }
+    
+    
+    func addNewPoint(start_point:CLLocation, description:String) {
+        
+        let point = MKPointAnnotation()
+        point.coordinate = start_point.coordinate
+        point.title = description
+        mapView.addAnnotation(point)
+        //mapView.selectAnnotation(point, animated: true)
     }
     
     func setInitialPoint(start_point:CLLocation) {

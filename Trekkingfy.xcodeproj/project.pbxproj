@@ -32,6 +32,7 @@
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
 		93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */; };
+		93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C49AEA1F0265D400408659 /* POIViewText.swift */; };
 		93C55E211EE000CB0087E2DE /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E201EE000CB0087E2DE /* close.png */; };
 		93C55E231EE000D00087E2DE /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E221EE000D00087E2DE /* camera.png */; };
 		93C55E251EE001ED0087E2DE /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E241EE001ED0087E2DE /* ok.png */; };
@@ -74,6 +75,7 @@
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
 		93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Free-Download-PNG.png"; sourceTree = "<group>"; };
+		93C49AEA1F0265D400408659 /* POIViewText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = POIViewText.swift; path = Views/UI/POIViewText.swift; sourceTree = "<group>"; };
 		93C55E201EE000CB0087E2DE /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		93C55E221EE000D00087E2DE /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = PNG/camera.png; sourceTree = "<group>"; };
 		93C55E241EE001ED0087E2DE /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		93B315421ED0324C00DCA53E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				93C49AEA1F0265D400408659 /* POIViewText.swift */,
 				93B315431ED0328D00DCA53E /* RouteViewCell.swift */,
 				93A8669F1ED0D3730074BDD6 /* POIViewCell.swift */,
 				9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */,
@@ -426,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93B315401ED030D800DCA53E /* Route.swift in Sources */,
+				93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */,
 				93B3150F1ED02DDD00DCA53E /* MainViewController.swift in Sources */,
 				930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */,
 				938FC52D1ED622420024B980 /* UserLocation.swift in Sources */,

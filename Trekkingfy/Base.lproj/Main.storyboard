@@ -521,7 +521,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a description..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LN1-ui-ocY">
-                                        <rect key="frame" x="8" y="628" width="398" height="30"/>
+                                        <rect key="frame" x="0.0" y="613" width="414" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="I2U-QW-xo7"/>
                                         </constraints>
@@ -534,14 +534,14 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Pm7-Au-D42" secondAttribute="trailing" id="3Ec-TK-hTt"/>
                                     <constraint firstItem="Pm7-Au-D42" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" id="CCJ-Hp-Mc2"/>
-                                    <constraint firstItem="LQl-jN-Gcf" firstAttribute="top" secondItem="LN1-ui-ocY" secondAttribute="bottom" constant="-10" id="DXa-Ma-SVi"/>
+                                    <constraint firstItem="LQl-jN-Gcf" firstAttribute="top" secondItem="LN1-ui-ocY" secondAttribute="bottom" constant="5" id="DXa-Ma-SVi"/>
                                     <constraint firstItem="lLB-qX-tpi" firstAttribute="centerY" secondItem="BS1-0p-aab" secondAttribute="centerY" id="LMm-sM-Ba0"/>
-                                    <constraint firstAttribute="trailing" secondItem="LN1-ui-ocY" secondAttribute="trailing" constant="8" id="Lqr-Qv-wcQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="LN1-ui-ocY" secondAttribute="trailing" id="Lqr-Qv-wcQ"/>
                                     <constraint firstItem="LN1-ui-ocY" firstAttribute="centerX" secondItem="Pm7-Au-D42" secondAttribute="centerX" id="LtK-Fm-Ano"/>
                                     <constraint firstAttribute="bottom" secondItem="Pm7-Au-D42" secondAttribute="bottom" id="PnT-CX-GVz"/>
                                     <constraint firstItem="Pm7-Au-D42" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="top" id="UAe-QJ-wjf"/>
                                     <constraint firstItem="lLB-qX-tpi" firstAttribute="leading" secondItem="Pm7-Au-D42" secondAttribute="leading" id="UaX-kc-kZt"/>
-                                    <constraint firstItem="LN1-ui-ocY" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" constant="8" id="b0q-r9-3hd"/>
+                                    <constraint firstItem="LN1-ui-ocY" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" id="b0q-r9-3hd"/>
                                     <constraint firstItem="LQl-jN-Gcf" firstAttribute="centerX" secondItem="Pm7-Au-D42" secondAttribute="centerX" id="b8c-Jx-z7d"/>
                                     <constraint firstAttribute="trailing" secondItem="BS1-0p-aab" secondAttribute="trailing" constant="8" id="rPx-Wt-U8g"/>
                                     <constraint firstItem="BS1-0p-aab" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="top" constant="20" id="rpj-fW-Y1f"/>

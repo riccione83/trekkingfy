@@ -33,7 +33,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     var currentRoute:Route?
     var altitudeBarLoaded = false
-    //private var locationManager = AppDelegate().locationManager
+    var oldPositions:[CLLocationCoordinate2D] = []
     
     var locationManager = CLLocationManager()
     
@@ -199,7 +199,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions?[cnt])!)
             }
             
-            
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
             mapView.setRegion(region, animated: true)
             
@@ -261,6 +260,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = description
         mapView.addAnnotation(point)
+        recreateLines(newPoint: start_point)
         //mapView.selectAnnotation(point, animated: true)
     }
     
@@ -270,7 +270,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = "Start"
         mapView.addAnnotation(point)
-        //mapView.selectAnnotation(point, animated: true)
+        recreateLines(newPoint: start_point)
     }
 
     func setFinalPoint(start_point:CLLocation) {
@@ -279,11 +279,20 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = "Stop"
         mapView.addAnnotation(point)
+        recreateLines(newPoint: start_point)
         mapView.selectAnnotation(point, animated: true)
     }
 
-    func updateLines(newPoint: CLLocation) {
+    func recreateLines(newPoint: CLLocation) {
+        
+        oldPositions.append(newPoint.coordinate)
+
+        let route = MKPolyline(coordinates: oldPositions, count: oldPositions.count)
+        mapView.add(route)
+    }
     
+    func updateLines(newPoint: CLLocation) {
+
         //currentRoute?.Positions.append(Point(val: newPoint.coordinate))
         let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: (currentRoute!.Positions.count))
         mapView.add(route)
@@ -365,7 +374,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        oldPositions = []
         //setupUI()
     }
     

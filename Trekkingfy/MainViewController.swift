@@ -51,6 +51,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
         else {
             route.ID = routes.count
+            route.createdAt = Date()
             routes.append(route)
         }
         let userDefaults = UserDefaults.standard
@@ -327,6 +328,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.imgClose.isHidden = true
                 cell.backgroundColor = UIColor.clear
                 cell.layer.shadowColor = UIColor.clear.cgColor
+                cell.lblCreatedAt.text = routes[indexPath.row].createdAt?.to_string()
+                if(routes[indexPath.row].Images.count>0) {
+                    let rnd = arc4random_uniform(UInt32(routes[indexPath.row].Images.count))
+                    cell.imgCarousel.image = routes[indexPath.row].Images[Int(rnd)]
+                }
             }
         }
         

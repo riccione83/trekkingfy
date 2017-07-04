@@ -12,4 +12,9 @@ class RouteViewCell: UICollectionViewCell {
     
     @IBOutlet var imgClose: UIImageView!
     
+    @IBOutlet var lblCreatedAt: UILabel!
+    
+    @IBOutlet var imgCarousel: UIImageView!
+    
+    
 }

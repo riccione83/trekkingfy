@@ -9,7 +9,19 @@
 import UIKit
 import MapKit
 
+extension Date {
+    
+    func to_string() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/mm/yyyy hh:mm" //Your New Date format as per requirement change it own
+        let newDate = dateFormatter.string(from: self) //pass Date here
+        return newDate //New formatted Date string
+    }
+}
+
+
 class Point:NSObject,NSCoding {
+    
     var lat:Double? = 0.0
     var lon:Double? = 0.0
     
@@ -41,6 +53,7 @@ class Route:NSObject, NSCoding {
     var ImageDescriptions: [String]? = []
     var Positions: [Point] = []
     var Altitudes: [Double] = []
+    var createdAt: Date? = Date()
     
     override init() {
         self.ID = -1
@@ -87,6 +100,7 @@ class Route:NSObject, NSCoding {
         self.Positions = aDecoder.decodeObject(forKey: "positions") as! [Point]
         self.Altitudes = aDecoder.decodeObject(forKey: "altitudes") as! [Double]
         self.ImageDescriptions = (aDecoder.decodeObject(forKey: "imagesdescriptions") as? [String])
+        self.createdAt = aDecoder.decodeObject(forKey: "createdAt") as? Date
     }
     
     func encode(with aCoder: NSCoder) {
@@ -96,6 +110,7 @@ class Route:NSObject, NSCoding {
         aCoder.encode(Positions, forKey: "positions")
         aCoder.encode(Altitudes, forKey: "altitudes")
         aCoder.encode(ImageDescriptions, forKey: "imagesdescriptions")
+        aCoder.encode(createdAt, forKey: "createAt")
     }
 
 }

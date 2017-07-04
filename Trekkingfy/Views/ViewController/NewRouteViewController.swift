@@ -31,7 +31,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     var altitudeBarLoaded = false
     var oldPositions:[CLLocationCoordinate2D] = []
     var locationManager = CLLocationManager()
-    
+    var mapWasCentered = false
     var graphBarView = ScrollableGraphView()
     var graphConstraints = [NSLayoutConstraint]()
     var label = UILabel()
@@ -72,7 +72,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 self.timerUpdateLocation = nil
                 UIApplication.shared.isIdleTimerDisabled = false
             }
-
+            
         }
     }
     
@@ -235,10 +235,14 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 100, 100)
+        if(!mapWasCentered) {
+            
+            mapWasCentered = true
+            let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 0.01, 0.01)
+            
+            mapView.setRegion(region, animated: true)
+        }
         
-        mapView.setRegion(region, animated: true)
-        mapView.setCenter(locations.last!.coordinate, animated: true)
         updateLines(newPoint: locations.last!)
         
         if((currentRoute?.Positions.count)!>0) {
@@ -251,6 +255,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 
                 currentRoute?.Positions.append(Point(val: locations.last!.coordinate))
                 currentRoute?.Altitudes.append(locations.last!.altitude)
+                
+                mapView.setCenter(locations.last!.coordinate, animated: true)
             }
         }
         else {
@@ -397,6 +403,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         oldPositions = []
+        mapWasCentered = false
         //setupUI()
     }
     

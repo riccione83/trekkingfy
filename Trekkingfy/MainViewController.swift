@@ -259,7 +259,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteViewNavigationController") as! NewRouteViewController
             
-            
             vc.mainView = self
             if(indexPath.row == routes.count || (routes.count-1) == -1) {
                 vc.currentRoute = nil

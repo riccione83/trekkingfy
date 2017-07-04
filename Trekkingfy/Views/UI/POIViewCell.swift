@@ -14,10 +14,11 @@ class POIViewCell: UICollectionViewCell {
     
     @IBOutlet var lblPlus: UILabel!
     
-    var strTitle = ""
-    var strDescription = ""
+    @IBOutlet var viewText: POIViewText!
+    
     
     override func draw(_ rect: CGRect) { //Your code should go here.
+        
         super.draw(rect)
         self.layer.cornerRadius = self.frame.size.width / 2
     
@@ -28,9 +29,9 @@ class POIViewCell: UICollectionViewCell {
         context.scaleBy (x: 1, y: -1)
         
         
-        centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: UIColor.red, font: UIFont.systemFont(ofSize: 12), clockwise: true)
+      //  centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: UIColor.red, font: UIFont.systemFont(ofSize: 12), clockwise: true)
 
-        centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: UIColor.red, font: UIFont.systemFont(ofSize: 12), clockwise: false)
+    //    centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: UIColor.red, font: UIFont.systemFont(ofSize: 12), clockwise: false)
 
         UIGraphicsEndImageContext()
     }

@@ -145,10 +145,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
         vc.endPoint = currentRoute!.Positions.first
+        vc.pointDescription = "End Point"
         locationManager.stopUpdatingLocation()
-        
         self.present(vc, animated: false, completion: nil)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -288,8 +287,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = description
         mapView.addAnnotation(point)
-        recreateLines(newPoint: start_point)
-        //mapView.selectAnnotation(point, animated: true)
+     //   recreateLines(newPoint: start_point)
     }
     
     func setInitialPoint(start_point:CLLocation) {
@@ -298,7 +296,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = "Start"
         mapView.addAnnotation(point)
-        recreateLines(newPoint: start_point)
+      //  recreateLines(newPoint: start_point)
     }
     
     func setFinalPoint(start_point:CLLocation) {
@@ -307,21 +305,19 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         point.coordinate = start_point.coordinate
         point.title = "Stop"
         mapView.addAnnotation(point)
-        recreateLines(newPoint: start_point)
+      //  recreateLines(newPoint: start_point)
         mapView.selectAnnotation(point, animated: true)
     }
     
     func recreateLines(newPoint: CLLocation) {
         
         oldPositions.append(newPoint.coordinate)
-        
         let route = MKPolyline(coordinates: oldPositions, count: oldPositions.count)
         mapView.add(route)
     }
     
     func updateLines(newPoint: CLLocation) {
         
-        //currentRoute?.Positions.append(Point(val: newPoint.coordinate))
         let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: (currentRoute!.Positions.count))
         mapView.add(route)
     }
@@ -478,7 +474,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         else {
             vc.currentID = indexPath.row
             if(!(currentRoute!.ImageDescriptions?[indexPath.row].isEmpty)!) {
-                vc.txtNote.text = currentRoute!.ImageDescriptions?[indexPath.row]
+                vc.currentNote = currentRoute?.ImageDescriptions?[indexPath.row]
+                vc.currentImage = currentRoute!.Images[indexPath.row]
+                vc.currentLocation = currentRoute!.ImagesPositions[indexPath.row]
             }
         }
         vc.mainViewDelegate = self
@@ -506,34 +504,22 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let cell: POIViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! POIViewCell
         
-        
         if(currentRoute != nil) {
             if(!currentRoute!.Images.isEmpty) {
                 if(indexPath.row < currentRoute!.Images.count ) {
                     if (currentRoute?.Images[indexPath.row] != nil) {
                         cell.imageView.image = currentRoute?.Images[indexPath.row]
-                        cell.strTitle = currentRoute!.ImageDescriptions![indexPath.row]
-                        cell.strDescription = ""
+                        cell.viewText.strTitle = currentRoute!.ImageDescriptions![indexPath.row]
+                        cell.viewText.strDescription = ""
                         cell.lblPlus.isHidden = true
                     }
                 }
                 else
                 {
                     cell.imageView.image = nil
-                    cell.strTitle = "Add a point"
-                    cell.strDescription = "click here"
                     cell.lblPlus.isHidden = false
                 }
             }
-                
-            else {
-                cell.strTitle = "Add a point"
-                cell.strDescription = "click here"
-            }
-        }
-        else {
-            cell.strTitle = "Add a point"
-            cell.strDescription = "click here"
         }
         
         cell.contentView.layer.cornerRadius = 2.0

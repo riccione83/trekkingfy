@@ -19,16 +19,23 @@ protocol PhotoShootDelegate {
 class PhotoCameraViewController: UIViewController {
     
     @IBOutlet var previewView: UIView!
-    
     @IBOutlet var captureImageView: UIImageView!
     @IBOutlet var btnTakePhoto: UIButton!
     @IBOutlet var btnOK: UIButton!
     @IBOutlet var txtNote: UITextField!
     @IBOutlet var photoBackgroundButton: UIView!
+    @IBOutlet var btnNavigateToPoint: UIButton!
+    
+    @IBOutlet var lblNote: UILabel!
+    
+    @IBOutlet var lblLocate: UILabel!
     
     
     var mainViewDelegate: PhotoShootDelegate?
     var currentID:Int?
+    var currentLocation:Point?
+    var currentNote:String?
+    var currentImage:UIImage?
     
     var boxView:UIView!
     let myButton: UIButton = UIButton()
@@ -54,6 +61,15 @@ class PhotoCameraViewController: UIViewController {
         }
     }
     
+    @IBAction func navigateToThisPoint(_ sender: Any) {
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
+        vc.endPoint = self.currentLocation
+        vc.pointDescription = self.currentNote
+        self.present(vc, animated: false, completion: nil)
+    }
+    
+    
     @IBAction func takePhoto(_ sender: Any) {
         
         if let videoConnection = stillImageOutput!.connection(withMediaType: AVMediaTypeVideo) {
@@ -66,7 +82,6 @@ class PhotoCameraViewController: UIViewController {
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                     
                     let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: self.imageOrientation)
-                    //UIImageOrientation.right
                     
                     self.videoPreviewLayer?.removeFromSuperlayer()
                     self.captureImageView.image = image
@@ -79,19 +94,34 @@ class PhotoCameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Setup your camera here...
         
-        if(videoPreviewLayer != nil) {
-            videoPreviewLayer!.frame = previewView.bounds
-        }
-        else
-        {
-            showMessage(message: "Sorry, Unable to start camera", completitionHandler: { (completed) in
-                
-                self.dismiss(animated: false, completion: nil)
-                
-            })
+        if(currentID == -1) {
+            btnTakePhoto.isHidden = false
+            btnOK.isHidden = false
+            btnNavigateToPoint.isHidden = true
+            startPhotoCamera()
             
+            if(videoPreviewLayer != nil) {
+                videoPreviewLayer!.frame = previewView.bounds
+            }
+            else
+            {
+                showMessage(message: "Sorry, Unable to start camera", completitionHandler: { (completed) in
+                    
+                    self.dismiss(animated: false, completion: nil)
+                })
+            }
+        }
+        else {
+            btnTakePhoto.isHidden = true
+            btnOK.isHidden = true
+            btnNavigateToPoint.isHidden = false
+            photoBackgroundButton.isHidden = true
+            txtNote.isHidden = true
+            lblNote.isHidden = false
+            lblNote.text = currentNote
+            lblLocate.isHidden = false
+            captureImageView.image = currentImage
         }
     }
     
@@ -129,11 +159,11 @@ class PhotoCameraViewController: UIViewController {
                 
                 switch (orientation) {
                 case .portrait: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-                    imageOrientation = UIImageOrientation.right
+                imageOrientation = UIImageOrientation.right
                     break
                     
                 case .landscapeRight: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
-                    imageOrientation = UIImageOrientation.down
+                imageOrientation = UIImageOrientation.down
                     break
                     
                 case .landscapeLeft: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeRight)
@@ -199,8 +229,9 @@ class PhotoCameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        startPhotoCamera()
+        btnNavigateToPoint.isHidden = true
+        lblNote.isHidden = true
+        lblLocate.isHidden = true
     }
     
 }

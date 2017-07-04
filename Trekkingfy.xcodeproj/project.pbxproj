@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */; };
 		930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */; };
+		93241D951F0C1F1700E1D14E /* map-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 93241D941F0C1F1700E1D14E /* map-8.png */; };
 		936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 936BA2FE1F0BE25B005FAD9A /* camera.png */; };
 		937ED9751ED6DBFE0062A1C5 /* clear-day.png in Resources */ = {isa = PBXBuildFile; fileRef = 937ED96B1ED6DBFE0062A1C5 /* clear-day.png */; };
 		937ED9761ED6DBFE0062A1C5 /* clear-night.png in Resources */ = {isa = PBXBuildFile; fileRef = 937ED96C1ED6DBFE0062A1C5 /* clear-night.png */; };
@@ -46,6 +47,7 @@
 		88B9987B31FEA495267E0093 /* Pods_TrekkingfyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekkingfyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trekkingfy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorFromHEX.swift"; path = "Views/UI/UIColor+ColorFromHEX.swift"; sourceTree = "<group>"; };
+		93241D941F0C1F1700E1D14E /* map-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-8.png"; sourceTree = "<group>"; };
 		936BA2FE1F0BE25B005FAD9A /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		937ED96B1ED6DBFE0062A1C5 /* clear-day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear-day.png"; sourceTree = "<group>"; };
 		937ED96C1ED6DBFE0062A1C5 /* clear-night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear-night.png"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		930217D41ED6C65F00B24269 /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				93241D941F0C1F1700E1D14E /* map-8.png */,
 				936BA2FE1F0BE25B005FAD9A /* camera.png */,
 				93C55E241EE001ED0087E2DE /* ok.png */,
 				93C55E201EE000CB0087E2DE /* close.png */,
@@ -353,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				937ED9761ED6DBFE0062A1C5 /* clear-night.png in Resources */,
+				93241D951F0C1F1700E1D14E /* map-8.png in Resources */,
 				93C55E251EE001ED0087E2DE /* ok.png in Resources */,
 				937ED9771ED6DBFE0062A1C5 /* cloudy.png in Resources */,
 				937ED97E1ED6DBFE0062A1C5 /* wind.png in Resources */,

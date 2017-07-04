@@ -270,6 +270,7 @@
                                         <connections>
                                             <outlet property="imageView" destination="ngF-qX-3lG" id="u7A-zf-c3E"/>
                                             <outlet property="lblPlus" destination="5CR-fo-EFB" id="tRo-9C-ghu"/>
+                                            <outlet property="viewText" destination="W6S-16-7kE" id="khN-l3-nbG"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -524,42 +525,79 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywE-xC-SH2">
+                                        <rect key="frame" x="8" y="8" width="90" height="90"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="90" id="N5D-Bs-aRt"/>
+                                            <constraint firstAttribute="height" constant="90" id="Rha-he-xAe"/>
+                                        </constraints>
+                                        <state key="normal" title="Navigate" image="map-8.png"/>
+                                        <connections>
+                                            <action selector="navigateToThisPoint:" destination="nZJ-Vy-nTp" eventType="touchUpInside" id="iXb-Fc-OVO"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Locate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-q1-6Ae">
+                                        <rect key="frame" x="8" y="96" width="90" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="GMn-bM-aI5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Pm7-Au-D42" secondAttribute="trailing" id="3Ec-TK-hTt"/>
                                     <constraint firstAttribute="trailing" secondItem="Mja-BL-y0L" secondAttribute="trailing" id="5Ce-cJ-5j0"/>
+                                    <constraint firstItem="ywE-xC-SH2" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="top" constant="8" id="8aJ-rK-nBr"/>
                                     <constraint firstItem="Pm7-Au-D42" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" id="CCJ-Hp-Mc2"/>
                                     <constraint firstItem="LQl-jN-Gcf" firstAttribute="top" secondItem="LN1-ui-ocY" secondAttribute="bottom" constant="5" id="DXa-Ma-SVi"/>
                                     <constraint firstItem="lLB-qX-tpi" firstAttribute="centerY" secondItem="BS1-0p-aab" secondAttribute="centerY" id="LMm-sM-Ba0"/>
                                     <constraint firstAttribute="trailing" secondItem="LN1-ui-ocY" secondAttribute="trailing" id="Lqr-Qv-wcQ"/>
                                     <constraint firstItem="LN1-ui-ocY" firstAttribute="centerX" secondItem="Pm7-Au-D42" secondAttribute="centerX" id="LtK-Fm-Ano"/>
+                                    <constraint firstItem="u7Q-q1-6Ae" firstAttribute="top" secondItem="lLB-qX-tpi" secondAttribute="bottom" constant="21" id="NJ1-FJ-1Vr"/>
+                                    <constraint firstItem="u7Q-q1-6Ae" firstAttribute="centerX" secondItem="ywE-xC-SH2" secondAttribute="centerX" id="PED-rG-7Lk"/>
                                     <constraint firstAttribute="bottom" secondItem="Pm7-Au-D42" secondAttribute="bottom" id="PnT-CX-GVz"/>
                                     <constraint firstItem="Mja-BL-y0L" firstAttribute="centerY" secondItem="LQl-jN-Gcf" secondAttribute="centerY" id="QwP-BR-oWc"/>
                                     <constraint firstItem="Mja-BL-y0L" firstAttribute="centerX" secondItem="LQl-jN-Gcf" secondAttribute="centerX" id="Rdo-ap-v7w"/>
                                     <constraint firstItem="Pm7-Au-D42" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="top" id="UAe-QJ-wjf"/>
                                     <constraint firstItem="lLB-qX-tpi" firstAttribute="leading" secondItem="Pm7-Au-D42" secondAttribute="leading" id="UaX-kc-kZt"/>
                                     <constraint firstItem="Mja-BL-y0L" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" id="VpX-as-Rvk"/>
+                                    <constraint firstItem="u7Q-q1-6Ae" firstAttribute="width" secondItem="ywE-xC-SH2" secondAttribute="width" id="Yem-A4-xPJ"/>
                                     <constraint firstItem="LN1-ui-ocY" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" id="b0q-r9-3hd"/>
                                     <constraint firstItem="LQl-jN-Gcf" firstAttribute="centerX" secondItem="Pm7-Au-D42" secondAttribute="centerX" id="b8c-Jx-z7d"/>
                                     <constraint firstAttribute="trailing" secondItem="BS1-0p-aab" secondAttribute="trailing" constant="8" id="rPx-Wt-U8g"/>
                                     <constraint firstItem="BS1-0p-aab" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="top" constant="20" id="rpj-fW-Y1f"/>
+                                    <constraint firstItem="ywE-xC-SH2" firstAttribute="leading" secondItem="wOY-Ly-tWd" secondAttribute="leading" constant="8" id="tFa-Eq-jLv"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gF5-IA-mNC">
+                                <rect key="frame" x="0.0" y="710" width="414" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="70h-UT-mVs" firstAttribute="top" secondItem="wOY-Ly-tWd" secondAttribute="bottom" id="9xq-di-3S5"/>
                             <constraint firstItem="wOY-Ly-tWd" firstAttribute="leading" secondItem="7by-WE-m2P" secondAttribute="leading" id="Aih-hF-aBA"/>
+                            <constraint firstAttribute="trailing" secondItem="gF5-IA-mNC" secondAttribute="trailing" id="JmB-8G-19a"/>
                             <constraint firstAttribute="trailing" secondItem="wOY-Ly-tWd" secondAttribute="trailing" id="Phd-ty-Gfa"/>
                             <constraint firstItem="70h-UT-mVs" firstAttribute="top" secondItem="LQl-jN-Gcf" secondAttribute="bottom" constant="5" id="Ulz-fS-RkI"/>
+                            <constraint firstItem="gF5-IA-mNC" firstAttribute="leading" secondItem="7by-WE-m2P" secondAttribute="leading" id="ow0-5L-WTD"/>
                             <constraint firstItem="wOY-Ly-tWd" firstAttribute="top" secondItem="7by-WE-m2P" secondAttribute="top" id="qCy-6X-KrW"/>
+                            <constraint firstItem="70h-UT-mVs" firstAttribute="top" secondItem="gF5-IA-mNC" secondAttribute="bottom" constant="5" id="shu-bu-13Y"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnNavigateToPoint" destination="ywE-xC-SH2" id="0um-go-edK"/>
                         <outlet property="btnOK" destination="lLB-qX-tpi" id="6Sl-3E-RqN"/>
                         <outlet property="btnTakePhoto" destination="LQl-jN-Gcf" id="kef-xC-4FN"/>
                         <outlet property="captureImageView" destination="Pm7-Au-D42" id="m3o-uO-EsW"/>
+                        <outlet property="lblLocate" destination="u7Q-q1-6Ae" id="o0N-dt-OBE"/>
+                        <outlet property="lblNote" destination="gF5-IA-mNC" id="Eh9-1T-3Lb"/>
                         <outlet property="photoBackgroundButton" destination="Mja-BL-y0L" id="uJR-pH-pLS"/>
                         <outlet property="previewView" destination="wOY-Ly-tWd" id="FSW-S9-IiI"/>
                         <outlet property="txtNote" destination="LN1-ui-ocY" id="Ucn-eN-Yhw"/>
@@ -567,13 +605,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HYy-qe-eNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4049.184782608696" y="133.33333333333334"/>
+            <point key="canvasLocation" x="4047.826086956522" y="132.88043478260872"/>
         </scene>
     </scenes>
     <resources>
         <image name="Arrow-Free-Download-PNG.png" width="256" height="338"/>
         <image name="camera.png" width="1600" height="1600"/>
         <image name="close.png" width="256" height="256"/>
+        <image name="map-8.png" width="512" height="512"/>
         <image name="ok.png" width="512" height="512"/>
     </resources>
 </document>

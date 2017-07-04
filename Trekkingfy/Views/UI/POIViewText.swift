@@ -27,8 +27,6 @@ class POIViewText: UIView {
     override func draw(_ rect: CGRect) { //Your code should go here.
         super.draw(rect)
         
-        //   self.imageView.isHidden = true
-        
         self.layer.cornerRadius = self.frame.size.width / 2
         
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -37,9 +35,9 @@ class POIViewText: UIView {
         context.translateBy (x: size.width / 2, y: size.height / 2)
         context.scaleBy (x: 1, y: -1)
         
-        centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: UIColor.yellow, font: UIFont.systemFont(ofSize: 12), clockwise: true)
+        centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: UIColor.black, font: UIFont.systemFont(ofSize: 12), clockwise: true)
         
-        centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: UIColor.yellow, font: UIFont.systemFont(ofSize: 12), clockwise: false)
+        centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: UIColor.black, font: UIFont.systemFont(ofSize: 12), clockwise: false)
         
         UIGraphicsEndImageContext()
     }

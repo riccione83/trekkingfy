@@ -31,7 +31,6 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet var lblDistance: UILabel!
     @IBOutlet var lblGPSPosition: UILabel!
-    
     @IBOutlet var btnSOS: UIButton!
     @IBOutlet var btnSound: UIButton!
     @IBOutlet var btnLight: UIButton!
@@ -43,7 +42,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     var endPoint: Point? = nil
-
+    var pointDescription:String? = "End"
     var degrees = 0.0
     var currentHeading = CLHeading()
     
@@ -212,7 +211,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
 
         
-        navigationBarSos.topItem?.title = "SMS Mode"
+        navigationBarSos.topItem?.title = "SOS Mode"
         // Do any additional setup after loading the view.
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -306,7 +305,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         
         let point = MKPointAnnotation()
         point.coordinate = start_point.coordinate
-        point.title = "End"
+        point.title = pointDescription
         mapView.addAnnotation(point)
     }
     

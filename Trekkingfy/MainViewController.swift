@@ -256,7 +256,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if(!deleteModeActive) {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
+        
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteViewNavigationController") as! NewRouteViewController
+            
+            
             vc.mainView = self
             if(indexPath.row == routes.count || (routes.count-1) == -1) {
                 vc.currentRoute = nil
@@ -264,8 +267,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             else {
                 vc.currentRoute = routes[indexPath.row]
             }
-        
-            self.present(vc, animated: false, completion: nil)
+            
+           self.present(vc, animated: false, completion: nil)
         }
         else {
             if(indexPath.row < routes.count) {

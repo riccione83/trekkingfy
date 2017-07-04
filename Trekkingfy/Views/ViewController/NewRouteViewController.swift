@@ -17,24 +17,19 @@ protocol RouteSaveExtension {
 }
 
 class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UICollectionViewDelegate, UICollectionViewDataSource, PhotoShootDelegate {
-
+    
     @IBOutlet var graphView: UIView!
     @IBOutlet var mapView: MKMapView!
-    
     @IBOutlet var imagePositionGrid: UICollectionView!
-    
     @IBOutlet var navigationBar: UINavigationBar!
     
     
     var mainView:RouteSaveExtension? = nil
-    
     let updateLocationInterval = 5  //5 secs
     var timerUpdateLocation:Timer? = nil
-    
     var currentRoute:Route?
     var altitudeBarLoaded = false
     var oldPositions:[CLLocationCoordinate2D] = []
-    
     var locationManager = CLLocationManager()
     
     var graphBarView = ScrollableGraphView()
@@ -43,13 +38,41 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     var labelConstraints = [NSLayoutConstraint]()
     
     @IBAction func returnToMainAndSave(_ sender: Any) {
-            self.dismiss(animated: true) { 
+        
+        if(currentRoute?.ID == -1) {
+            
+            let alert = UIAlertController(title: "Save Route?", message: "Do you want to save this route?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
+                
+                self.dismiss(animated: true) {
+                    if(self.mainView != nil) {
+                        self.mainView?.saveNewRoute(route: self.currentRoute!)
+                    }
+                    self.locationManager.stopUpdatingLocation()
+                    self.timerUpdateLocation = nil
+                    UIApplication.shared.isIdleTimerDisabled = false
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (UIAlertAction) in
+                
+                self.dismiss(animated: true) {
+                    self.locationManager.stopUpdatingLocation()
+                    self.timerUpdateLocation = nil
+                    UIApplication.shared.isIdleTimerDisabled = false
+                }
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            self.dismiss(animated: true) {
                 self.locationManager.stopUpdatingLocation()
                 self.timerUpdateLocation = nil
                 UIApplication.shared.isIdleTimerDisabled = false
-                if(self.mainView != nil) {
-                    self.mainView?.saveNewRoute(route: self.currentRoute!)
-                }
+            }
+
         }
     }
     
@@ -84,7 +107,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             }
         }
         let rect = CGRect(x: 0.0, y: 0.0, width: actualWidth, height: actualHeight)
-
+        
         UIGraphicsBeginImageContext(rect.size);
         image.draw(in: rect)
         let img = UIGraphicsGetImageFromCurrentImageContext();
@@ -93,14 +116,14 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         return imageData! as NSData
     }
-        
-        
+    
+    
     func setPhoto(image:UIImage, id:Int, note:String) {
         
         if(id == -1) {              //new point
             
             let compressedImage = compressImage(image: image)
-            var compressed_image = UIImage(data: compressedImage as Data)
+            let compressed_image = UIImage(data: compressedImage as Data)
             
             currentRoute?.Images.append(compressed_image!)
             currentRoute?.ImageDescriptions?.append(note)
@@ -185,7 +208,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 loc = CLLocation(latitude: p.lat!, longitude: p.lon!)
                 updateLines(newPoint: loc)
             }
-
+            
             
             let startPoint = CLLocation(latitude: (currentRoute!.Positions.first?.lat!)!, longitude: (currentRoute?.Positions.first?.lon!)!)
             setInitialPoint(start_point: startPoint)
@@ -202,7 +225,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
             mapView.setRegion(region, animated: true)
             
-            
         }
         
         self.graphView.addSubview(graphBarView)
@@ -214,19 +236,19 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 100, 100)
-    
+        
         mapView.setRegion(region, animated: true)
         mapView.setCenter(locations.last!.coordinate, animated: true)
         updateLines(newPoint: locations.last!)
         
         if((currentRoute?.Positions.count)!>0) {
-       
+            
             let lastPoint = CLLocation(latitude: (currentRoute!.Positions.last?.lat)!, longitude: (currentRoute!.Positions.last?.lon)!)
-        
+            
             let distance = locations.last?.distance(from: lastPoint)
             
             if(distance! >= 10.0) {
-            
+                
                 currentRoute?.Positions.append(Point(val: locations.last!.coordinate))
                 currentRoute?.Altitudes.append(locations.last!.altitude)
             }
@@ -272,7 +294,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         mapView.addAnnotation(point)
         recreateLines(newPoint: start_point)
     }
-
+    
     func setFinalPoint(start_point:CLLocation) {
         
         let point = MKPointAnnotation()
@@ -282,17 +304,17 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         recreateLines(newPoint: start_point)
         mapView.selectAnnotation(point, animated: true)
     }
-
+    
     func recreateLines(newPoint: CLLocation) {
         
         oldPositions.append(newPoint.coordinate)
-
+        
         let route = MKPolyline(coordinates: oldPositions, count: oldPositions.count)
         mapView.add(route)
     }
     
     func updateLines(newPoint: CLLocation) {
-
+        
         //currentRoute?.Positions.append(Point(val: newPoint.coordinate))
         let route = MKPolyline(coordinates: currentRoute!.Positions_in_CLLocationCoordinate2D, count: (currentRoute!.Positions.count))
         mapView.add(route)
@@ -319,7 +341,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     }
     
     func didTap(_ gesture: UITapGestureRecognizer) {
-    
+        
     }
     
     private func createLabel(withText text: String, value: Float) -> UILabel {
@@ -402,7 +424,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         return labels
     }
-
+    
     fileprivate func createDarkGraph(_ frame: CGRect) -> ScrollableGraphView {
         let graphView = ScrollableGraphView(frame: frame)
         
@@ -453,8 +475,14 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             }
         }
         vc.mainViewDelegate = self
-        self.present(vc, animated: false, completion: nil)
         
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft  //kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(vc, animated: false, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -473,32 +501,32 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         
         if(currentRoute != nil) {
-          if(!currentRoute!.Images.isEmpty) {
-            if(indexPath.row < currentRoute!.Images.count ) {
-                if (currentRoute?.Images[indexPath.row] != nil) {
-                    cell.imageView.image = currentRoute?.Images[indexPath.row]
-                    cell.strTitle = currentRoute!.ImageDescriptions![indexPath.row]
-                    cell.strDescription = ""
-                    cell.lblPlus.isHidden = true
+            if(!currentRoute!.Images.isEmpty) {
+                if(indexPath.row < currentRoute!.Images.count ) {
+                    if (currentRoute?.Images[indexPath.row] != nil) {
+                        cell.imageView.image = currentRoute?.Images[indexPath.row]
+                        cell.strTitle = currentRoute!.ImageDescriptions![indexPath.row]
+                        cell.strDescription = ""
+                        cell.lblPlus.isHidden = true
+                    }
+                }
+                else
+                {
+                    cell.imageView.image = nil
+                    cell.strTitle = "Add a point"
+                    cell.strDescription = "click here"
+                    cell.lblPlus.isHidden = false
                 }
             }
-            else
-            {
-                cell.imageView.image = nil
+                
+            else {
                 cell.strTitle = "Add a point"
                 cell.strDescription = "click here"
-                cell.lblPlus.isHidden = false
             }
         }
-          
         else {
             cell.strTitle = "Add a point"
             cell.strDescription = "click here"
-        }
-        }
-        else {
-                cell.strTitle = "Add a point"
-                cell.strDescription = "click here"
         }
         
         cell.contentView.layer.cornerRadius = 2.0

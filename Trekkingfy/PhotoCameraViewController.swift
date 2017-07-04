@@ -19,7 +19,7 @@ protocol PhotoShootDelegate {
 class PhotoCameraViewController: UIViewController {
     
     @IBOutlet var previewView: UIView!
-
+    
     @IBOutlet var captureImageView: UIImageView!
     @IBOutlet var btnTakePhoto: UIButton!
     @IBOutlet var btnOK: UIButton!
@@ -42,7 +42,7 @@ class PhotoCameraViewController: UIViewController {
     @IBAction func closeView(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func btnOKClicked(_ sender: Any) {
         self.dismiss(animated: true) {
             self.mainViewDelegate?.setPhoto(image: self.captureImageView.image!, id: self.currentID!, note: self.txtNote.text!)
@@ -60,7 +60,7 @@ class PhotoCameraViewController: UIViewController {
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                     
                     let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
-                
+                    
                     self.videoPreviewLayer?.removeFromSuperlayer()
                     self.captureImageView.image = image
                     self.btnOK.isHidden = false
@@ -73,13 +73,30 @@ class PhotoCameraViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Setup your camera here...
+        
         if(videoPreviewLayer != nil) {
             videoPreviewLayer!.frame = previewView.bounds
         }
         else
         {
-            self.dismiss(animated: false, completion: nil)
+            showMessage(message: "Sorry, Unable to start camera", completitionHandler: { (completed) in
+                
+                self.dismiss(animated: false, completion: nil)
+                
+            })
+            
         }
+    }
+    
+    private func showMessage(message:String, completitionHandler:@escaping (_ success:Bool) -> ())  {
+        let alert = UIAlertController(title: "Trekkingfy", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (UIAlertAction) in
+            completitionHandler(true)
+        }))
+        
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func startPhotoCamera() {
@@ -100,6 +117,7 @@ class PhotoCameraViewController: UIViewController {
             error = error1
             input = nil
             print(error!.localizedDescription)
+            
         }
         if error == nil && session!.canAddInput(input) {
             session!.addInput(input)
@@ -121,7 +139,8 @@ class PhotoCameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         startPhotoCamera()
     }
-
+    
 }

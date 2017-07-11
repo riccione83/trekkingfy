@@ -42,6 +42,12 @@ class POIViewText: UIView {
         UIGraphicsEndImageContext()
     }
     
+    func reDraw() {
+        
+        self.setNeedsDisplay()
+        
+    }
+    
     func centreArcPerpendicular(text str: String, context: CGContext, radius r: CGFloat, angle theta: CGFloat, colour c: UIColor, font: UIFont, clockwise: Bool){
         // *******************************************************
         // This draws the String str around an arc of radius r,

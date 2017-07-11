@@ -217,7 +217,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         mapView.showsUserLocation = true
         mapView.showsCompass = true
         
-        let endP:CLLocation = CLLocation(latitude: endPoint!.lat!, longitude: endPoint!.lon!)
+        let endP:CLLocation = CLLocation(latitude: endPoint!.lat, longitude: endPoint!.lon)
         setPointOnMap(start_point: endP)
         
         let region = MKCoordinateRegionMakeWithDistance(endP.coordinate, 100, 100)
@@ -236,9 +236,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     func calculateUserAngle(current: CLLocationCoordinate2D) {
         
         var x:Double = 0, y:Double = 0 , deg:Double = 0, delLon:Double = 0;
-        delLon = endPoint!.lon! - current.longitude;
-        y = sin(delLon) * cos(endPoint!.lat!);
-        x = cos(current.latitude) * sin(endPoint!.lat!) - sin(current.latitude) * cos(endPoint!.lat!) * cos(delLon);
+        delLon = endPoint!.lon - current.longitude;
+        y = sin(delLon) * cos(endPoint!.lat);
+        x = cos(current.latitude) * sin(endPoint!.lat) - sin(current.latitude) * cos(endPoint!.lat) * cos(delLon);
         
         deg = atan2(y, x).radiansToDegrees;
     
@@ -255,8 +255,8 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         let lat1 = userLocation.coordinate.latitude.degreesToRadians
         let lon1 = userLocation.coordinate.longitude.degreesToRadians
     
-        let lat2 = endPoint?.lat?.degreesToRadians
-        let lon2 = endPoint?.lon?.degreesToRadians
+        let lat2 = endPoint?.lat.degreesToRadians
+        let lon2 = endPoint?.lon.degreesToRadians
         let dLon = lon2! - lon1
     
         let y = sin(dLon) * cos(lat2!)
@@ -287,7 +287,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         degrees = setLatLonForDistanceAndAngle(userLocation: locations.last!)
         print("Degrees: \(degrees)")
         let coordinate₀ = CLLocation(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
-        let coordinate₁ = CLLocation(latitude: endPoint!.lat!, longitude: endPoint!.lon!)
+        let coordinate₁ = CLLocation(latitude: endPoint!.lat, longitude: endPoint!.lon)
         
         let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
         

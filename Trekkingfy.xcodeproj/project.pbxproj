@@ -10,6 +10,7 @@
 		643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */; };
 		930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */; };
 		93241D951F0C1F1700E1D14E /* map-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 93241D941F0C1F1700E1D14E /* map-8.png */; };
+		9350B73B1F13C4C500666471 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9350B73A1F13C4C500666471 /* DBManager.swift */; };
 		936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 936BA2FE1F0BE25B005FAD9A /* camera.png */; };
 		937ED9751ED6DBFE0062A1C5 /* clear-day.png in Resources */ = {isa = PBXBuildFile; fileRef = 937ED96B1ED6DBFE0062A1C5 /* clear-day.png */; };
 		937ED9761ED6DBFE0062A1C5 /* clear-night.png in Resources */ = {isa = PBXBuildFile; fileRef = 937ED96C1ED6DBFE0062A1C5 /* clear-night.png */; };
@@ -48,6 +49,7 @@
 		8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trekkingfy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorFromHEX.swift"; path = "Views/UI/UIColor+ColorFromHEX.swift"; sourceTree = "<group>"; };
 		93241D941F0C1F1700E1D14E /* map-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-8.png"; sourceTree = "<group>"; };
+		9350B73A1F13C4C500666471 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Database/DBManager.swift; sourceTree = "<group>"; };
 		936BA2FE1F0BE25B005FAD9A /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		937ED96B1ED6DBFE0062A1C5 /* clear-day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear-day.png"; sourceTree = "<group>"; };
 		937ED96C1ED6DBFE0062A1C5 /* clear-night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear-night.png"; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 				93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */,
 			);
 			name = Img;
+			sourceTree = "<group>";
+		};
+		9350B7391F13C4A400666471 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				9350B73A1F13C4C500666471 /* DBManager.swift */,
+			);
+			name = Database;
 			sourceTree = "<group>";
 		};
 		937ED8D41ED6D6A60062A1C5 /* Clima */ = {
@@ -215,6 +225,7 @@
 		93B3153B1ED0303800DCA53E /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				9350B7391F13C4A400666471 /* Database */,
 				93B315411ED030E000DCA53E /* Controller */,
 				93B3153E1ED0308000DCA53E /* Model */,
 				93B3153C1ED0304800DCA53E /* Base */,
@@ -439,6 +450,7 @@
 				938FC52D1ED622420024B980 /* UserLocation.swift in Sources */,
 				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,
 				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,
+				9350B73B1F13C4C500666471 /* DBManager.swift in Sources */,
 				93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
 				93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */,

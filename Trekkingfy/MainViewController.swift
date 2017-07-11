@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RealmSwift
 
 class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDelegate,UIGestureRecognizerDelegate {
     
@@ -27,7 +28,6 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     
     @IBOutlet var txtWeather: UILabel!
     
-    var routes: [Route] = []
     var deleteModeActive = false
     var locationManager = CLLocationManager()
     
@@ -37,58 +37,20 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func saveNewRoute(route:Route) {
-
-        if(route.ID! > -1) {
-            var i=0;
-            for r in routes {
-                if(r.ID == route.ID)
-                {
-                    routes[i]=route
-                    break
-                }
-                i = i + 1
-            }
-        }
-        else {
-            route.ID = routes.count
+        
+        if(route.ID == -1) {
+            route.ID = DBManager.sharedInstance.getDataFromDB().count
             route.createdAt = Date()
-            routes.append(route)
         }
-        let userDefaults = UserDefaults.standard
-        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: routes)
-        userDefaults.set(encodedData, forKey: "routes")
-        userDefaults.synchronize()
+        DBManager.sharedInstance.addData(object: route)
+        
         
         routesGrid.reloadData()
-        print("Save new Route!!")
-    }
-    
-    func saveRoutes() {
-        let userDefaults = UserDefaults.standard
-        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: routes)
-        userDefaults.set(encodedData, forKey: "routes")
-        userDefaults.synchronize()
-        
-        routesGrid.reloadData()
-    }
-
-    
-    func loadRoutes() -> [Route] {
-        let userDefaults = UserDefaults.standard
-        let decoded  = userDefaults.object(forKey: "routes") as? Data
-        if(decoded != nil) {
-            return NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! [Route]
-        }
-        else {
-            return [Route]()
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        routes = loadRoutes()
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
@@ -120,12 +82,17 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             return
         }
         
-        if(deleteModeActive && routes.count > 0) {
+        if(deleteModeActive && DBManager.sharedInstance.getDataFromDB().count > 0) { //routes.count > 0) {
            
-            if((indexPath?.row)! < routes.count) {
-                routes.remove(at: (indexPath?.row)!)
-                saveRoutes()
-                if(routes.count == 0) {
+            if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {//routes.count) {
+                
+                let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!] //routes[(indexPath?.row)!]
+                
+                DBManager.sharedInstance.deleteFromDb(object: item)
+                
+                //routes.remove(at: (indexPath?.row)!)
+                
+                if(DBManager.sharedInstance.getDataFromDB().count == 0) { //if(routes.count == 0) {
                     deleteModeActive = false
                 }
             }
@@ -133,16 +100,20 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
         else {
             if(!deleteModeActive) {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
-                vc.mainView = self
-                if(indexPath?.row == routes.count || (routes.count-1) == -1) {
-                    vc.currentRoute = nil
-                }
-                else {
-                    vc.currentRoute = routes[(indexPath?.row)!]
-                }
                 
-                self.present(vc, animated: false, completion: nil)
+                DispatchQueue.main.async(execute: {
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
+                    vc.mainView = self
+                    if(indexPath?.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                        //vc.currentRoute = nil
+                    }
+                    else {
+                        vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                    }
+                    
+                    self.present(vc, animated: false, completion: nil)
+                })
             }
         }
 
@@ -156,7 +127,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         let p = gestureReconizer.location(in: self.routesGrid)
         let indexPath = self.routesGrid.indexPathForItem(at: p)
         
-        if let index = indexPath {
+        if indexPath != nil {
             deleteModeActive = true
             routesGrid.reloadData()
 
@@ -171,6 +142,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  
         let latestLocation: AnyObject = locations[locations.count - 1]
         
         let lat = latestLocation.coordinate.latitude
@@ -186,8 +158,12 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             DispatchQueue.main.async(execute: {
                 if(data != nil) {
                     self.extractData(weatherData: data! as NSData)
-                    self.locationManager.stopUpdatingLocation()
                 }
+                else
+                {
+                    self.txtWeather.text = "Error on getting forecast data"
+                }
+                self.locationManager.stopUpdatingLocation()
             })
         }
         
@@ -231,23 +207,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             
             if let min = json!["hourly"] as? NSDictionary {
                 if let desc = min["summary"] as? String {
-                    // locationName = name
                     txtWeather.text = desc
                 }
             }
 
-        }
-       // return (locationName,temperature)
-    }
-    
-    private func loadFooData() {
-        let numberOfItems = 5
-        
-        for i in 0...numberOfItems {
-            routes.append(Route())
-            for _ in 0...100 {
-                routes[i].Altitudes.append(Double(arc4random()).truncatingRemainder(dividingBy: 1000))
-            }
         }
     }
 }
@@ -255,36 +218,15 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if(!deleteModeActive) {
-        
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteViewNavigationController") as! NewRouteViewController
-            
-            vc.mainView = self
-            if(indexPath.row == routes.count || (routes.count-1) == -1) {
-                vc.currentRoute = nil
-            }
-            else {
-                vc.currentRoute = routes[indexPath.row]
-            }
-            
-           self.present(vc, animated: false, completion: nil)
-        }
-        else {
-            if(indexPath.row < routes.count) {
-                routes.remove(at: indexPath.row)
 
-                saveRoutes()
-            }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(routes.count == 0) {
+        if(DBManager.sharedInstance.getDataFromDB().count == 0) {
             return 1
         }
         else {
-            return routes.count + 1
+            return DBManager.sharedInstance.getDataFromDB().count + 1
         }
     }
     
@@ -292,20 +234,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cell: RouteViewCell
         
-        if(indexPath.row == routes.count || (routes.count-1 == -1)) {
+        if(indexPath.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1 == -1)) {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! RouteViewCell
         }
         else {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "routeCellIdentifier", for: indexPath) as! RouteViewCell
             
+            cell.contentView.layer.cornerRadius = 10
+            cell.contentView.layer.borderWidth = 1
+            cell.contentView.layer.borderColor = UIColor.clear.cgColor
+            cell.contentView.layer.masksToBounds = true
+            
             if(deleteModeActive) {
                 cell.imgClose.isHidden = false
                 cell.backgroundColor = UIColor.red
-                
-                cell.contentView.layer.cornerRadius = 10
-                cell.contentView.layer.borderWidth = 1
-                cell.contentView.layer.borderColor = UIColor.clear.cgColor
-                cell.contentView.layer.masksToBounds = true
                 
                 cell.layer.shadowColor = UIColor.lightGray.cgColor
                 cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
@@ -328,10 +270,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.imgClose.isHidden = true
                 cell.backgroundColor = UIColor.clear
                 cell.layer.shadowColor = UIColor.clear.cgColor
-                cell.lblCreatedAt.text = routes[indexPath.row].createdAt?.to_string()
-                if(routes[indexPath.row].Images.count>0) {
-                    let rnd = arc4random_uniform(UInt32(routes[indexPath.row].Images.count))
-                    cell.imgCarousel.image = routes[indexPath.row].Images[Int(rnd)]
+                cell.lblCreatedAt.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
+                if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
+                    let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
+                    cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
                 }
             }
         }

@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RealmSwift
 
 extension Date {
     
@@ -19,54 +20,87 @@ extension Date {
     }
 }
 
-
-class Point:NSObject,NSCoding {
+class Point {
     
-    var lat:Double? = 0.0
-    var lon:Double? = 0.0
+     var lat:Double = 0.0
+     var lon:Double = 0.0
     
     convenience init(val:CLLocationCoordinate2D) {
         self.init()
         self.lat = val.latitude
         self.lon = val.longitude
     }
+}
+
+
+class DataPoint: Object {
     
-    required convenience init(coder aDecoder: NSCoder) {
-        
-        self.init()
-        self.lat = aDecoder.decodeObject(forKey: "lat") as? Double
-        self.lon = aDecoder.decodeObject(forKey: "lon") as? Double
-        
+    dynamic var lat:Double = 0.0
+    dynamic var lon:Double = 0.0
+    
+    func toPoint() -> Point {
+        let v:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: self.lat, longitude: self.lon)
+        return Point(val: v)
     }
     
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(lat, forKey: "lat")
-        aCoder.encode(lon, forKey: "lon")
+    convenience init(lat:Double,lon:Double) {  //val:CLLocationCoordinate2D) {
+        self.init()
+        self.lat = lat
+        self.lon = lon
     }
 }
 
-class Route:NSObject, NSCoding {
+class DataImage: Object {
     
-    var ID: Int? = 0
-    var Images: [UIImage] = []
-    var ImagesPositions: [Point] = []
-    var ImageDescriptions: [String]? = []
-    var Positions: [Point] = []
-    var Altitudes: [Double] = []
-    var createdAt: Date? = Date()
+    dynamic var data:NSData = NSData()
     
-    override init() {
-        self.ID = -1
-        super.init()
-        
+    convenience init(data:NSData) {
+        self.init()
+        self.data = data
     }
+}
+
+class DataAltitude: Object {
+    
+    dynamic var altitude:Double = 0.0
+    
+    convenience init(altitude:Double) {
+        self.init()
+        self.altitude = altitude
+    }
+}
+
+class DataText: Object {
+    
+    dynamic var text = ""
+    
+    convenience init(text:String) {
+        self.init()
+        self.text = text
+    }
+}
+
+class Route: Object {
+    
+    dynamic var ID = -1
+    var Images = List<DataImage>()
+    var ImagesPositions = List<DataPoint>()
+    var ImageDescriptions = List<DataText>()
+    var Positions = List<DataPoint>()
+    var Altitudes =  List<DataAltitude>()
+    dynamic var createdAt =  Date()
+
+    override static func primaryKey() -> String? {
+        return "ID"
+    }
+ 
     
     var Positions_in_CLLocationCoordinate2D: [CLLocationCoordinate2D] {
         
         get {
             var positions: [CLLocationCoordinate2D] = []
             for pos in self.Positions {
-                positions.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(pos.lat!), longitude: CLLocationDegrees(pos.lon!)))
+                positions.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(pos.lat), longitude: CLLocationDegrees(pos.lon)))
             }
             return positions
         }
@@ -77,7 +111,7 @@ class Route:NSObject, NSCoding {
         get {
             var positions: [CLLocationCoordinate2D] = []
             for pos in self.ImagesPositions {
-                positions.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(pos.lat!), longitude: CLLocationDegrees(pos.lon!)))
+                positions.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(pos.lat), longitude: CLLocationDegrees(pos.lon)))
             }
             return positions
         }
@@ -85,32 +119,10 @@ class Route:NSObject, NSCoding {
     
     public func toCLLocationCoordinate2D(point:Point) ->CLLocationCoordinate2D {
         
-        let newPoint = CLLocationCoordinate2D(latitude: CLLocationDegrees(point.lat!), longitude: CLLocationDegrees(point.lon!))
+        let newPoint = CLLocationCoordinate2D(latitude: CLLocationDegrees(point.lat), longitude: CLLocationDegrees(point.lon))
         
         return newPoint
         
     }
     
-    required convenience init(coder aDecoder: NSCoder) {
-        
-        self.init()
-        self.ID = aDecoder.decodeObject(forKey: "id") as? Int
-        self.Images = aDecoder.decodeObject(forKey: "images") as! [UIImage]
-        self.ImagesPositions = aDecoder.decodeObject(forKey: "imagespositions") as! [Point]
-        self.Positions = aDecoder.decodeObject(forKey: "positions") as! [Point]
-        self.Altitudes = aDecoder.decodeObject(forKey: "altitudes") as! [Double]
-        self.ImageDescriptions = (aDecoder.decodeObject(forKey: "imagesdescriptions") as? [String])
-        self.createdAt = aDecoder.decodeObject(forKey: "createdAt") as? Date
-    }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(ID, forKey: "id")
-        aCoder.encode(Images, forKey: "images")
-        aCoder.encode(ImagesPositions, forKey: "imagespositions")
-        aCoder.encode(Positions, forKey: "positions")
-        aCoder.encode(Altitudes, forKey: "altitudes")
-        aCoder.encode(ImageDescriptions, forKey: "imagesdescriptions")
-        aCoder.encode(createdAt, forKey: "createAt")
-    }
-
 }

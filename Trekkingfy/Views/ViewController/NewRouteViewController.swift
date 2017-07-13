@@ -230,10 +230,11 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
             setFinalPoint(start_point: finalPoint)
             
-            let cnt = 0
+            var cnt = 0
             for point in (currentRoute?.ImagesPositions)! {
                 let coord = CLLocation(latitude: point.lat, longitude: point.lon)
                 addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions[cnt].text)!)
+                cnt = cnt + 1
             }
             
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)

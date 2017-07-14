@@ -246,9 +246,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.contentView.layer.masksToBounds = true
             
             cell.lblCreatedAt.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
+            
             if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
+                
                 let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
                 cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
+            }
+            else
+            {
+                let index = arc4random_uniform(3) + 1
+                let image_name = "route_\(index)"
+                cell.imgCarousel.image = UIImage(named: image_name)
+                
             }
             
             if(deleteModeActive) {

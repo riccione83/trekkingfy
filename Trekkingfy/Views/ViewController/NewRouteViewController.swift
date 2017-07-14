@@ -177,7 +177,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let d = currentRoute?.Altitudes.map( { $0.altitude })
         
-        let data:[Double] = Array(d!.suffix(5))
+        var numberOfPoint = 5
+        
+        if(UIDevice.current.orientation.isLandscape || UIDevice.current.orientation.isPortrait) {
+            numberOfPoint = 10
+        }
+        
+        let data:[Double] = Array(d!.suffix(numberOfPoint))
         if((currentRoute?.Altitudes.count)! > 0) {
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
         }
@@ -517,20 +523,18 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                         
                         let data = currentRoute!.Images[indexPath.row].data as Data
                         cell.imageView.image = UIImage(data: data)
-                        
-                       // let colors = cell.imageView.image?.getColors()
 
                         cell.viewText.strTitle = (self.currentRoute?.ImageDescriptions[indexPath.row].text)!
                         cell.viewText.strDescription = ""
                         
                         
-                    DispatchQueue.global(qos: .background).async {
-                        cell.imageView.image?.getColors { colors in
-                         cell.viewText.colorText = colors.primary
-                         cell.viewText.reDraw()
-                         cell.lblPlus.isHidden = true
+                        DispatchQueue.global(qos: .background).async {
+                            cell.imageView.image?.getColors { colors in
+                                    cell.viewText.colorText = colors.primary
+                                    cell.viewText.reDraw()
+                                    cell.lblPlus.isHidden = true
+                            }
                         }
-                    }
                     }
                 }
                 else

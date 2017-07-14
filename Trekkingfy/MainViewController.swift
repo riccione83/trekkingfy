@@ -54,7 +54,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        
+        //locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        
         locationManager.startUpdatingLocation()
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
@@ -148,8 +151,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         let lat = latestLocation.coordinate.latitude
         let lon = latestLocation.coordinate.longitude
         
+        let pre = Locale.preferredLanguages[0]
+        
         // Put together a URL With lat and lon
-        let path = "https://api.darksky.net/forecast/0700af8905319f26ca64fe4593680056/\(lat),\(lon)?lang=it&units=si"
+        let path = "https://api.darksky.net/forecast/0700af8905319f26ca64fe4593680056/\(lat),\(lon)?lang=\(pre)&units=si"
         print(path)
         
         let url = NSURL(string: path)

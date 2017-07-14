@@ -45,6 +45,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         inStop = true
         
         self.locationManager.stopUpdatingLocation()
+        self.timerUpdateLocation?.invalidate()
         self.timerUpdateLocation = nil
         UIApplication.shared.isIdleTimerDisabled = false
         
@@ -170,7 +171,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func updateNewLocationTimer() {
         
-        locationManager.startUpdatingLocation()
+        if(!inStop) {
+            locationManager.startUpdatingLocation()
+        }
     }
     
     private func updateAltimeterGraph() {
@@ -179,7 +182,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         var numberOfPoint = 5
         
-        if(UIDevice.current.orientation.isLandscape || UIDevice.current.orientation.isPortrait) {
+        let orientation = UIDevice.current.orientation
+        
+        if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight) {
             numberOfPoint = 10
         }
         
@@ -255,6 +260,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        print("Got new location")
         
         if(!inStop) {
             if(!mapWasCentered) {

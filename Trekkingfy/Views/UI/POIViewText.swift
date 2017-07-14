@@ -23,6 +23,7 @@ class POIViewText: UIView {
     
     var strTitle = "Add a point"
     var strDescription = "click here"
+    var colorText:UIColor?
     
     override func draw(_ rect: CGRect) { //Your code should go here.
         super.draw(rect)
@@ -35,9 +36,21 @@ class POIViewText: UIView {
         context.translateBy (x: size.width / 2, y: size.height / 2)
         context.scaleBy (x: 1, y: -1)
         
-        centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: UIColor.black, font: UIFont.systemFont(ofSize: 12), clockwise: true)
+        var textColor = UIColor.black
         
-        centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: UIColor.black, font: UIFont.systemFont(ofSize: 12), clockwise: false)
+        //TODO Fix this
+        if let clText = colorText {
+            textColor = clText
+        }
+        else {
+            if(strTitle != "Add a point") {
+                textColor = UIColor.white
+            }
+        }
+        
+        centreArcPerpendicular(text: strTitle, context: context, radius: self.layer.cornerRadius-2, angle: 0, colour: textColor, font: UIFont.systemFont(ofSize: 12), clockwise: true)
+        
+        centreArcPerpendicular(text: strDescription, context: context, radius: self.layer.cornerRadius-10, angle: CGFloat(-M_PI), colour: textColor, font: UIFont.systemFont(ofSize: 12), clockwise: false)
         
         UIGraphicsEndImageContext()
     }
@@ -108,6 +121,7 @@ class POIViewText: UIView {
         
         // Set the text attributes
         let attributes = [NSForegroundColorAttributeName: c,
+                          //NSBackgroundColorAttributeName: UIColor.gray,
                           NSFontAttributeName: font]
         // Save the context
         context.saveGState()

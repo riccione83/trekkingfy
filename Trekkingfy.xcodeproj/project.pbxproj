@@ -33,6 +33,7 @@
 		93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */; };
 		93B315401ED030D800DCA53E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3153F1ED030D800DCA53E /* Route.swift */; };
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
+		93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C3014D1F18BD10005B2F87 /* UIImageColor.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
 		93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */; };
 		93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C49AEA1F0265D400408659 /* POIViewText.swift */; };
@@ -78,6 +79,7 @@
 		93B3152E1ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93B3153F1ED030D800DCA53E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Route.swift; path = Models/Route.swift; sourceTree = "<group>"; };
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
+		93C3014D1F18BD10005B2F87 /* UIImageColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColor.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
 		93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Free-Download-PNG.png"; sourceTree = "<group>"; };
 		93C49AEA1F0265D400408659 /* POIViewText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = POIViewText.swift; path = Views/UI/POIViewText.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			children = (
 				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
 				938FC52C1ED622420024B980 /* UserLocation.swift */,
+				93C3014D1F18BD10005B2F87 /* UIImageColor.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,
 				9350B73B1F13C4C500666471 /* DBManager.swift in Sources */,
 				93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */,
+				93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
 				93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */,
 				93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */,

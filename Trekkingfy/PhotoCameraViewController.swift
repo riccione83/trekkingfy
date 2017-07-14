@@ -18,6 +18,8 @@ protocol PhotoShootDelegate {
 
 class PhotoCameraViewController: UIViewController {
     
+    
+    @IBOutlet var btnCancel: UIButton!
     @IBOutlet var previewView: UIView!
     @IBOutlet var captureImageView: UIImageView!
     @IBOutlet var btnTakePhoto: UIButton!
@@ -93,6 +95,7 @@ class PhotoCameraViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         if(currentID == -1) {
@@ -122,6 +125,14 @@ class PhotoCameraViewController: UIViewController {
             lblNote.text = currentNote
             lblLocate.isHidden = false
             captureImageView.image = currentImage
+            
+            DispatchQueue.global(qos: .background).async {
+                self.currentImage?.getColors { colors in
+                        self.lblNote.textColor = colors.primary
+                }
+            }
+
+            
         }
     }
     
@@ -214,12 +225,17 @@ class PhotoCameraViewController: UIViewController {
             if session!.canAddOutput(stillImageOutput) {
                 session!.addOutput(stillImageOutput)
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill//AVLayerVideoGravityResizeAspect
                 //videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 
+                
                 previewView.bringSubview(toFront: photoBackgroundButton)
                 previewView.bringSubview(toFront: btnTakePhoto)
+                previewView.bringSubview(toFront: btnCancel)
+                previewView.bringSubview(toFront: btnOK)
+                previewView.bringSubview(toFront: btnNavigateToPoint)
+                previewView.bringSubview(toFront: lblLocate)
                 previewView.bringSubview(toFront: txtNote)
                 session!.startRunning()
             }

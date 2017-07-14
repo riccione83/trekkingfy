@@ -245,6 +245,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.contentView.layer.borderColor = UIColor.clear.cgColor
             cell.contentView.layer.masksToBounds = true
             
+            cell.lblCreatedAt.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
+            if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
+                let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
+                cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
+            }
+            
             if(deleteModeActive) {
                 cell.imgClose.isHidden = false
                 cell.backgroundColor = UIColor.red
@@ -270,11 +276,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.imgClose.isHidden = true
                 cell.backgroundColor = UIColor.clear
                 cell.layer.shadowColor = UIColor.clear.cgColor
-                cell.lblCreatedAt.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
-                if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
-                    let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
-                    cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
-                }
             }
         }
         

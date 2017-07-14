@@ -517,10 +517,20 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                         
                         let data = currentRoute!.Images[indexPath.row].data as Data
                         cell.imageView.image = UIImage(data: data)
-                        cell.viewText.strTitle = (currentRoute?.ImageDescriptions[indexPath.row].text)!
+                        
+                       // let colors = cell.imageView.image?.getColors()
+
+                        cell.viewText.strTitle = (self.currentRoute?.ImageDescriptions[indexPath.row].text)!
                         cell.viewText.strDescription = ""
-                        cell.viewText.reDraw()
-                        cell.lblPlus.isHidden = true
+                        
+                        
+                    DispatchQueue.global(qos: .background).async {
+                        cell.imageView.image?.getColors { colors in
+                         cell.viewText.colorText = colors.primary
+                         cell.viewText.reDraw()
+                         cell.lblPlus.isHidden = true
+                        }
+                    }
                     }
                 }
                 else

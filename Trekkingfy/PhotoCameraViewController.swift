@@ -18,7 +18,6 @@ protocol PhotoShootDelegate {
 
 class PhotoCameraViewController: UIViewController {
     
-    
     @IBOutlet var btnCancel: UIButton!
     @IBOutlet var previewView: UIView!
     @IBOutlet var captureImageView: UIImageView!

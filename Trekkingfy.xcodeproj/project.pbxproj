@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */; };
 		930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */; };
+		9305033E1F1F5A5A00BD0791 /* VCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9305033D1F1F5A5A00BD0791 /* VCard.swift */; };
 		93241D951F0C1F1700E1D14E /* map-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 93241D941F0C1F1700E1D14E /* map-8.png */; };
 		9350B73B1F13C4C500666471 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9350B73A1F13C4C500666471 /* DBManager.swift */; };
 		936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 936BA2FE1F0BE25B005FAD9A /* camera.png */; };
@@ -53,6 +54,7 @@
 		88B9987B31FEA495267E0093 /* Pods_TrekkingfyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekkingfyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trekkingfy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorFromHEX.swift"; path = "Views/UI/UIColor+ColorFromHEX.swift"; sourceTree = "<group>"; };
+		9305033D1F1F5A5A00BD0791 /* VCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VCard.swift; path = Models/VCard.swift; sourceTree = "<group>"; };
 		93241D941F0C1F1700E1D14E /* map-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-8.png"; sourceTree = "<group>"; };
 		9350B73A1F13C4C500666471 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Database/DBManager.swift; sourceTree = "<group>"; };
 		936BA2FE1F0BE25B005FAD9A /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				93B3153F1ED030D800DCA53E /* Route.swift */,
+				9305033D1F1F5A5A00BD0791 /* VCard.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 			files = (
 				93B315401ED030D800DCA53E /* Route.swift in Sources */,
 				93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */,
+				9305033E1F1F5A5A00BD0791 /* VCard.swift in Sources */,
 				93B3150F1ED02DDD00DCA53E /* MainViewController.swift in Sources */,
 				930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */,
 				938FC52D1ED622420024B980 /* UserLocation.swift in Sources */,

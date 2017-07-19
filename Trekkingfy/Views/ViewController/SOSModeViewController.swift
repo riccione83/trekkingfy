@@ -80,6 +80,29 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         playSound()
     }
     
+    
+    @IBAction func shareButtonClick(_ sender: Any) {
+        
+        if let finalPoint = endPoint {
+       
+            let point = CLLocationCoordinate2D(latitude: finalPoint.lat, longitude: finalPoint.lon)
+            
+            let vCardURL = VCard.vCardURL(from: point, with: "My Position")
+            
+            // set up activity view controller
+            let pointToShare = [ vCardURL ]
+            let activityViewController = UIActivityViewController(activityItems: pointToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+            // exclude some activity types from the list (optional)
+           // activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+            
+            // present the view controller
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
+    
     func stopSound() {
         if((player) != nil) {
             player?.stop()

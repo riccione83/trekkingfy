@@ -1,0 +1,32 @@
+/* 
+  Localizable.string.strings
+  Trekkingfy
+
+  Created by Riccardo Rizzo on 08/08/17.
+  Copyright © 2017 Riccardo Rizzo. All rights reserved.
+*/
+
+"Error on getting forecast data" = "Impossibile scaricare le informazioni meteo";
+"Save Route?" = "Salvare?";
+"Do you want to save this route?" = "Vuoi salvare questo itinerario?";
+"Yes" = "Si";
+"No" = "No";
+"End Point" = "Punto Finale";
+"Route" = "Itinerario";
+"GPS: Good" = "GPS: Ottimo";
+"GPS: Not Good" = "GPS: Scarso";
+"GPS: Bad" = "GPS: No";
+"Start" = "Inizio";
+"Stop" = "Fine";
+"End" = "Fine";
+"Light ON" = "Accendi Torcia";
+"Light OFF" = "Spegni Torcia";
+"Sound OFF" = "Disattiva Suono";
+"Sound ON" = "Attiva Suono";
+"SOS Light OFF" = "Spegni SOS";
+"SOS Light ON" = "Accendi SOS";
+"SOS Mode" = "Modo SOS";
+"Distance:" = "Distanza:";
+"Sorry, Unable to start camera" = "Spiacente, impossibile inizializzare la fotocamera";
+"Add a point" = "Aggiungi un punto";
+"click here" = "Clicca qui";

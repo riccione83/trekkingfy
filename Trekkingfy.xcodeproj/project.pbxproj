@@ -10,9 +10,12 @@
 		643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */; };
 		930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */; };
 		9305033E1F1F5A5A00BD0791 /* VCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9305033D1F1F5A5A00BD0791 /* VCard.swift */; };
+		93129D941F38EA2900613635 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93129D931F38EA2900613635 /* GoogleService-Info.plist */; };
 		93241D951F0C1F1700E1D14E /* map-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 93241D941F0C1F1700E1D14E /* map-8.png */; };
 		9350B73B1F13C4C500666471 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9350B73A1F13C4C500666471 /* DBManager.swift */; };
 		936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 936BA2FE1F0BE25B005FAD9A /* camera.png */; };
+		9372BBF71F3A236D00791BC9 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372BBF61F3A236D00791BC9 /* Tools.swift */; };
+		9372BBFA1F3A252C00791BC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9372BBFC1F3A252C00791BC9 /* Localizable.strings */; };
 		937529EF1F19195B001D67E1 /* route_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529EB1F19195B001D67E1 /* route_1.png */; };
 		937529F01F19195B001D67E1 /* route_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529EC1F19195B001D67E1 /* route_2.png */; };
 		937529F11F19195B001D67E1 /* route_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529ED1F19195B001D67E1 /* route_3.png */; };
@@ -55,9 +58,15 @@
 		8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trekkingfy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9301743F1ED0DC450077AC0A /* UIColor+ColorFromHEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+ColorFromHEX.swift"; path = "Views/UI/UIColor+ColorFromHEX.swift"; sourceTree = "<group>"; };
 		9305033D1F1F5A5A00BD0791 /* VCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VCard.swift; path = Models/VCard.swift; sourceTree = "<group>"; };
+		93129D911F38E8B500613635 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		93129D921F38E8B500613635 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		93129D931F38EA2900613635 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		93241D941F0C1F1700E1D14E /* map-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-8.png"; sourceTree = "<group>"; };
 		9350B73A1F13C4C500666471 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Database/DBManager.swift; sourceTree = "<group>"; };
 		936BA2FE1F0BE25B005FAD9A /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		9372BBF61F3A236D00791BC9 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		9372BBFB1F3A252C00791BC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9372BBFD1F3A252F00791BC9 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		937529EB1F19195B001D67E1 /* route_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_1.png; sourceTree = "<group>"; };
 		937529EC1F19195B001D67E1 /* route_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_2.png; sourceTree = "<group>"; };
 		937529ED1F19195B001D67E1 /* route_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_3.png; sourceTree = "<group>"; };
@@ -213,7 +222,9 @@
 				93B3153B1ED0303800DCA53E /* Class */,
 				93B3153A1ED0302A00DCA53E /* Views */,
 				93B315131ED02DDD00DCA53E /* Assets.xcassets */,
+				93129D931F38EA2900613635 /* GoogleService-Info.plist */,
 				93B315181ED02DDD00DCA53E /* Info.plist */,
+				9372BBFC1F3A252C00791BC9 /* Localizable.strings */,
 			);
 			path = Trekkingfy;
 			sourceTree = "<group>";
@@ -263,6 +274,7 @@
 				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
 				938FC52C1ED622420024B980 /* UserLocation.swift */,
 				93C3014D1F18BD10005B2F87 /* UIImageColor.swift */,
+				9372BBF61F3A236D00791BC9 /* Tools.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -366,6 +378,14 @@
 						DevelopmentTeam = RKD82WWETR;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -376,6 +396,7 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 93B315001ED02DDD00DCA53E;
 			productRefGroup = 93B3150A1ED02DDD00DCA53E /* Products */;
@@ -397,6 +418,7 @@
 				93C55E251EE001ED0087E2DE /* ok.png in Resources */,
 				937529F21F19195B001D67E1 /* route_4.png in Resources */,
 				937ED9771ED6DBFE0062A1C5 /* cloudy.png in Resources */,
+				9372BBFA1F3A252C00791BC9 /* Localizable.strings in Resources */,
 				937ED97E1ED6DBFE0062A1C5 /* wind.png in Resources */,
 				936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */,
 				937ED9751ED6DBFE0062A1C5 /* clear-day.png in Resources */,
@@ -409,6 +431,7 @@
 				93B315141ED02DDD00DCA53E /* Assets.xcassets in Resources */,
 				937529EF1F19195B001D67E1 /* route_1.png in Resources */,
 				93C55E211EE000CB0087E2DE /* close.png in Resources */,
+				93129D941F38EA2900613635 /* GoogleService-Info.plist in Resources */,
 				937ED97D1ED6DBFE0062A1C5 /* snow.png in Resources */,
 				93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */,
 				93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */,
@@ -482,6 +505,7 @@
 				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,
 				93A866A01ED0D3730074BDD6 /* POIViewCell.swift in Sources */,
 				9350B73B1F13C4C500666471 /* DBManager.swift in Sources */,
+				9372BBF71F3A236D00791BC9 /* Tools.swift in Sources */,
 				93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */,
 				93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
@@ -493,10 +517,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		9372BBFC1F3A252C00791BC9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9372BBFB1F3A252C00791BC9 /* Base */,
+				9372BBFD1F3A252F00791BC9 /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		93B315101ED02DDD00DCA53E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				93B315111ED02DDD00DCA53E /* Base */,
+				93129D921F38E8B500613635 /* it */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -505,6 +539,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				93B315161ED02DDD00DCA53E /* Base */,
+				93129D911F38E8B500613635 /* it */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -516,6 +551,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -566,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

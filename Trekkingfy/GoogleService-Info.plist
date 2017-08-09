@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>13997201599-kofi28o22mu3qslostfft0qh2ts36o3k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.13997201599-kofi28o22mu3qslostfft0qh2ts36o3k</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBmIciBUamMnCVtJgScSqXXa_pTKNgUoI4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>13997201599</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.riccardorizzo.trekkingfy</string>
+	<key>PROJECT_ID</key>
+	<string>trekkingfy</string>
+	<key>STORAGE_BUCKET</key>
+	<string>trekkingfy.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:13997201599:ios:ad39633f07b9e4a1</string>
+	<key>DATABASE_URL</key>
+	<string>https://trekkingfy.firebaseio.com</string>
+</dict>
+</plist>

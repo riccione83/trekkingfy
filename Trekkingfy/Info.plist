@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Trekkingfy would like to use your Camera.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -26,6 +20,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Trekkingfy would like to use your Camera.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Trekkingfy would like to use your location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Trekkingfy would like to use your location.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

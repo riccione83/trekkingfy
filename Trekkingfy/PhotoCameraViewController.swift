@@ -108,7 +108,7 @@ class PhotoCameraViewController: UIViewController {
             }
             else
             {
-                showMessage(message: "Sorry, Unable to start camera", completitionHandler: { (completed) in
+                showMessage(message: "Sorry, Unable to start camera".localized, completitionHandler: { (completed) in
                     
                     self.dismiss(animated: false, completion: nil)
                 })
@@ -138,7 +138,7 @@ class PhotoCameraViewController: UIViewController {
     private func showMessage(message:String, completitionHandler:@escaping (_ success:Bool) -> ())  {
         let alert = UIAlertController(title: "Trekkingfy", message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             completitionHandler(true)
         }))
         

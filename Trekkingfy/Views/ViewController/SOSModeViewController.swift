@@ -42,7 +42,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     var endPoint: Point? = nil
-    var pointDescription:String? = "End"
+    var pointDescription:String? = "End".localized
     var degrees = 0.0
     var currentHeading = CLHeading()
     
@@ -191,10 +191,10 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         FlashMode = !FlashMode
         turnFlashlight(on: FlashMode)
         if(!FlashMode) {
-                    btnLight.setTitle("Light ON", for: UIControlState.normal)
+                    btnLight.setTitle("Light ON".localized, for: UIControlState.normal)
         }
         else {
-                    btnLight.setTitle("Light OFF", for: UIControlState.normal)
+                    btnLight.setTitle("Light OFF".localized, for: UIControlState.normal)
         }
         
     }
@@ -205,11 +205,11 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         if(!SoundMode) {
             soundTimer = Timer.scheduledTimer(timeInterval:  2.0, target: self, selector: #selector(self.soundTimerTick), userInfo: nil, repeats: true)
             
-            btnSound.setTitle("Sound OFF", for: UIControlState.normal)
+            btnSound.setTitle("Sound OFF".localized, for: UIControlState.normal)
         }
         else {
             stopSound()
-            btnSound.setTitle("Sound ON", for: UIControlState.normal)
+            btnSound.setTitle("Sound ON".localized, for: UIControlState.normal)
         }
         SoundMode = !SoundMode
     }
@@ -220,12 +220,12 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         if(!SOSBlinkMode) {
             SOSBlinkMode = true
             startFlashSOSMode()
-            btnSOS.setTitle("SOS Light OFF", for: UIControlState.normal)
+            btnSOS.setTitle("SOS Light OFF".localized, for: UIControlState.normal)
         }
         else {
             SOSBlinkMode = false
             stopFlashSOSMode()
-            btnSOS.setTitle("SOS Light ON", for: UIControlState.normal)
+            btnSOS.setTitle("SOS Light ON".localized, for: UIControlState.normal)
         }
         
     }
@@ -234,7 +234,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
 
         
-        navigationBarSos.topItem?.title = "SOS Mode"
+        navigationBarSos.topItem?.title = "SOS Mode".localized
         // Do any additional setup after loading the view.
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -306,7 +306,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let here = locations.last?.coordinate
+     //   let here = locations.last?.coordinate
         degrees = setLatLonForDistanceAndAngle(userLocation: locations.last!)
         print("Degrees: \(degrees)")
         let coordinate₀ = CLLocation(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
@@ -315,10 +315,10 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
         
         if(distanceInMeters < 1000) {
-            lblDistance.text = "Distance: \(distanceInMeters.roundTo(places: 0)) mt"
+            lblDistance.text = "Distance:".localized + "\(distanceInMeters.roundTo(places: 0)) mt"
         }
         else {
-            lblDistance.text = "Distance \((distanceInMeters/1000).roundTo(places: 2)) km"
+            lblDistance.text = "Distance".localized +  "\((distanceInMeters/1000).roundTo(places: 2)) km"
         }
         
         lblGPSPosition.text = "GPS: \(locations.last!.coordinate.latitude.roundTo(places: 5)) - \(locations.last!.coordinate.longitude.roundTo(places: 5))"
@@ -337,10 +337,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
 
 extension SOSModeViewController: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+  /*  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let latitudineDelta = Float(mapView.region.span.latitudeDelta)
-
     }
-    
+    */
 }
 

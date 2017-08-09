@@ -21,8 +21,8 @@ import UIKit
 
 class POIViewText: UIView {
     
-    var strTitle = "Add a point"
-    var strDescription = "click here"
+    var strTitle = "Add a point".localized
+    var strDescription = "click here".localized
     var colorText:UIColor?
     
     override func draw(_ rect: CGRect) { //Your code should go here.
@@ -43,7 +43,7 @@ class POIViewText: UIView {
             textColor = clText
         }
         else {
-            if(strTitle != "Add a point") {
+            if(strTitle != "Add a point".localized) {
                 textColor = UIColor.white
             }
         }

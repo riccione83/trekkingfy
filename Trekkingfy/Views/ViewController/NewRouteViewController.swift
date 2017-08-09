@@ -51,9 +51,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         if(currentRoute?.ID == -1) {
             
-            let alert = UIAlertController(title: "Save Route?", message: "Do you want to save this route?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Save Route?".localized, message: "Do you want to save this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
             
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { (UIAlertAction) in
                 
                 if(self.mainView != nil) {
                     self.mainView?.saveNewRoute(route: self.currentRoute!)
@@ -63,7 +63,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 
             }))
             
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: { (UIAlertAction) in
                 
                 self.dismiss(animated: true) { }
             }))
@@ -149,7 +149,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
         vc.endPoint = currentRoute?.Positions.first?.toPoint()
-        vc.pointDescription = "End Point"
+        vc.pointDescription = "End Point".localized
         locationManager.stopUpdatingLocation()
         self.present(vc, animated: false, completion: nil)
     }
@@ -165,13 +165,14 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         setupUI()
         
-        timerUpdateLocation = Timer.scheduledTimer(timeInterval: TimeInterval(updateLocationInterval), target: self, selector: #selector(self.updateNewLocationTimer), userInfo: nil, repeats: true)
+     //   timerUpdateLocation = Timer.scheduledTimer(timeInterval: TimeInterval(updateLocationInterval), target: self, selector: #selector(self.updateNewLocationTimer), userInfo: nil, repeats: true)
         
     }
     
     func updateNewLocationTimer() {
         
         if(!inStop) {
+            locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
         }
     }
@@ -200,7 +201,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        navigationBar.topItem?.title = "Route"
+        navigationBar.topItem?.title = "Route".localized
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
@@ -212,9 +213,10 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
             
             locationManager.delegate = self
-            locationManager.distanceFilter = kCLDistanceFilterNone
+            locationManager.distanceFilter = CLLocationDistance(exactly: 10)!  //kCLDistanceFilterNone
             locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
+            locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
         }
         else {
@@ -301,16 +303,16 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 updateAltimeterGraph()
             }
             if(locations.last!.horizontalAccuracy <= 10) {
-                addLabel(withText: "GPS: Good", value: 1.0)
+                addLabel(withText: "GPS: Good".localized, value: 1.0)
             }
             else if(locations.last!.horizontalAccuracy <= 170) {
-                addLabel(withText: "GPS: Not Good", value: 0.5)
+                addLabel(withText: "GPS: Not Good".localized, value: 0.5)
             }
             else {
-                addLabel(withText: "GPS: Bad", value: 0.0)
+                addLabel(withText: "GPS: Bad".localized, value: 0.0)
             }
             
-            locationManager.stopUpdatingLocation()
+          //  locationManager.stopUpdatingLocation()
         }
     }
     
@@ -328,7 +330,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let point = MKPointAnnotation()
         point.coordinate = start_point.coordinate
-        point.title = "Start"
+        point.title = "Start".localized
         mapView.addAnnotation(point)
         //  recreateLines(newPoint: start_point)
     }
@@ -337,7 +339,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let point = MKPointAnnotation()
         point.coordinate = start_point.coordinate
-        point.title = "Stop"
+        point.title = "Stop".localized
         mapView.addAnnotation(point)
         //  recreateLines(newPoint: start_point)
         mapView.selectAnnotation(point, animated: true)

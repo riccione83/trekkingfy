@@ -1,0 +1,69 @@
+
+/* Class = "UIBarButtonItem"; title = "SOS Mode"; ObjectID = "2xf-vm-CA1"; */
+"2xf-vm-CA1.title" = "Modo SOS";
+
+/* Class = "UILabel"; text = "+"; ObjectID = "4sj-e9-E8Q"; */
+"4sj-e9-E8Q.text" = "+";
+
+/* Class = "UILabel"; text = "+"; ObjectID = "5CR-fo-EFB"; */
+"5CR-fo-EFB.text" = "+";
+
+/* Class = "UIButton"; normalTitle = "X"; ObjectID = "BS1-0p-aab"; */
+"BS1-0p-aab.normalTitle" = "X";
+
+/* Class = "UILabel"; text = "Route"; ObjectID = "Ef0-k6-u4W"; */
+"Ef0-k6-u4W.text" = "Itinerario";
+
+/* Class = "UIBarButtonItem"; title = "SOS Mode"; ObjectID = "Hrg-xA-8dh"; */
+"Hrg-xA-8dh.title" = "Modo SOS";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "IbZ-oJ-hkL"; */
+"IbZ-oJ-hkL.title" = "Titolo";
+
+/* Class = "UILabel"; text = "Loading..."; ObjectID = "JGH-0d-GVd"; */
+"JGH-0d-GVd.text" = "Caricamento...";
+
+/* Class = "UITextField"; placeholder = "Enter a description..."; ObjectID = "LN1-ui-ocY"; */
+"LN1-ui-ocY.placeholder" = "Inserisci una descrizione...";
+
+/* Class = "UIButton"; normalTitle = "Take photo"; ObjectID = "LQl-jN-Gcf"; */
+"LQl-jN-Gcf.normalTitle" = "Scatta una Foto";
+
+/* Class = "UILabel"; text = "Trekkingfy"; ObjectID = "SwP-08-a2k"; */
+"SwP-08-a2k.text" = "Trekkingfy";
+
+/* Class = "UIBarButtonItem"; title = "Return"; ObjectID = "UH4-XS-wxf"; */
+"UH4-XS-wxf.title" = "Ritorna";
+
+/* Class = "UILabel"; text = "GPS:"; ObjectID = "ZG5-qc-oli"; */
+"ZG5-qc-oli.text" = "GPS:";
+
+/* Class = "UIButton"; normalTitle = "SOS Light ON"; ObjectID = "eGP-34-E48"; */
+"eGP-34-E48.normalTitle" = "Accendi SOS";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gF5-IA-mNC"; */
+"gF5-IA-mNC.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Light ON"; ObjectID = "iDS-0O-Tpe"; */
+"iDS-0O-Tpe.normalTitle" = "Accendi Torcia";
+
+/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "lLB-qX-tpi"; */
+"lLB-qX-tpi.normalTitle" = "OK";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "lnl-mK-Ngp"; */
+"lnl-mK-Ngp.title" = "Salva";
+
+/* Class = "UIButton"; normalTitle = "Sound ON"; ObjectID = "nzG-zJ-JzM"; */
+"nzG-zJ-JzM.normalTitle" = "Attiva Suono";
+
+/* Class = "UILabel"; text = "Distance: "; ObjectID = "qCF-H0-QiN"; */
+"qCF-H0-QiN.text" = "Distanza: ";
+
+/* Class = "UILabel"; text = "Locate"; ObjectID = "u7Q-q1-6Ae"; */
+"u7Q-q1-6Ae.text" = "Localizza";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "xD8-Bk-DbZ"; */
+"xD8-Bk-DbZ.title" = "Titolo";
+
+/* Class = "UIButton"; normalTitle = "Navigate"; ObjectID = "ywE-xC-SH2"; */
+"ywE-xC-SH2.normalTitle" = "Naviga";

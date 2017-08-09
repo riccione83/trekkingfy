@@ -14,7 +14,7 @@ extension Date {
     
     func to_string() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/mm/yyyy hh:mm" //Your New Date format as per requirement change it own
+        dateFormatter.dateFormat = "dd/MM/yyyy hh:mm" //Your New Date format as per requirement change it own
         let newDate = dateFormatter.string(from: self) //pass Date here
         return newDate //New formatted Date string
     }

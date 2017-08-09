@@ -37,10 +37,11 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func saveNewRoute(route:Route) {
-        
+    
         if(route.ID == -1) {
             route.ID = DBManager.sharedInstance.getDataFromDB().count
-            route.createdAt = Date()
+            let date = Date()
+            route.createdAt =  date
         }
         DBManager.sharedInstance.addData(object: route)
         
@@ -166,7 +167,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                 }
                 else
                 {
-                    self.txtWeather.text = "Error on getting forecast data"
+                    self.txtWeather.text = "Error on getting forecast data".localized
                 }
                 self.locationManager.stopUpdatingLocation()
             })
@@ -236,8 +237,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    
         let cell: RouteViewCell
+        var dateFormat: String
+        switch NSLocale.current.identifier {
+        case "it_IT":
+            dateFormat = "dd/MM/yyyy hh:mm"
+        default:
+            dateFormat = "dd/MM/yyyy hh:mm"//"yyyy-MM-dd hh:mm"
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+            
         
         if(indexPath.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1 == -1)) {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! RouteViewCell
@@ -250,7 +261,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.contentView.layer.borderColor = UIColor.clear.cgColor
             cell.contentView.layer.masksToBounds = true
             
-            cell.lblCreatedAt.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
+            
+            let created = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
+            cell.lblCreatedAt.text = formatter.date(from: created)!.to_string()
             
             if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
                 

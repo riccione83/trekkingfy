@@ -121,28 +121,30 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     func setPhoto(image:UIImage, id:Int, note:String) {
         
-        let pos = DataPoint(lat: locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude)
-        
-        if(id == -1) {              //new point
+        if currentRoute?.ID == -1 {
+            let pos = DataPoint(lat: locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude)
             
-            let compressedImage = compressImage(image: image)
-            // let compressed_image = UIImage(data: compressedImage as Data)
-            
-            currentRoute?.Images.append(DataImage(data: compressedImage))
-            currentRoute?.ImageDescriptions.append(DataText(text: note))
-            currentRoute?.ImagesPositions.append(pos)
-        }
-        else {
-            if(id <= (currentRoute?.Images.count)!) {
-                if(currentRoute?.Images[id].data.length != 0) {  //Check if is nil
-                    currentRoute?.Images[id] = DataImage(data: UIImageJPEGRepresentation(image, 1.0)! as NSData)
-                    currentRoute?.ImageDescriptions[id] = DataText(text: note)
-                    
-                    currentRoute?.ImagesPositions[id] = pos
+            if(id == -1) {              //new point
+                
+                let compressedImage = compressImage(image: image)
+                // let compressed_image = UIImage(data: compressedImage as Data)
+                
+                currentRoute?.Images.append(DataImage(data: compressedImage))
+                currentRoute?.ImageDescriptions.append(DataText(text: note))
+                currentRoute?.ImagesPositions.append(pos)
+            }
+            else {
+                if(id <= (currentRoute?.Images.count)!) {
+                    if(currentRoute?.Images[id].data.length != 0) {  //Check if is nil
+                        currentRoute?.Images[id] = DataImage(data: UIImageJPEGRepresentation(image, 1.0)! as NSData)
+                        currentRoute?.ImageDescriptions[id] = DataText(text: note)
+                        
+                        currentRoute?.ImagesPositions[id] = pos
+                    }
                 }
             }
+            imagePositionGrid.reloadData()
         }
-        imagePositionGrid.reloadData()
     }
     
     @IBAction func btnSOSClicked(_ sender: Any) {
@@ -213,7 +215,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
             
             locationManager.delegate = self
-            locationManager.distanceFilter = CLLocationDistance(exactly: 10)!  //kCLDistanceFilterNone
+            locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
             locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
             locationManager.requestAlwaysAuthorization()
             locationManager.allowsBackgroundLocationUpdates = true
@@ -275,7 +277,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             }
             
             updateLines(newPoint: locations.last!)
-            
             
             let pos = DataPoint(lat: locations.last!.coordinate.latitude, lon: locations.last!.coordinate.longitude)
             

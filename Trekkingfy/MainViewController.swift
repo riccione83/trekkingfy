@@ -147,15 +147,22 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
   
-        let latestLocation: AnyObject = locations[locations.count - 1]
         
+        locationManager.stopUpdatingLocation()
+        let latestLocation: AnyObject = locations[locations.count - 1]
+        var language = ""
         let lat = latestLocation.coordinate.latitude
         let lon = latestLocation.coordinate.longitude
         
-        let pre = Locale.preferredLanguages[0]
+        if let pre = Locale.current.languageCode { // .preferredLanguages[0].localizedLowercase
+            language = pre
+        }
+        else {
+            language = "en"
+        }
         
         // Put together a URL With lat and lon
-        let path = "https://api.darksky.net/forecast/0700af8905319f26ca64fe4593680056/\(lat),\(lon)?lang=\(pre)&units=si"
+        let path = "https://api.darksky.net/forecast/0700af8905319f26ca64fe4593680056/\(lat),\(lon)?lang=\(language)&units=si"
         print(path)
         
         let url = NSURL(string: path)

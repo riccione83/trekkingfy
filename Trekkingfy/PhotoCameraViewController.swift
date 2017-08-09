@@ -26,11 +26,8 @@ class PhotoCameraViewController: UIViewController {
     @IBOutlet var txtNote: UITextField!
     @IBOutlet var photoBackgroundButton: UIView!
     @IBOutlet var btnNavigateToPoint: UIButton!
-    
     @IBOutlet var lblNote: UILabel!
-    
     @IBOutlet var lblLocate: UILabel!
-    
     
     var mainViewDelegate: PhotoShootDelegate?
     var currentID:Int?
@@ -88,6 +85,7 @@ class PhotoCameraViewController: UIViewController {
                     self.captureImageView.image = image
                     self.btnOK.isHidden = false
                     self.txtNote.isHidden = false
+                    self.btnTakePhoto.isHidden = true
                 }
             })
         }
@@ -197,6 +195,7 @@ class PhotoCameraViewController: UIViewController {
         btnOK.isHidden = true
         txtNote.isHidden = true
         
+        
         session = AVCaptureSession()
         session!.sessionPreset = AVCaptureSessionPresetPhoto
         
@@ -247,6 +246,7 @@ class PhotoCameraViewController: UIViewController {
         btnNavigateToPoint.isHidden = true
         lblNote.isHidden = true
         lblLocate.isHidden = true
+        btnTakePhoto.isHidden = false
     }
     
 }

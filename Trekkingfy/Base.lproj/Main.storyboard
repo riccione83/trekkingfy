@@ -542,11 +542,10 @@
                                             <action selector="navigateToThisPoint:" destination="nZJ-Vy-nTp" eventType="touchUpInside" id="iXb-Fc-OVO"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Locate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-q1-6Ae">
-                                        <rect key="frame" x="350" y="71" width="52" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Localizza" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-q1-6Ae">
+                                        <rect key="frame" x="340.66666666666669" y="71" width="71" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="GMn-bM-aI5"/>
-                                            <constraint firstAttribute="width" constant="52" id="gAc-px-35d"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>

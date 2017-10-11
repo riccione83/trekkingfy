@@ -83,6 +83,7 @@ class DataText: Object {
 class Route: Object {
     
     dynamic var ID = -1
+    dynamic var Name = ""
     var Images = List<DataImage>()
     var ImagesPositions = List<DataPoint>()
     var ImageDescriptions = List<DataText>()

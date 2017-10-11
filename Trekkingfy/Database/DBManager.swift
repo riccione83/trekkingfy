@@ -11,13 +11,28 @@ import RealmSwift
 
 class DBManager {
     
+    private let kCurrentDatabaseVersion = 2
     private var database:Realm
     static let sharedInstance = DBManager()
     
     private init() {
         
-        database = try! Realm()
+        let config = Realm.Configuration(
+            // Set the new schema version. This must be greater than the previously used
+            // version (if you've never set a schema version before, the version is 0).
+            schemaVersion: 2,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 2 {
+                        migration.enumerateObjects(ofType: Route.className()) { (_, newRoute) in
+                            newRoute?["Name"] = "Route".localized
+                        }
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
+    
+        _ = try! Realm.performMigration()
         
+        database = try! Realm()
     }
     
     func getDataFromDB() -> Results<Route> {

@@ -45,8 +45,13 @@ class PhotoCameraViewController: UIViewController {
     var stillImageOutput: AVCaptureStillImageOutput?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    @IBAction func swipeLeftImage(_ sender:Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func closeView(_ sender: Any) {
@@ -128,8 +133,6 @@ class PhotoCameraViewController: UIViewController {
                         self.lblNote.textColor = colors.primary
                 }
             }
-
-            
         }
     }
     
@@ -156,13 +159,9 @@ class PhotoCameraViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         if let connection =  self.videoPreviewLayer?.connection  {
-            
             let currentDevice: UIDevice = UIDevice.current
-            
             let orientation: UIDeviceOrientation = currentDevice.orientation
-            
             let previewLayerConnection : AVCaptureConnection = connection
-            
             if previewLayerConnection.isVideoOrientationSupported {
                 
                 switch (orientation) {
@@ -183,7 +182,6 @@ class PhotoCameraViewController: UIViewController {
                     break
                     
                 default: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-                
                     break
                 }
             }

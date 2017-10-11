@@ -15,14 +15,18 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2</string>
 	<key>CFBundleVersion</key>
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Trekkingfy would like to use your Camera.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Trekkingfy would like to use your location.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Trekkingfy would like to use your location.</string>
+	<key>NSLocationUsageDescription</key>
 	<string>Trekkingfy would like to use your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Trekkingfy would like to use your location.</string>

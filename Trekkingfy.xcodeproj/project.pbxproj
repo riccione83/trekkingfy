@@ -43,7 +43,7 @@
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
 		93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C3014D1F18BD10005B2F87 /* UIImageColor.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
-		93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */; };
+		93C41F431ED5D384006D5DA8 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* arrow.png */; };
 		93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C49AEA1F0265D400408659 /* POIViewText.swift */; };
 		93C55E211EE000CB0087E2DE /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E201EE000CB0087E2DE /* close.png */; };
 		93C55E251EE001ED0087E2DE /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C55E241EE001ED0087E2DE /* ok.png */; };
@@ -100,7 +100,7 @@
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
 		93C3014D1F18BD10005B2F87 /* UIImageColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColor.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
-		93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-Free-Download-PNG.png"; sourceTree = "<group>"; };
+		93C41F421ED5D384006D5DA8 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		93C49AEA1F0265D400408659 /* POIViewText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = POIViewText.swift; path = Views/UI/POIViewText.swift; sourceTree = "<group>"; };
 		93C55E201EE000CB0087E2DE /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		93C55E241EE001ED0087E2DE /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				93C55E241EE001ED0087E2DE /* ok.png */,
 				93C55E201EE000CB0087E2DE /* close.png */,
 				937ED8D41ED6D6A60062A1C5 /* Clima */,
-				93C41F421ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png */,
+				93C41F421ED5D384006D5DA8 /* arrow.png */,
 			);
 			name = Img;
 			sourceTree = "<group>";
@@ -370,7 +370,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Riccardo Rizzo";
 				TargetAttributes = {
 					93B315081ED02DDD00DCA53E = {
@@ -434,7 +434,7 @@
 				93129D941F38EA2900613635 /* GoogleService-Info.plist in Resources */,
 				937ED97D1ED6DBFE0062A1C5 /* snow.png in Resources */,
 				93B315121ED02DDD00DCA53E /* Main.storyboard in Resources */,
-				93C41F431ED5D384006D5DA8 /* Arrow-Free-Download-PNG.png in Resources */,
+				93C41F431ED5D384006D5DA8 /* arrow.png in Resources */,
 				937529F11F19195B001D67E1 /* route_3.png in Resources */,
 				937ED97B1ED6DBFE0062A1C5 /* rain.png in Resources */,
 				937ED97C1ED6DBFE0062A1C5 /* sleet.png in Resources */,
@@ -558,7 +558,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -566,7 +568,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -609,7 +615,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -617,7 +625,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Chalkduster.ttf">
+            <string>Chalkduster</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -73,8 +78,8 @@
                                                             <rect key="frame" x="-5" y="0.0" width="169" height="159"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef0-k6-u4W">
-                                                            <rect key="frame" x="27.666666666666664" y="52" width="109.33333333333334" height="55"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Ef0-k6-u4W">
+                                                            <rect key="frame" x="0.0" y="52" width="164" height="55"/>
                                                             <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="46"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -96,17 +101,20 @@
                                                 </view>
                                                 <constraints>
                                                     <constraint firstItem="z5k-J0-qfZ" firstAttribute="top" secondItem="f0v-hl-epp" secondAttribute="top" constant="8" id="3Ax-fL-iAF"/>
+                                                    <constraint firstItem="Ef0-k6-u4W" firstAttribute="leading" secondItem="f0v-hl-epp" secondAttribute="leading" id="4xf-Qq-tuN"/>
                                                     <constraint firstAttribute="bottom" secondItem="3Bt-Sf-K6z" secondAttribute="bottom" id="Hm9-c5-jPY"/>
                                                     <constraint firstItem="Ef0-k6-u4W" firstAttribute="centerY" secondItem="f0v-hl-epp" secondAttribute="centerY" id="J2J-sk-qnN"/>
                                                     <constraint firstItem="Ef0-k6-u4W" firstAttribute="centerX" secondItem="f0v-hl-epp" secondAttribute="centerX" id="Qs4-yb-Hsz"/>
                                                     <constraint firstItem="3Bt-Sf-K6z" firstAttribute="leading" secondItem="f0v-hl-epp" secondAttribute="leading" id="lua-jd-QbP"/>
                                                     <constraint firstAttribute="trailing" secondItem="z5k-J0-qfZ" secondAttribute="trailing" constant="8" id="ra6-pV-8Cs"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Ef0-k6-u4W" secondAttribute="trailing" id="wjO-Qg-a5C"/>
                                                     <constraint firstAttribute="trailing" secondItem="3Bt-Sf-K6z" secondAttribute="trailing" id="zMd-sT-fVe"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="imgCarousel" destination="nxn-Y8-mDI" id="yS9-ZM-soC"/>
                                                     <outlet property="imgClose" destination="z5k-J0-qfZ" id="UXm-Dk-jEr"/>
                                                     <outlet property="lblCreatedAt" destination="3Bt-Sf-K6z" id="IrT-VM-Xle"/>
+                                                    <outlet property="txtRouteName" destination="Ef0-k6-u4W" id="has-6E-ueW"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
@@ -400,7 +408,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Arrow-Free-Download-PNG.png" translatesAutoresizingMaskIntoConstraints="NO" id="G6v-hQ-fR3">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="G6v-hQ-fR3">
                                 <rect key="frame" x="107.66666666666669" y="173.00000000000003" width="198.66666666666663" height="248.66666666666671"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" secondItem="G6v-hQ-fR3" secondAttribute="height" multiplier="200:250" id="syt-pe-EuS"/>
@@ -499,8 +507,11 @@
                                             <constraint firstAttribute="height" constant="60" id="5kq-Z1-yxd"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pm7-Au-D42">
+                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pm7-Au-D42">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="tvK-AT-QAi" appends="YES" id="8sh-rA-SgK"/>
+                                        </connections>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS1-0p-aab">
                                         <rect key="frame" x="8" y="20" width="50" height="50"/>
@@ -621,12 +632,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HYy-qe-eNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="tvK-AT-QAi">
+                    <connections>
+                        <action selector="swipeLeftImage:" destination="nZJ-Vy-nTp" id="SSe-Ej-z5v"/>
+                        <outlet property="delegate" destination="nZJ-Vy-nTp" id="mbD-CI-9av"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4047.826086956522" y="132.88043478260872"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Arrow-Free-Download-PNG.png" width="256" height="338"/>
+        <image name="arrow.png" width="256" height="338"/>
         <image name="camera.png" width="1600" height="1600"/>
         <image name="close.png" width="256" height="256"/>
         <image name="map-8.png" width="512" height="512"/>

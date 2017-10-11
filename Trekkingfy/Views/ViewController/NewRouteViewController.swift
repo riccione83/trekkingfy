@@ -39,6 +39,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     var label = UILabel()
     var labelConstraints = [NSLayoutConstraint]()
     var inStop = false
+    var GPSFixed = false
     
     @IBAction func returnToMainAndSave(_ sender: Any) {
         
@@ -56,17 +57,42 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { (UIAlertAction) in
                 
                 if(self.mainView != nil) {
-                    self.mainView?.saveNewRoute(route: self.currentRoute!)
+                    let alertController = UIAlertController(title: "Add New Name".localized, message: "", preferredStyle: .alert)
+                    
+                    alertController.addAction(UIKit.UIAlertAction(title: "Save".localized, style: .default, handler: { (UIAlertAction) in
+                        let routeName = alertController.textFields![0] as UITextField
+                        if let name = routeName.text {
+                            if name == "" {
+                                self.currentRoute?.Name = "Route".localized
+                            }
+                            else {
+                                self.currentRoute?.Name = name
+                            }
+                        }
+                        else {
+                            self.currentRoute?.Name = "Route".localized
+                        }
+                        self.mainView?.saveNewRoute(route: self.currentRoute!)
+                        self.dismiss(animated: true) { }
+                    }))
+                    
+                    alertController.addTextField { (textField : UITextField!) -> Void in
+                        textField.placeholder = "Route".localized
+                        textField.autocapitalizationType = UITextAutocapitalizationType.sentences
+                    }
+                    
+                    self.present(alertController,animated: true, completion: nil)
                 }
                 
-                self.dismiss(animated: true) { }
                 
             }))
             
-            alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: { (UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "No".localized, style: .default, handler: { (UIAlertAction) in
                 
                 self.dismiss(animated: true) { }
             }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
         }
@@ -122,7 +148,10 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     func setPhoto(image:UIImage, id:Int, note:String) {
         
         if currentRoute?.ID == -1 {
-            let pos = DataPoint(lat: locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude)
+            
+            guard let latitude = locationManager.location?.coordinate.latitude else { return }
+            
+            let pos = DataPoint(lat: latitude, lon: locationManager.location!.coordinate.longitude)
             
             if(id == -1) {              //new point
                 
@@ -132,6 +161,12 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 currentRoute?.Images.append(DataImage(data: compressedImage))
                 currentRoute?.ImageDescriptions.append(DataText(text: note))
                 currentRoute?.ImagesPositions.append(pos)
+                
+                DispatchQueue.main.async {
+                    let pointCoord = CLLocation(latitude: pos.lat, longitude: pos.lon)
+                    self.addNewPoint(start_point: pointCoord,description: note)
+                }
+                
             }
             else {
                 if(id <= (currentRoute?.Images.count)!) {
@@ -147,8 +182,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
     }
     
-    @IBAction func btnSOSClicked(_ sender: Any) {
-        
+    @IBAction func btnSOSClicked(_ sender: Any) {     
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
         vc.endPoint = currentRoute?.Positions.first?.toPoint()
         vc.pointDescription = "End Point".localized
@@ -167,7 +201,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         setupUI()
         
-     //   timerUpdateLocation = Timer.scheduledTimer(timeInterval: TimeInterval(updateLocationInterval), target: self, selector: #selector(self.updateNewLocationTimer), userInfo: nil, repeats: true)
+        updateAltimeterGraph()
+        
+        //   timerUpdateLocation = Timer.scheduledTimer(timeInterval: TimeInterval(updateLocationInterval), target: self, selector: #selector(self.updateNewLocationTimer), userInfo: nil, repeats: true)
         
     }
     
@@ -187,7 +223,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let orientation = UIDevice.current.orientation
         
-        if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight) {
+        if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight || orientation == UIDeviceOrientation.faceUp) {
             numberOfPoint = 10
         }
         
@@ -267,6 +303,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         print("Got new location")
         
+        
         if(!inStop) {
             if(!mapWasCentered) {
                 
@@ -276,7 +313,12 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 mapView.setRegion(region, animated: true)
             }
             
-            updateLines(newPoint: locations.last!)
+            if(GPSFixed) {
+                updateLines(newPoint: locations.last!)
+            }
+            else {
+                GPSFixed = true
+            }
             
             let pos = DataPoint(lat: locations.last!.coordinate.latitude, lon: locations.last!.coordinate.longitude)
             
@@ -286,13 +328,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 
                 let distance = locations.last?.distance(from: lastPoint)
                 
-                if(distance! >= 10.0) {
+            //    if(distance! >= 10.0) {
                     
                     currentRoute?.Positions.append(pos)
                     currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
                     
                     mapView.setCenter(locations.last!.coordinate, animated: true)
-                }
+           //     }
             }
             else {
                 
@@ -312,8 +354,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             else {
                 addLabel(withText: "GPS: Bad".localized, value: 0.0)
             }
-            
-          //  locationManager.stopUpdatingLocation()
         }
     }
     
@@ -503,9 +543,11 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
         vc.mainViewDelegate = self
         
+        locationManager.stopUpdatingLocation()
+        locationManager.delegate = nil
         
         let transition = CATransition()
-        transition.duration = 0.5
+        transition.duration = 0.8
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft  //kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
@@ -533,16 +575,15 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                         
                         let data = currentRoute!.Images[indexPath.row].data as Data
                         cell.imageView.image = UIImage(data: data)
-
+                        
                         cell.viewText.strTitle = (self.currentRoute?.ImageDescriptions[indexPath.row].text)!
                         cell.viewText.strDescription = ""
                         
-                        
                         DispatchQueue.global(qos: .background).async {
                             cell.imageView.image?.getColors { colors in
-                                    cell.viewText.colorText = colors.primary
-                                    cell.viewText.reDraw()
-                                    cell.lblPlus.isHidden = true
+                                cell.viewText.colorText = colors.primary
+                                cell.viewText.reDraw()
+                                cell.lblPlus.isHidden = true
                             }
                         }
                     }
@@ -551,7 +592,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 {
                     cell.imageView.image = nil
                     cell.lblPlus.isHidden = false
-                    
                 }
             }
         }

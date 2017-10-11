@@ -45,7 +45,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     var pointDescription:String? = "End".localized
     var degrees = 0.0
     var currentHeading = CLHeading()
-    
+    var endOfRoute = false
     var userLocation: CLLocationCoordinate2D!
     
     private var SOSBlinkMode = false
@@ -287,19 +287,19 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         
         var radiansBearing = atan2(y, x);
         if(radiansBearing < 0.0) {
-            radiansBearing += 2*M_PI;
+            radiansBearing += 2*Double.pi;
         }
         return radiansBearing
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Use the true heading if it is valid.
-        
-        
-        //imgArrow.transform = CGAffineTransform(rotationAngle: CGFloat((degrees-newHeading.trueHeading) * Double.pi / 180))
         let direction = -newHeading.trueHeading;
-        imgArrow.transform = CGAffineTransform(rotationAngle:CGFloat((direction * M_PI / 180) + degrees))
-
+        let rotateAng = CGFloat((direction * .pi / 180) + degrees)
+        
+        if (!endOfRoute) {
+            imgArrow.transform = CGAffineTransform(rotationAngle: rotateAng)
+        }
         
         mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
     }
@@ -315,13 +315,35 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
         
         if(distanceInMeters < 1000) {
-            lblDistance.text = "Distance:".localized + "\(distanceInMeters.roundTo(places: 0)) mt"
+            lblDistance.text = "Distance:".localized + " \(distanceInMeters.roundTo(places: 0)) mt"
         }
         else {
-            lblDistance.text = "Distance".localized +  "\((distanceInMeters/1000).roundTo(places: 2)) km"
+            lblDistance.text = "Distance".localized +  " \((distanceInMeters/1000).roundTo(places: 2)) km"
         }
-        
+ 
         lblGPSPosition.text = "GPS: \(locations.last!.coordinate.latitude.roundTo(places: 5)) - \(locations.last!.coordinate.longitude.roundTo(places: 5))"
+        
+        if distanceInMeters <= CLLocationDistance(5.0) {
+            if !endOfRoute {
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                let animation = CATransition()
+                animation.duration = 0.3
+                animation.type = kCATransitionFade
+                imgArrow.layer.add(animation, forKey: "ImageFade")
+                imgArrow.image = UIImage(named: "ok.png")
+                imgArrow.contentMode = .scaleAspectFill
+                imgArrow.transform = CGAffineTransform(rotationAngle: 0.0)
+                endOfRoute = true
+                //locationManager.stopUpdatingHeading()
+                //locationManager.stopUpdatingLocation()
+            }
+        }
+        else
+        {
+            imgArrow.image = UIImage(named: "arrow.png")
+            imgArrow.contentMode = .scaleToFill
+            endOfRoute = false
+        }
     }
     
     func setPointOnMap(start_point:CLLocation) {

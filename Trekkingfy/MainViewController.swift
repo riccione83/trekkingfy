@@ -13,23 +13,17 @@ import RealmSwift
 class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDelegate,UIGestureRecognizerDelegate {
     
     @IBOutlet var routesGrid: UICollectionView!
-    
     @IBOutlet var imgWeather1: UIImageView!
-    
     @IBOutlet var imgWeather2: UIImageView!
-    
     @IBOutlet var imgWeather3: UIImageView!
-    
     @IBOutlet var imgWeather4: UIImageView!
-    
     @IBOutlet var imgWeather5: UIImageView!
-    
     @IBOutlet var imgWeather6: UIImageView!
-    
     @IBOutlet var txtWeather: UILabel!
     
     var deleteModeActive = false
     var locationManager = CLLocationManager()
+    var locationServicesEnabled = true
     
     @IBOutlet var btnDelete: UIButton!
     
@@ -37,17 +31,25 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func saveNewRoute(route:Route) {
-    
         if(route.ID == -1) {
             route.ID = DBManager.sharedInstance.getDataFromDB().count
             let date = Date()
             route.createdAt =  date
         }
         DBManager.sharedInstance.addData(object: route)
-        
-        
         routesGrid.reloadData()
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationServicesEnabled = true
+        default:
+            locationServicesEnabled = false
+            txtWeather.text = "Please enable GPS Services for Trekkingy".localized
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +57,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
-        
-        //locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
-        
         locationManager.startUpdatingLocation()
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
@@ -69,6 +68,18 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         lpgr.delegate = self
         self.routesGrid.addGestureRecognizer(lpgr)
         self.routesGrid.addGestureRecognizer(touchr)
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined, .restricted, .denied:
+                locationServicesEnabled = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationServicesEnabled = true
+            }
+        } else {
+            print("Location services are not enabled")
+            locationServicesEnabled = false
+        }
     }
     
     func handleShortPress(gestureReconizer: UITapGestureRecognizer) {
@@ -87,16 +98,13 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
         
         if(deleteModeActive && DBManager.sharedInstance.getDataFromDB().count > 0) { //routes.count > 0) {
-           
+            
             if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {//routes.count) {
                 
-                let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!] //routes[(indexPath?.row)!]
+                let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
                 
                 DBManager.sharedInstance.deleteFromDb(object: item)
-                
-                //routes.remove(at: (indexPath?.row)!)
-                
-                if(DBManager.sharedInstance.getDataFromDB().count == 0) { //if(routes.count == 0) {
+                if(DBManager.sharedInstance.getDataFromDB().count == 0) {
                     deleteModeActive = false
                 }
             }
@@ -104,37 +112,36 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
         else {
             if(!deleteModeActive) {
-                
-                DispatchQueue.main.async(execute: {
-                    
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
-                    vc.mainView = self
-                    if(indexPath?.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
-                        //vc.currentRoute = nil
-                    }
-                    else {
-                        vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
-                    }
-                    
-                    self.present(vc, animated: false, completion: nil)
-                })
+                if locationServicesEnabled {
+                    DispatchQueue.main.async(execute: {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
+                        vc.mainView = self
+                        if(indexPath?.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                        }
+                        else {
+                            vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                        }
+                        
+                        self.present(vc, animated: false, completion: nil)
+                    })
+                }
             }
         }
-
+        
     }
     
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
         if gestureReconizer.state != UIGestureRecognizerState.ended {
             return
         }
-    
+        
         let p = gestureReconizer.location(in: self.routesGrid)
         let indexPath = self.routesGrid.indexPathForItem(at: p)
         
         if indexPath != nil {
             deleteModeActive = true
             routesGrid.reloadData()
-
+            
         } else {
             print("Could not find index path")
         }
@@ -146,8 +153,6 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-  
-        
         locationManager.stopUpdatingLocation()
         let latestLocation: AnyObject = locations[locations.count - 1]
         var language = ""
@@ -223,7 +228,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                     txtWeather.text = desc
                 }
             }
-
+            
         }
     }
 }
@@ -231,7 +236,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -244,18 +249,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
+        
         let cell: RouteViewCell
         var dateFormat: String
+        
         switch NSLocale.current.identifier {
         case "it_IT":
-            dateFormat = "dd/MM/yyyy hh:mm"
+            dateFormat = "dd/MM/yyyy HH:mm"
         default:
-            dateFormat = "dd/MM/yyyy hh:mm"//"yyyy-MM-dd hh:mm"
+            dateFormat = "dd/MM/yyyy h:mm a"//"yyyy-MM-dd hh:mm"
         }
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
-            
+        
         
         if(indexPath.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1 == -1)) {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! RouteViewCell
@@ -269,8 +275,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.contentView.layer.masksToBounds = true
             
             
-            let created = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt.to_string()
-            cell.lblCreatedAt.text = formatter.date(from: created)!.to_string()
+            let created = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt ///.to_string()
+            let date =  formatter.string(from: created)
+            cell.lblCreatedAt.text = date //formatter.date(from: created)!.to_string()
+            
+            cell.txtRouteName.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].Name
             
             if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
                 

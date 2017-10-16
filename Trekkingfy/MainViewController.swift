@@ -50,7 +50,6 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -274,29 +273,37 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.contentView.layer.borderColor = UIColor.clear.cgColor
             cell.contentView.layer.masksToBounds = true
             
+            let distanceInMeters = DBManager.sharedInstance.getDataFromDB()[indexPath.row].TotalDistance
+            if(distanceInMeters < 1000) {
+                cell.txtDistance.text = "Distance:".localized + " \(distanceInMeters.roundTo(places: 0)) mt"
+            }
+            else {
+                cell.txtDistance.text = "Distance:".localized +  " \((distanceInMeters/1000).roundTo(places: 2)) km"
+            }
             
             let created = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt ///.to_string()
             let date =  formatter.string(from: created)
             cell.lblCreatedAt.text = date //formatter.date(from: created)!.to_string()
-            
             cell.txtRouteName.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].Name
             
+            cell.imgCarousel.alpha = 0.3
             if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
                 
-                let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
-                cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
+                //let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
+                //cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
+                cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[0].data as Data)
             }
             else
             {
-                let index = arc4random_uniform(3) + 1
-                let image_name = "route_\(index)"
+                //let index = arc4random_uniform(3) + 1
+                //let image_name = "route_\(index)"
+                let image_name = "route_1"
                 cell.imgCarousel.image = UIImage(named: image_name)
-                
             }
             
             if(deleteModeActive) {
                 cell.imgClose.isHidden = false
-                cell.backgroundColor = UIColor.red
+                //cell.backgroundColor = UIColor.red
                 
                 cell.layer.shadowColor = UIColor.lightGray.cgColor
                 cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
@@ -304,7 +311,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.layer.shadowOpacity = 1.0
                 cell.layer.masksToBounds = false
                 cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-                
                 
                 let transformAnim  = CAKeyframeAnimation(keyPath:"transform")
                 transformAnim.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(0.04, 0.0, 0.0, 1.0)),NSValue(caTransform3D: CATransform3DMakeRotation(-0.04 , 0, 0, 1))]

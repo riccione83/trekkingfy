@@ -13,3 +13,9 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
 }
+
+extension Double {
+    var twoDecimal: String {
+        return String(format: "%.2f", self)
+    }
+}

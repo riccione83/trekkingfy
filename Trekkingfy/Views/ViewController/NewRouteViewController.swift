@@ -267,13 +267,11 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
             }
             
-            
             var loc:CLLocation = CLLocation()
             for p in (currentRoute?.Positions)! {
                 loc = CLLocation(latitude: p.lat, longitude: p.lon)
                 updateLines(newPoint: loc)
             }
-            
             
             let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat)!, longitude: (currentRoute?.Positions.first?.lon)!)
             setInitialPoint(start_point: startPoint)
@@ -302,8 +300,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         print("Got new location")
-        
-        
+    
         if(!inStop) {
             if(!mapWasCentered) {
                 
@@ -313,33 +310,23 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 mapView.setRegion(region, animated: true)
             }
             
+            let pos = DataPoint(lat: locations.last!.coordinate.latitude, lon: locations.last!.coordinate.longitude)
+            
+            if((currentRoute?.Positions.count)!>0) {
+                    currentRoute?.Positions.append(pos)
+                    currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
+                    mapView.setCenter(locations.last!.coordinate, animated: true)
+            }
+            else {
+                currentRoute?.Positions.append(pos)
+                currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
+            }
+            
             if(GPSFixed) {
                 updateLines(newPoint: locations.last!)
             }
             else {
                 GPSFixed = true
-            }
-            
-            let pos = DataPoint(lat: locations.last!.coordinate.latitude, lon: locations.last!.coordinate.longitude)
-            
-            if((currentRoute?.Positions.count)!>0) {
-                
-                let lastPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
-                
-                let distance = locations.last?.distance(from: lastPoint)
-                
-            //    if(distance! >= 10.0) {
-                    
-                    currentRoute?.Positions.append(pos)
-                    currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
-                    
-                    mapView.setCenter(locations.last!.coordinate, animated: true)
-           //     }
-            }
-            else {
-                
-                currentRoute?.Positions.append(pos)
-                currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
             }
             
             if(altitudeBarLoaded) {

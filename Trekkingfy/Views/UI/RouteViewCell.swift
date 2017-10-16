@@ -18,4 +18,7 @@ class RouteViewCell: UICollectionViewCell {
     
     @IBOutlet var txtRouteName: UILabel!
     
+    @IBOutlet var txtDistance: UILabel!
+    
+    
 }

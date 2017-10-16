@@ -96,6 +96,19 @@ class Route: Object {
     }
  
     
+    var TotalDistance: Double {
+        get {
+            var distance = 0.0
+            guard self.Positions.count > 2 else { return 0.0 }
+            for i in 1...self.Positions.count-1 {
+                    let pos0 = CLLocation(latitude: CLLocationDegrees(self.Positions[i-1].lat), longitude: CLLocationDegrees(self.Positions[i-1].lon))
+                    let pos1 = CLLocation(latitude: CLLocationDegrees(self.Positions[i].lat), longitude: CLLocationDegrees(self.Positions[i].lon))
+                    distance += pos1.distance(from: pos0)
+            }
+            return distance
+        }
+    }
+    
     var Positions_in_CLLocationCoordinate2D: [CLLocationCoordinate2D] {
         
         get {

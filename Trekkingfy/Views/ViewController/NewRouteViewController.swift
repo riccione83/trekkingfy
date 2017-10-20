@@ -83,12 +83,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                     
                     self.present(alertController,animated: true, completion: nil)
                 }
-                
-                
             }))
             
             alert.addAction(UIAlertAction(title: "No".localized, style: .default, handler: { (UIAlertAction) in
-                
                 self.dismiss(animated: true) { }
             }))
             
@@ -261,7 +258,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             inStop = true
             let d = currentRoute?.Altitudes.map( { $0.altitude })
             
-            let data:[Double] = Array(d!.suffix(5))
+            let data:[Double] = Array(d!) //.suffix(5))
             
             if((currentRoute?.Altitudes.count)! > 0) {
                 graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
@@ -562,7 +559,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                         
                         let data = currentRoute!.Images[indexPath.row].data as Data
                         cell.imageView.image = UIImage(data: data)
-                        
+                        cell.lblPlus.isHidden = true
                         cell.viewText.strTitle = (self.currentRoute?.ImageDescriptions[indexPath.row].text)!
                         cell.viewText.strDescription = ""
                         

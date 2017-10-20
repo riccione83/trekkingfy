@@ -16,6 +16,9 @@
 		936BA2FF1F0BE25B005FAD9A /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 936BA2FE1F0BE25B005FAD9A /* camera.png */; };
 		9372BBF71F3A236D00791BC9 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372BBF61F3A236D00791BC9 /* Tools.swift */; };
 		9372BBFA1F3A252C00791BC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9372BBFC1F3A252C00791BC9 /* Localizable.strings */; };
+		9372E4DF1F95FF9100D0CD89 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372E4DE1F95FF9100D0CD89 /* IAPHelper.swift */; };
+		9372E4E11F95FF9A00D0CD89 /* TrekkingfyProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372E4E01F95FF9A00D0CD89 /* TrekkingfyProducts.swift */; };
+		9372E4E31F9603D100D0CD89 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9372E4E21F9603D100D0CD89 /* StoreKit.framework */; };
 		937529EF1F19195B001D67E1 /* route_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529EB1F19195B001D67E1 /* route_1.png */; };
 		937529F01F19195B001D67E1 /* route_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529EC1F19195B001D67E1 /* route_2.png */; };
 		937529F11F19195B001D67E1 /* route_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 937529ED1F19195B001D67E1 /* route_3.png */; };
@@ -67,6 +70,9 @@
 		9372BBF61F3A236D00791BC9 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		9372BBFB1F3A252C00791BC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9372BBFD1F3A252F00791BC9 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9372E4DE1F95FF9100D0CD89 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		9372E4E01F95FF9A00D0CD89 /* TrekkingfyProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekkingfyProducts.swift; sourceTree = "<group>"; };
+		9372E4E21F9603D100D0CD89 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		937529EB1F19195B001D67E1 /* route_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_1.png; sourceTree = "<group>"; };
 		937529EC1F19195B001D67E1 /* route_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_2.png; sourceTree = "<group>"; };
 		937529ED1F19195B001D67E1 /* route_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_3.png; sourceTree = "<group>"; };
@@ -118,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9372E4E31F9603D100D0CD89 /* StoreKit.framework in Frameworks */,
 				93A866A31ED0D54C0074BDD6 /* MapKit.framework in Frameworks */,
 				643483AA77AC347184BD2954 /* Pods_Trekkingfy.framework in Frameworks */,
 			);
@@ -187,6 +194,7 @@
 		93A866A11ED0D54C0074BDD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9372E4E21F9603D100D0CD89 /* StoreKit.framework */,
 				93A866A21ED0D54C0074BDD6 /* MapKit.framework */,
 				8E4DDF3173F063A63CBA2CDF /* Pods_Trekkingfy.framework */,
 				62F8E212FA6EB66025B2A243 /* Pods_TrekkingfyTests.framework */,
@@ -271,6 +279,8 @@
 		93B3153C1ED0304800DCA53E /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				9372E4E01F95FF9A00D0CD89 /* TrekkingfyProducts.swift */,
+				9372E4DE1F95FF9100D0CD89 /* IAPHelper.swift */,
 				93B3150C1ED02DDD00DCA53E /* AppDelegate.swift */,
 				938FC52C1ED622420024B980 /* UserLocation.swift */,
 				93C3014D1F18BD10005B2F87 /* UIImageColor.swift */,
@@ -380,6 +390,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 							com.apple.Maps.iOS = {
@@ -496,10 +509,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9372E4E11F95FF9A00D0CD89 /* TrekkingfyProducts.swift in Sources */,
 				93B315401ED030D800DCA53E /* Route.swift in Sources */,
 				93C49AEB1F0265D400408659 /* POIViewText.swift in Sources */,
 				9305033E1F1F5A5A00BD0791 /* VCard.swift in Sources */,
 				93B3150F1ED02DDD00DCA53E /* MainViewController.swift in Sources */,
+				9372E4DF1F95FF9100D0CD89 /* IAPHelper.swift in Sources */,
 				930174401ED0DC450077AC0A /* UIColor+ColorFromHEX.swift in Sources */,
 				938FC52D1ED622420024B980 /* UserLocation.swift in Sources */,
 				93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */,

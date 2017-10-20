@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.3.1</string>
 	<key>CFBundleVersion</key>
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -23,13 +23,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Trekkingfy would like to use your Camera.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
+	<string>Trekkingfy would like to use your location to track your route. No data will be saved in external server.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
+	<string>Trekkingfy would like to use your location to track your route. No data will be saved in external server.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
+	<string>Trekkingfy would like to use your location to track your route. No data will be saved in external server.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Trekkingfy would like to use your location.</string>
+	<string>Trekkingfy would like to use your location to track your route. No data will be saved in external server.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

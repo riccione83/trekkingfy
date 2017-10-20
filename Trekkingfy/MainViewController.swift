@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import RealmSwift
+import StoreKit
 
 class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDelegate,UIGestureRecognizerDelegate {
     
@@ -26,8 +27,37 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     var locationServicesEnabled = true
     
     @IBOutlet var btnDelete: UIButton!
+    var isPurchased = false
+    var products = [SKProduct]()
+    let useInAppPurchase = true
+    
     
     @IBAction func btnTrashModeClicked(_ sender: Any) {
+    }
+    
+    func handlePurchaseNotification(_ notification: Notification) {
+        guard let productID = notification.object as? String else { return }
+        
+        for (index, product) in products.enumerated() {
+            guard product.productIdentifier == productID else { continue }
+            
+            print(product.productIdentifier)
+        }
+        self.isPurchased = true
+    }
+    
+    func isAppPurchased() -> Bool {
+        guard products.count > 0 else {return false}
+        let product = products[0]
+        return TrekkingfyProducts.store.isProductPurchased(product.productIdentifier)
+    }
+    
+    func buyFullApp() {
+        let product = products[0]
+        TrekkingfyProducts.store.buyProduct(product)
+    }
+    func restoreApp() {
+        TrekkingfyProducts.store.restorePurchases()
     }
     
     func saveNewRoute(route:Route) {
@@ -54,6 +84,12 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        TrekkingfyProducts.store.requestProducts{success, products in
+            if success {
+                self.products = products!
+            }
+        }
+        
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -79,6 +115,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             print("Location services are not enabled")
             locationServicesEnabled = false
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)),
+                                               name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
+                                               object: nil)
     }
     
     func handleShortPress(gestureReconizer: UITapGestureRecognizer) {
@@ -113,19 +153,65 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             if(!deleteModeActive) {
                 if locationServicesEnabled {
                     DispatchQueue.main.async(execute: {
+                        
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
                         vc.mainView = self
-                        if(indexPath?.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                        self.isPurchased = self.isAppPurchased()
+                        let routeCount = DBManager.sharedInstance.getDataFromDB().count
+                        if(indexPath?.row == routeCount || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                            
+                            if self.products.count == 0
+                            {
+                                self.isPurchased = true
+                                
+                            }
+                            
+                            print("App Purchased: \(self.isPurchased)")
+                            if self.useInAppPurchase {
+                                if !self.isPurchased {
+                                    if routeCount >= 2 {
+                                        self.tryToBuyApp()
+                                    }
+                                    else {
+                                        self.present(vc, animated: false, completion: nil)
+                                    }
+                                }
+                                else
+                                {
+                                    self.present(vc, animated: false, completion: nil)
+                                }
+                            }
+                            else {
+                                self.present(vc, animated: false, completion: nil)
+                            }
                         }
                         else {
                             vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                            self.present(vc, animated: false, completion: nil)
                         }
-                        
-                        self.present(vc, animated: false, completion: nil)
                     })
                 }
             }
         }
+    }
+    
+    func tryToBuyApp(){
+        let product = products[0]
+        let alert = UIAlertController(title: product.localizedTitle, message: "With the Full App Purchased you can save all you Route, forever.".localized, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Buy the Full App".localized, style: .default, handler: { (UIAlertAction) in
+            print("Start to buy the full App")
+            self.buyFullApp()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Restore my purchases".localized, style: .default, handler: { (UIAlertAction) in
+            print("Restore the App")
+            self.restoreApp()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
         
     }
     

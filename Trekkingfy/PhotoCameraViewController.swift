@@ -12,7 +12,7 @@ import AVFoundation
 protocol PhotoShootDelegate {
     
     func setPhoto(image:UIImage, id:Int, note:String)
-    
+    func returnWithPhotoError()
 }
 
 
@@ -114,6 +114,7 @@ class PhotoCameraViewController: UIViewController {
                 showMessage(message: "Sorry, Unable to start camera".localized, completitionHandler: { (completed) in
                     
                     self.dismiss(animated: false, completion: nil)
+                    self.mainViewDelegate?.returnWithPhotoError()
                 })
             }
         }
@@ -192,9 +193,9 @@ class PhotoCameraViewController: UIViewController {
         
         btnOK.isHidden = true
         txtNote.isHidden = true
+    
+        session =  AVCaptureSession()
         
-        
-        session = AVCaptureSession()
         session!.sessionPreset = AVCaptureSessionPresetPhoto
         
         let backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
@@ -221,11 +222,8 @@ class PhotoCameraViewController: UIViewController {
             if session!.canAddOutput(stillImageOutput) {
                 session!.addOutput(stillImageOutput)
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill//AVLayerVideoGravityResizeAspect
-                //videoPreviewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
                 previewView.layer.addSublayer(videoPreviewLayer!)
-                
-                
                 previewView.bringSubview(toFront: photoBackgroundButton)
                 previewView.bringSubview(toFront: btnTakePhoto)
                 previewView.bringSubview(toFront: btnCancel)
@@ -235,7 +233,6 @@ class PhotoCameraViewController: UIViewController {
                 previewView.bringSubview(toFront: txtNote)
                 session!.startRunning()
             }
-            
         }
     }
     

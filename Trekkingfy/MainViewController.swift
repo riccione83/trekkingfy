@@ -38,7 +38,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
         
-        for (index, product) in products.enumerated() {
+        for (_, product) in products.enumerated() {
             guard product.productIdentifier == productID else { continue }
             
             print(product.productIdentifier)
@@ -62,7 +62,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     
     func saveNewRoute(route:Route) {
         if(route.ID == -1) {
-            route.ID = DBManager.sharedInstance.getDataFromDB().count
+            route.ID = DBManager.sharedInstance.getNewID() + 1 // .getDataFromDB().count + 1
             let date = Date()
             route.createdAt =  date
         }
@@ -87,7 +87,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         TrekkingfyProducts.store.requestProducts{success, products in
             if success {
                 self.products = products!
+                self.isPurchased = TrekkingfyProducts.store.isProductPurchased(products![0].productIdentifier)
+                
             }
+           // self.isPurchased = self.isAppPurchased()
         }
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -140,25 +143,42 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             
             if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {//routes.count) {
                 
-                let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                //Here
+                let alert = UIAlertController(title: "Deleting".localized, message: "Are you sute to delete this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
                 
-                DBManager.sharedInstance.deleteFromDb(object: item)
-                if(DBManager.sharedInstance.getDataFromDB().count == 0) {
-                    deleteModeActive = false
-                }
+                alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { (UIAlertAction) in
+                    
+                            let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                    
+                            DBManager.sharedInstance.deleteFromDb(object: item)
+                            if(DBManager.sharedInstance.getDataFromDB().count == 0) {
+                                self.deleteModeActive = false
+                            }
+                    self.routesGrid.reloadData()
+                    }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (UIAlertAction) in
+                    }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+                
+                //Here
             }
-            routesGrid.reloadData()
+
         }
         else {
             if(!deleteModeActive) {
                 if locationServicesEnabled {
-                    DispatchQueue.main.async(execute: {
+             
+                    //DispatchQueue.main.async(execute: {
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
                         vc.mainView = self
-                        self.isPurchased = self.isAppPurchased()
                         let routeCount = DBManager.sharedInstance.getDataFromDB().count
                         if(indexPath?.row == routeCount || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                            
+                            self.isPurchased = isAppPurchased()
                             
                             if self.products.count == 0
                             {
@@ -189,8 +209,11 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                             vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
                             self.present(vc, animated: false, completion: nil)
                         }
-                    })
+            //        })
                 }
+            }
+            else {
+                self.deleteModeActive = false
             }
         }
     }

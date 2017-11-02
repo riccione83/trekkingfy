@@ -35,6 +35,18 @@ class DBManager {
         database = try! Realm()
     }
     
+    func getNewID() -> Int {
+        
+        let items = getDataFromDB()
+        let newId = items.map { $0.ID }.max()
+        if items.count == 0 {
+            return 0
+        }
+        else {
+            return newId!
+        }
+    }
+    
     func getDataFromDB() -> Results<Route> {
         
         let results: Results<Route> = database.objects(Route.self)
@@ -44,7 +56,7 @@ class DBManager {
     func addData(object: Route) {
         
         try! database.write {
-            database.add(object, update: true)
+            database.add(object, update: false)
             print("Added new object")
         }
     }

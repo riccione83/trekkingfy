@@ -225,20 +225,20 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         self.present(vc, animated: false, completion: nil)
     }
     
- /*   override func viewDidAppear(_ animated: Bool) {
-        
-        // Do any additional setup after loading the view.
-        UIApplication.shared.isIdleTimerDisabled = true
-        
-        if(currentRoute == nil) {
-            currentRoute = Route()
-        }
-        
-        setupUI()
-        
-        updateAltimeterGraph()
-    }
- */
+    /*   override func viewDidAppear(_ animated: Bool) {
+     
+     // Do any additional setup after loading the view.
+     UIApplication.shared.isIdleTimerDisabled = true
+     
+     if(currentRoute == nil) {
+     currentRoute = Route()
+     }
+     
+     setupUI()
+     
+     updateAltimeterGraph()
+     }
+     */
     
     private func updateAltimeterGraph() {
         
@@ -272,17 +272,17 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         if(currentRoute?.ID == -1) {
             
-
-            let data: [Double] = [0]
-            
-            graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
-            
             locationManager.delegate = self
             locationManager.distanceFilter = CLLocationDistance(exactly: 5)!  //kCLDistanceFilterNone
             locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
             locationManager.requestAlwaysAuthorization()
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
+            
+           // updateAltimeterGraph()
+            let data: [Double] = [(locationManager.location?.altitude)!]
+            
+            graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
         }
         else {
             inStop = true
@@ -302,17 +302,22 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 updateLines(newPoint: loc)
             }
             
-            let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat)!, longitude: (currentRoute?.Positions.first?.lon)!)
-            setInitialPoint(start_point: startPoint)
-            
-            let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
-            setFinalPoint(start_point: finalPoint)
-            
-            var cnt = 0
-            for point in (currentRoute?.ImagesPositions)! {
-                let coord = CLLocation(latitude: point.lat, longitude: point.lon)
-                addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions[cnt].text)!)
-                cnt = cnt + 1
+            if let routeCnt = currentRoute?.Positions.count {
+                
+                if routeCnt >= 2 {
+                let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat)!, longitude: (currentRoute?.Positions.first?.lon)!)
+                setInitialPoint(start_point: startPoint)
+                
+                let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
+                setFinalPoint(start_point: finalPoint)
+                
+                var cnt = 0
+                for point in (currentRoute?.ImagesPositions)! {
+                    let coord = CLLocation(latitude: point.lat, longitude: point.lon)
+                    addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions[cnt].text)!)
+                    cnt = cnt + 1
+                }
+                }
             }
             
             let region = MKCoordinateRegionMakeWithDistance(loc.coordinate, 100, 100)
@@ -348,7 +353,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 mapView.setCenter(locations.last!.coordinate, animated: true)
             }
             
-          
+            
             if(altitudeBarLoaded && GPSFixed) {
                 updateAltimeterGraph()
             }
@@ -357,27 +362,27 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 gpsFixCount = gpsFixCount + 1
                 if(gpsFixCount >= 3) {
                     GPSFixed = true
-                     locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
                 }
             }
- 
- 
+            
+            
             if(locations.last!.horizontalAccuracy <= 10) {
                 if(!lblGood) {
-                addLabel(withText: "GPS: Good".localized, value: 1.0)
-                lblGood = true
-                lblNotGood = false
-                lblBad = false
-                GPSFixed = true
-                     locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    addLabel(withText: "GPS: Good".localized, value: 1.0)
+                    lblGood = true
+                    lblNotGood = false
+                    lblBad = false
+                    GPSFixed = true
+                    locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
                 }
             }
             else if(locations.last!.horizontalAccuracy <= 170) {
                 if( !lblNotGood) {
-                addLabel(withText: "GPS: Not Good".localized, value: 0.5)
-                lblGood = false
-                lblNotGood = true
-                lblBad = false
+                    addLabel(withText: "GPS: Not Good".localized, value: 0.5)
+                    lblGood = false
+                    lblNotGood = true
+                    lblBad = false
                 }
             }
             else if (!lblBad){
@@ -428,7 +433,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     func updateLines(newPoint: CLLocation) {
         
         let route = MKPolyline(coordinates: (currentRoute?.Positions_in_CLLocationCoordinate2D)!, count: (currentRoute?.Positions.count)!)
-       // mapView.remo
+        // mapView.remo
         mapView.add(route)
     }
     
@@ -521,8 +526,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }
         
         setupUI()
-        
-        updateAltimeterGraph()
     }
     
     private func generateSequentialLabels(_ numberOfItems: Int, texts: [Double]) -> [String] {
@@ -581,30 +584,30 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             self.inStop = true
             
             if let count = currentRoute?.Images.count {
-            if(indexPath.row == count) {
-                vc.currentID = -1
-            }
-            else {
-                vc.currentID = indexPath.row
-                if(!((currentRoute?.Images[indexPath.row] == nil))) {
-                    vc.currentNote = currentRoute?.ImageDescriptions[indexPath.row].text
-                    let image = UIImage(data: currentRoute!.Images[indexPath.row].data as Data)
-                    vc.currentImage = image!
-                    vc.currentLocation = currentRoute?.ImagesPositions[indexPath.row].toPoint()
+                if(indexPath.row == count) {
+                    vc.currentID = -1
                 }
-            }
-            
-            vc.mainViewDelegate = self
-            locationManager.stopUpdatingLocation()
-            locationManager.delegate = nil
-            
-            let transition = CATransition()
-            transition.duration = 0.8
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromLeft  //kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
+                else {
+                    vc.currentID = indexPath.row
+                    if(!((currentRoute?.Images[indexPath.row] == nil))) {
+                        vc.currentNote = currentRoute?.ImageDescriptions[indexPath.row].text
+                        let image = UIImage(data: currentRoute!.Images[indexPath.row].data as Data)
+                        vc.currentImage = image!
+                        vc.currentLocation = currentRoute?.ImagesPositions[indexPath.row].toPoint()
+                    }
+                }
                 
-            self.present(vc, animated: false, completion: nil)
+                vc.mainViewDelegate = self
+                locationManager.stopUpdatingLocation()
+                locationManager.delegate = nil
+                
+                let transition = CATransition()
+                transition.duration = 0.8
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromLeft  //kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                
+                self.present(vc, animated: false, completion: nil)
             }
             
         }
@@ -649,15 +652,15 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                         cell.viewText.strDescription = ""
                         cell.lblPlus.isHidden = true
                         
-                     //   DispatchQueue.global(qos: .default).async {
-                    //        cell.imageView.image?.getColors { colors in
-                   //             cell.viewText.colorText = colors.primary
+                        //   DispatchQueue.global(qos: .default).async {
+                        //        cell.imageView.image?.getColors { colors in
+                        //             cell.viewText.colorText = colors.primary
                         cell.viewText.colorText = UIColor.red
-                                cell.viewText.reDraw()
-                                cell.lblPlus.isHidden = true
-                  //          }
-                //        }
- 
+                        cell.viewText.reDraw()
+                        cell.lblPlus.isHidden = true
+                        //          }
+                        //        }
+                        
                     }
                 }
                 else

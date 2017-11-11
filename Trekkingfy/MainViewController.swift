@@ -144,7 +144,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
             if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {//routes.count) {
                 
                 //Here
-                let alert = UIAlertController(title: "Deleting".localized, message: "Are you sute to delete this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Deleting".localized, message: "Are you sure to delete this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { (UIAlertAction) in
                     

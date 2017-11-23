@@ -314,11 +314,16 @@
                                 <connections>
                                     <outlet property="dataSource" destination="Jml-Uq-Iph" id="5b4-jV-Pwn"/>
                                     <outlet property="delegate" destination="Jml-Uq-Iph" id="5uQ-jF-NP0"/>
+                                    <outletCollection property="gestureRecognizers" destination="1fl-Z0-bVW" appends="YES" id="Maz-MV-Hjn"/>
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cub-qv-4xZ">
                                 <rect key="frame" x="0.0" y="495.5" width="375" height="171.5"/>
                                 <color key="backgroundColor" red="0.199973762" green="0.2000150383" blue="0.19997116919999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="wG1-Bt-Izz" appends="YES" id="kto-yR-0CM"/>
+                                </connections>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S3c-8y-iZH">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -340,6 +345,7 @@
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="1jV-se-Lvw" firstAttribute="top" secondItem="cub-qv-4xZ" secondAttribute="bottom" id="3dC-RS-6ol"/>
                             <constraint firstItem="S3c-8y-iZH" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="4dF-3D-fdb"/>
@@ -369,6 +375,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barGraphHeightConstraint" destination="f9S-8w-gcM" id="DYS-u7-oSk"/>
                         <outlet property="graphView" destination="cub-qv-4xZ" id="Kyl-5x-ToW"/>
                         <outlet property="imagePositionGrid" destination="Tg8-4L-cwC" id="D9h-28-VWm"/>
                         <outlet property="mapView" destination="neN-yp-O4S" id="EVv-QZ-8eO"/>
@@ -376,6 +383,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uq-2A-ii6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="wG1-Bt-Izz">
+                    <connections>
+                        <action selector="graphTapped" destination="Jml-Uq-Iph" id="4Ds-f4-PSR"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="1fl-Z0-bVW">
+                    <connections>
+                        <action selector="showGraphTapped" destination="Jml-Uq-Iph" id="sJz-Wu-dzq"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2479.7101449275365" y="136.95652173913044"/>
         </scene>

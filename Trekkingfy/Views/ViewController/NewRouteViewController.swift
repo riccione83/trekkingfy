@@ -22,6 +22,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     @IBOutlet var imagePositionGrid: UICollectionView!
     @IBOutlet var navigationBar: UINavigationBar!
     
+    @IBOutlet var barGraphHeightConstraint: NSLayoutConstraint!
+    
+    
     var mainView:RouteSaveExtension? = nil
     let updateLocationInterval = 5  //5 secs
     var timerUpdateLocation:Timer? = nil
@@ -44,7 +47,35 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     var lblGood = false
     var lblNotGood = false
     var lblBad = false
+    var lastImagePositionGridHeight:CGFloat = 0.0
     
+    @IBAction func showGraphTapped() {
+        
+        guard lastImagePositionGridHeight != 0.0 else {return}
+        
+            UIView.animate(withDuration: 0.6, animations: {
+            self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.lastImagePositionGridHeight)
+            self.label.alpha = 1.0
+            self.graphView.alpha = 1.0
+            }, completion: {(complete) in
+                self.lastImagePositionGridHeight = 0.0
+            })
+        
+    }
+    
+    @IBAction func graphTapped() {
+        
+        guard lastImagePositionGridHeight == 0.0 else {return}
+        
+        lastImagePositionGridHeight = self.imagePositionGrid.frame.height
+        
+        UIView.animate(withDuration: 0.6, animations: {
+            self.label.alpha = 0.0
+            self.graphView.alpha = 0.0
+            
+            self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.imagePositionGrid.frame.height + self.graphView.frame.height)
+        }, completion: nil)
+    }
     
     @IBAction func returnToMainAndSave(_ sender: Any) {
         
@@ -280,9 +311,13 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             locationManager.startUpdatingLocation()
             
            // updateAltimeterGraph()
-            let data: [Double] = [(locationManager.location?.altitude)!]
             
-            graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
+            if let altitude = locationManager.location?.altitude {
+            
+                let data: [Double] = [altitude]
+            
+                graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
+            }
         }
         else {
             inStop = true

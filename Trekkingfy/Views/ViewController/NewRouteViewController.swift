@@ -234,8 +234,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             }
             imagePositionGrid.reloadData()
             
-            locationManager.startUpdatingLocation()
-            locationManager.delegate = self
+            //locationManager.startUpdatingLocation()
+            //locationManager.delegate = self
             mapView.showsUserLocation = true
             inStop = false
         }
@@ -256,20 +256,20 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         self.present(vc, animated: false, completion: nil)
     }
     
-    /*   override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
      
-     // Do any additional setup after loading the view.
-     UIApplication.shared.isIdleTimerDisabled = true
+                // Do any additional setup after loading the view.
+                //UIApplication.shared.isIdleTimerDisabled = true
      
-     if(currentRoute == nil) {
-     currentRoute = Route()
+                //if(currentRoute == nil) {
+                        //currentRoute = Route()
+                //}
+     
+                //setupUI()
+     
+                //updateAltimeterGraph()
      }
-     
-     setupUI()
-     
-     updateAltimeterGraph()
-     }
-     */
+    
     
     private func updateAltimeterGraph() {
         
@@ -296,7 +296,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        navigationBar.topItem?.title = "Route".localized
+       // navigationBar.topItem?.title = "Route".localized
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
@@ -371,6 +371,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         print("Got new location")
         
         if(!inStop) {
+            mapView.showsUserLocation = true
             if(!mapWasCentered) {
                 mapWasCentered = true
                 let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 0.01, 0.01)
@@ -548,6 +549,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        
         oldPositions = []
         mapWasCentered = false
         
@@ -576,7 +579,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     fileprivate func createDarkGraph(_ frame: CGRect) -> ScrollableGraphView {
         let graphView = ScrollableGraphView(frame: frame)
         
-        graphView.backgroundFillColor = UIColor.colorFromHex(hexString: "#333333")
+        graphView.backgroundFillColor = imagePositionGrid.backgroundColor!  //UIColor.colorFromHex(hexString: "#333333")
+        //self.view.backgroundColor = imagePositionGrid.backgroundColor!
         
         graphView.lineWidth = 1
         graphView.lineColor = UIColor.colorFromHex(hexString: "#777777")
@@ -584,14 +588,16 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         graphView.shouldFill = true
         graphView.fillType = ScrollableGraphViewFillType.gradient
-        graphView.fillColor = UIColor.colorFromHex(hexString: "#555555")
+        graphView.fillColor = imagePositionGrid.backgroundColor!//UIColor.colorFromHex(hexString: "#555555")
         graphView.fillGradientType = ScrollableGraphViewGradientType.linear
-        graphView.fillGradientStartColor = UIColor.colorFromHex(hexString: "#555555")
+        graphView.fillGradientStartColor = imagePositionGrid.backgroundColor! //UIColor.colorFromHex(hexString: "#555555")
         graphView.fillGradientEndColor = UIColor.colorFromHex(hexString: "#444444")
         
         graphView.dataPointSpacing = 80
         graphView.dataPointSize = 2
         graphView.dataPointFillColor = UIColor.white
+        
+        graphView.bottomMargin = 15
         
         graphView.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
         graphView.referenceLineColor = UIColor.white.withAlphaComponent(0.2)
@@ -614,8 +620,8 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "cameraStoryboard") as? PhotoCameraViewController {
             
-            self.locationManager.stopUpdatingLocation()
-            self.mapView.showsUserLocation = false
+            //self.locationManager.stopUpdatingLocation()
+            //self.mapView.showsUserLocation = false
             self.inStop = true
             
             if let count = currentRoute?.Images.count {
@@ -633,11 +639,11 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 }
                 
                 vc.mainViewDelegate = self
-                locationManager.stopUpdatingLocation()
-                locationManager.delegate = nil
+                //locationManager.stopUpdatingLocation()
+                //locationManager.delegate = nil
                 
                 let transition = CATransition()
-                transition.duration = 0.8
+                transition.duration = 0.5
                 transition.type = kCATransitionPush
                 transition.subtype = kCATransitionFromLeft  //kCATransitionFromRight
                 view.window!.layer.add(transition, forKey: kCATransition)

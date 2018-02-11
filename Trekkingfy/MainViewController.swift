@@ -189,7 +189,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                             print("App Purchased: \(self.isPurchased)")
                             if self.useInAppPurchase {
                                 if !self.isPurchased {
-                                    if routeCount >= 2 {
+                                    if routeCount >= 8 {
                                         self.tryToBuyApp()
                                     }
                                     else {

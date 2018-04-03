@@ -27,7 +27,7 @@ extension Double {
     }
 }
 
-class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
+class SOSModeViewController: UIViewController, LocationManagerDelegate {//CLLocationManagerDelegate {
     
     @IBOutlet var lblDistance: UILabel!
     @IBOutlet var lblGPSPosition: UILabel!
@@ -36,11 +36,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var btnLight: UIButton!
     @IBOutlet var imgArrow: UIImageView!
     @IBOutlet var mapView: MKMapView!
-    
     @IBOutlet var navigationBarSos: UINavigationBar!
     
-    
-    let locationManager = CLLocationManager()
+    // let locationManager = CLLocationManager()
     var endPoint: Point? = nil
     var pointDescription:String? = "End".localized
     var degrees = 0.0
@@ -84,7 +82,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func shareButtonClick(_ sender: Any) {
         
         if let finalPoint = endPoint {
-       
+            
             let point = CLLocationCoordinate2D(latitude: finalPoint.lat, longitude: finalPoint.lon)
             
             let vCardURL = VCard.vCardURL(from: point, with: "My Position")
@@ -95,7 +93,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             
             // exclude some activity types from the list (optional)
-           // activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+            // activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
             
             // present the view controller
             self.present(activityViewController, animated: true, completion: nil)
@@ -137,7 +135,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
                 if(on) {
                     device.torchMode = .on
                     try device.setTorchModeOnWithLevel(1.0)
-
+                    
                 }
                 else {
                     device.torchMode = .off
@@ -147,7 +145,7 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
                 print("error")
             }
         }
-
+        
     }
     
     private func scheduleTimer() {
@@ -179,29 +177,26 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         turnFlashlight(on: false)
     }
     
-    
     @IBAction func btnReturn(_ sender: Any) {
-    
+        LocationService.sharedInstance.stopUpdatingLocation()
+        LocationService.sharedInstance.stopUpdatingHeading()
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func btnLightClicked(_ sender: Any) {
-
+        
         FlashMode = !FlashMode
         turnFlashlight(on: FlashMode)
         if(!FlashMode) {
-                    btnLight.setTitle("Light ON".localized, for: UIControlState.normal)
+            btnLight.setTitle("Light ON".localized, for: UIControlState.normal)
         }
         else {
-                    btnLight.setTitle("Light OFF".localized, for: UIControlState.normal)
+            btnLight.setTitle("Light OFF".localized, for: UIControlState.normal)
         }
-        
     }
     
-    
     @IBAction func btnSoundClicked(_ sender: Any) {
-
+        
         if(!SoundMode) {
             soundTimer = Timer.scheduledTimer(timeInterval:  2.0, target: self, selector: #selector(self.soundTimerTick), userInfo: nil, repeats: true)
             
@@ -232,7 +227,6 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         navigationBarSos.topItem?.title = "SOS Mode".localized
         // Do any additional setup after loading the view.
@@ -246,16 +240,12 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         let region = MKCoordinateRegionMakeWithDistance(endP.coordinate, 100, 100)
         mapView.setRegion(region, animated: true)
         
-        locationManager.delegate = self
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
-    
+        LocationService.sharedInstance.delegate = self
+        LocationService.sharedInstance.startUpdatingLocation()
+        LocationService.sharedInstance.startUpdatingHeading()
     }
     
-
+    
     func calculateUserAngle(current: CLLocationCoordinate2D) {
         
         var x:Double = 0, y:Double = 0 , deg:Double = 0, delLon:Double = 0;
@@ -264,9 +254,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         x = cos(current.latitude) * sin(endPoint!.lat) - sin(current.latitude) * cos(endPoint!.lat) * cos(delLon);
         
         deg = atan2(y, x).radiansToDegrees;
-    
+        
         if(deg<0){
-                deg = -deg;
+            deg = -deg;
         } else {
             deg = 360 - deg;
         }
@@ -277,11 +267,11 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
     {
         let lat1 = userLocation.coordinate.latitude.degreesToRadians
         let lon1 = userLocation.coordinate.longitude.degreesToRadians
-    
+        
         let lat2 = endPoint?.lat.degreesToRadians
         let lon2 = endPoint?.lon.degreesToRadians
         let dLon = lon2! - lon1
-    
+        
         let y = sin(dLon) * cos(lat2!)
         let x = cos(lat1) * sin(lat2!) - sin(lat1) * cos(lat2!) * cos(dLon)
         
@@ -292,9 +282,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         return radiansBearing
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    func tracingHeading(_ currentHeading: CLHeading) {
         // Use the true heading if it is valid.
-        let direction = -newHeading.trueHeading;
+        let direction = -currentHeading.trueHeading;
         let rotateAng = CGFloat((direction * .pi / 180) + degrees)
         
         if (!endOfRoute) {
@@ -304,12 +294,16 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+    func tracingLocationDidFailWithError(_ error: NSError) {
         
-     //   let here = locations.last?.coordinate
-        degrees = setLatLonForDistanceAndAngle(userLocation: locations.last!)
+    }
+    
+    func tracingLocation(_ currentLocation: CLLocation) {
+        
+        degrees = setLatLonForDistanceAndAngle(userLocation: currentLocation)
         print("Degrees: \(degrees)")
-        let coordinate₀ = CLLocation(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
+        let coordinate₀ = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
         let coordinate₁ = CLLocation(latitude: endPoint!.lat, longitude: endPoint!.lon)
         
         let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
@@ -320,8 +314,8 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
         else {
             lblDistance.text = "Distance".localized +  " \((distanceInMeters/1000).roundTo(places: 2)) km"
         }
- 
-        lblGPSPosition.text = "GPS: \(locations.last!.coordinate.latitude.roundTo(places: 5)) - \(locations.last!.coordinate.longitude.roundTo(places: 5))"
+        
+        lblGPSPosition.text = "GPS: \(currentLocation.coordinate.latitude.roundTo(places: 5)) - \(currentLocation.coordinate.longitude.roundTo(places: 5))"
         
         if distanceInMeters <= CLLocationDistance(5.0) {
             if !endOfRoute {
@@ -334,8 +328,6 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
                 imgArrow.contentMode = .scaleAspectFill
                 imgArrow.transform = CGAffineTransform(rotationAngle: 0.0)
                 endOfRoute = true
-                //locationManager.stopUpdatingHeading()
-                //locationManager.stopUpdatingLocation()
             }
         }
         else
@@ -359,9 +351,9 @@ class SOSModeViewController: UIViewController, CLLocationManagerDelegate {
 
 extension SOSModeViewController: MKMapViewDelegate {
     
-  /*  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let latitudineDelta = Float(mapView.region.span.latitudeDelta)
-    }
-    */
+    /*  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+     let latitudineDelta = Float(mapView.region.span.latitudeDelta)
+     }
+     */
 }
 

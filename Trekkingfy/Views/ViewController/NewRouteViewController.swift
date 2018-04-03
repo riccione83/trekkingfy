@@ -15,25 +15,21 @@ protocol RouteSaveExtension {
     func saveNewRoute(route:Route)
 }
 
-class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UICollectionViewDelegate, UICollectionViewDataSource, PhotoShootDelegate {
+class NewRouteViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, PhotoShootDelegate, LocationManagerDelegate {
     
     @IBOutlet var graphView: UIView!
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var imagePositionGrid: UICollectionView!
     @IBOutlet var navigationBar: UINavigationBar!
-    
     @IBOutlet var barGraphHeightConstraint: NSLayoutConstraint!
     
     
     var mainView:RouteSaveExtension? = nil
     let updateLocationInterval = 5  //5 secs
     var timerUpdateLocation:Timer? = nil
-    
     var currentRoute:Route?
-    
     var altitudeBarLoaded = false
     var oldPositions:[CLLocationCoordinate2D]? = []
-    var locationManager = CLLocationManager()
     var mapWasCentered = false
     var graphBarView = ScrollableGraphView()
     var graphConstraints = [NSLayoutConstraint]()
@@ -42,7 +38,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     var inStop = false
     var GPSFixed = false
     var gpsFixCount = 0
-    
     var kDelayBarBounce = 0.1
     var lblGood = false
     var lblNotGood = false
@@ -53,17 +48,23 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         guard lastImagePositionGridHeight != 0.0 else {return}
         
-            UIView.animate(withDuration: 0.6, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.lastImagePositionGridHeight)
             self.label.alpha = 1.0
             self.graphView.alpha = 1.0
-            }, completion: {(complete) in
-                self.lastImagePositionGridHeight = 0.0
-            })
-        
+        },
+                       completion: {(complete) in
+                        self.lastImagePositionGridHeight = 0.0
+        })
     }
     
-    @IBAction func graphTapped() {
+    @IBAction func swipeDownGraph() {
+        
+        hideGraph()
+    }
+    
+    
+    func hideGraph() {
         
         guard lastImagePositionGridHeight == 0.0 else {return}
         
@@ -77,17 +78,19 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         }, completion: nil)
     }
     
+    @IBAction func graphTapped() {
+        
+        hideGraph()
+    }
+    
     @IBAction func returnToMainAndSave(_ sender: Any) {
         
         inStop = true
-        
-        self.locationManager.stopUpdatingLocation()
         self.timerUpdateLocation?.invalidate()
         self.timerUpdateLocation = nil
         UIApplication.shared.isIdleTimerDisabled = false
         
         if(currentRoute?.ID == -1) {
-            self.locationManager.stopUpdatingLocation()
             self.mapView.showsUserLocation = false
             
             let alert = UIAlertController(title: "Save Route?".localized, message: "Do you want to save this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
@@ -129,15 +132,19 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 self.mapView.delegate = nil
                 self.oldPositions = nil
                 self.graphBarView.removeFromSuperview()
-                self.locationManager.delegate = nil
+                
+                LocationService.sharedInstance.stopUpdatingLocation()
+                LocationService.sharedInstance.delegate = nil
+                LocationService.sharedInstance.releaseDelegate()
+                
                 self.imagePositionGrid.delegate = nil
                 self.graphView = nil
-                
                 self.dismiss(animated: false, completion: nil)
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (UIAlertAction) in
-                self.locationManager.startUpdatingLocation()
+                LocationService.sharedInstance.delegate = self
+                LocationService.sharedInstance.startUpdatingLocation()
                 self.mapView.showsUserLocation = true
                 self.inStop = false
             }))
@@ -193,9 +200,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     }
     
     func returnWithPhotoError() {
-        
-        locationManager.startUpdatingLocation()
-        locationManager.delegate = self
         inStop = false
     }
     
@@ -203,9 +207,9 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         if currentRoute?.ID == -1 {
             
-            guard let latitude = locationManager.location?.coordinate.latitude else { return }
+            guard let latitude = LocationService.sharedInstance.currentLocation?.coordinate.latitude else { return }
             
-            let pos = DataPoint(lat: latitude, lon: locationManager.location!.coordinate.longitude)
+            let pos = DataPoint(lat: latitude, lon: LocationService.sharedInstance.currentLocation!.coordinate.longitude)
             
             if(id == -1) {              //new point
                 
@@ -233,9 +237,6 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 }
             }
             imagePositionGrid.reloadData()
-            
-            //locationManager.startUpdatingLocation()
-            //locationManager.delegate = self
             mapView.showsUserLocation = true
             inStop = false
         }
@@ -246,29 +247,23 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         //Check here - FIX
         if(currentRoute?.Positions.count == 0) {
-            currentRoute?.Positions.append(DataPoint(lat: (locationManager.location?.coordinate.latitude)!, lon: (locationManager.location?.coordinate.longitude)!))
+            currentRoute?.Positions.append(DataPoint(lat: (LocationService.sharedInstance.currentLocation?.coordinate.latitude)!, lon: (LocationService.sharedInstance.currentLocation?.coordinate.longitude)!))
         }
         
         vc.endPoint = currentRoute?.Positions.first?.toPoint()
         
         vc.pointDescription = "End Point".localized
-        locationManager.stopUpdatingLocation()
+        LocationService.sharedInstance.releaseDelegate()
         self.present(vc, animated: false, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-     
-                // Do any additional setup after loading the view.
-                //UIApplication.shared.isIdleTimerDisabled = true
-     
-                //if(currentRoute == nil) {
-                        //currentRoute = Route()
-                //}
-     
-                //setupUI()
-     
-                //updateAltimeterGraph()
-     }
+        
+        if(!inStop) {
+            LocationService.sharedInstance.delegate = self
+            LocationService.sharedInstance.startUpdatingLocation()
+        }
+    }
     
     
     private func updateAltimeterGraph() {
@@ -279,7 +274,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         
         let orientation = UIDevice.current.orientation
         
-        if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight || orientation == UIDeviceOrientation.faceUp) {
+        if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight) { // || orientation == UIDeviceOrientation.faceUp) {
             numberOfPoint = 10
         }
         
@@ -289,6 +284,10 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
         }
         
+        if currentRoute?.ID != -1 && data.count >= numberOfPoint {
+            hideGraph()
+        }
+        
     }
     
     private func setupUI() {
@@ -296,26 +295,31 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-       // navigationBar.topItem?.title = "Route".localized
+        // navigationBar.topItem?.title = "Route".localized
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
         
         if(currentRoute?.ID == -1) {
             
-            locationManager.delegate = self
-            locationManager.distanceFilter = CLLocationDistance(exactly: 5)!  //kCLDistanceFilterNone
-            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-            locationManager.requestAlwaysAuthorization()
-            locationManager.allowsBackgroundLocationUpdates = true
-            locationManager.startUpdatingLocation()
+            LocationService.sharedInstance.delegate = self
+            LocationService.sharedInstance.startUpdatingLocation()
             
-           // updateAltimeterGraph()
+            /* locationManager.delegate = self
+             locationManager.distanceFilter = CLLocationDistance(exactly: 5)!  //kCLDistanceFilterNone
+             locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+             locationManager.requestAlwaysAuthorization()
+             locationManager.allowsBackgroundLocationUpdates = true
+             locationManager.startUpdatingLocation()
+             */
             
-            if let altitude = locationManager.location?.altitude {
             
+            updateAltimeterGraph()
+            
+            if let altitude = LocationService.sharedInstance.currentLocation?.altitude {
+                
                 let data: [Double] = [altitude]
-            
+                
                 graphBarView.set(data: data, withLabels: self.generateSequentialLabels(1, texts: data))
             }
         }
@@ -340,18 +344,18 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
             if let routeCnt = currentRoute?.Positions.count {
                 
                 if routeCnt >= 2 {
-                let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat)!, longitude: (currentRoute?.Positions.first?.lon)!)
-                setInitialPoint(start_point: startPoint)
-                
-                let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
-                setFinalPoint(start_point: finalPoint)
-                
-                var cnt = 0
-                for point in (currentRoute?.ImagesPositions)! {
-                    let coord = CLLocation(latitude: point.lat, longitude: point.lon)
-                    addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions[cnt].text)!)
-                    cnt = cnt + 1
-                }
+                    let startPoint = CLLocation(latitude: (currentRoute?.Positions.first?.lat)!, longitude: (currentRoute?.Positions.first?.lon)!)
+                    setInitialPoint(start_point: startPoint)
+                    
+                    let finalPoint = CLLocation(latitude: (currentRoute?.Positions.last?.lat)!, longitude: (currentRoute?.Positions.last?.lon)!)
+                    setFinalPoint(start_point: finalPoint)
+                    
+                    var cnt = 0
+                    for point in (currentRoute?.ImagesPositions)! {
+                        let coord = CLLocation(latitude: point.lat, longitude: point.lon)
+                        addNewPoint(start_point: coord, description: (currentRoute?.ImageDescriptions[cnt].text)!)
+                        cnt = cnt + 1
+                    }
                 }
             }
             
@@ -366,31 +370,38 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
         altitudeBarLoaded = true
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+    //func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+    func tracingLocationDidFailWithError(_ error: NSError) {
+    }
+    
+    func tracingHeading(_ currentHeading: CLHeading) {
+    }
+    
+    func tracingLocation(_ currentLocation: CLLocation) {
         print("Got new location")
         
         if(!inStop) {
             mapView.showsUserLocation = true
             if(!mapWasCentered) {
                 mapWasCentered = true
-                let region = MKCoordinateRegionMakeWithDistance(locations.last!.coordinate, 0.01, 0.01)
+                let region = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, 0.01, 0.01)
                 mapView.setRegion(region, animated: true)
             }
             
             if(GPSFixed) {
-                let pos = DataPoint(lat: locations.last!.coordinate.latitude, lon: locations.last!.coordinate.longitude)
+                let pos = DataPoint(lat: currentLocation.coordinate.latitude, lon: currentLocation.coordinate.longitude)
                 currentRoute?.Positions.append(pos)
-                currentRoute?.Altitudes.append(DataAltitude(altitude: locations.last!.altitude))
-                updateLines(newPoint: locations.last!)
+                currentRoute?.Altitudes.append(DataAltitude(altitude: currentLocation.altitude))
+                updateLines(newPoint: currentLocation)
             }
             
             if((currentRoute?.Positions.count)!>0) {
-                mapView.setCenter(locations.last!.coordinate, animated: true)
+                mapView.setCenter(currentLocation.coordinate, animated: true)
             }
             
             
-            if(altitudeBarLoaded && GPSFixed) {
+            if(altitudeBarLoaded) { // && GPSFixed) {
                 updateAltimeterGraph()
             }
             
@@ -398,22 +409,23 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
                 gpsFixCount = gpsFixCount + 1
                 if(gpsFixCount >= 3) {
                     GPSFixed = true
-                    locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    // locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
                 }
             }
             
             
-            if(locations.last!.horizontalAccuracy <= 10) {
+            if(currentLocation.horizontalAccuracy <= 10) {
                 if(!lblGood) {
                     addLabel(withText: "GPS: Good".localized, value: 1.0)
                     lblGood = true
                     lblNotGood = false
                     lblBad = false
                     GPSFixed = true
-                    locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    //locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    // LocationService.sharedInstance.locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
                 }
             }
-            else if(locations.last!.horizontalAccuracy <= 170) {
+            else if(currentLocation.horizontalAccuracy <= 170) {
                 if( !lblNotGood) {
                     addLabel(withText: "GPS: Not Good".localized, value: 0.5)
                     lblGood = false
@@ -549,7 +561,7 @@ class NewRouteViewController: UIViewController, CLLocationManagerDelegate,UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         
         oldPositions = []
         mapWasCentered = false

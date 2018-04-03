@@ -11,7 +11,7 @@ import MapKit
 import RealmSwift
 import StoreKit
 
-class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDelegate,UIGestureRecognizerDelegate {
+class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDelegate,LocationManagerDelegate {
     
     @IBOutlet var routesGrid: UICollectionView!
     @IBOutlet var imgWeather1: UIImageView!
@@ -23,7 +23,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
     @IBOutlet var txtWeather: UILabel!
     
     var deleteModeActive = false
-    var locationManager = CLLocationManager()
+    
     var locationServicesEnabled = true
     
     @IBOutlet var btnDelete: UIButton!
@@ -56,6 +56,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         let product = products[0]
         TrekkingfyProducts.store.buyProduct(product)
     }
+    
     func restoreApp() {
         TrekkingfyProducts.store.restorePurchases()
     }
@@ -90,13 +91,10 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                 self.isPurchased = TrekkingfyProducts.store.isProductPurchased(products![0].productIdentifier)
                 
             }
-           // self.isPurchased = self.isAppPurchased()
+            // self.isPurchased = self.isAppPurchased()
         }
         
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+        LocationService.sharedInstance.delegate = self
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
         let touchr = UITapGestureRecognizer(target: self, action: #selector(self.handleShortPress(gestureReconizer:)))
@@ -148,68 +146,68 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                 
                 alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { (UIAlertAction) in
                     
-                            let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                    let item = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
                     
-                            DBManager.sharedInstance.deleteFromDb(object: item)
-                            if(DBManager.sharedInstance.getDataFromDB().count == 0) {
-                                self.deleteModeActive = false
-                            }
+                    DBManager.sharedInstance.deleteFromDb(object: item)
+                    if(DBManager.sharedInstance.getDataFromDB().count == 0) {
+                        self.deleteModeActive = false
+                    }
                     self.routesGrid.reloadData()
-                    }))
+                }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (UIAlertAction) in
-                    }))
+                }))
                 
                 self.present(alert, animated: true, completion: nil)
                 
                 
                 //Here
             }
-
+            
         }
         else {
             if(!deleteModeActive) {
                 if locationServicesEnabled {
-             
+                    
                     //DispatchQueue.main.async(execute: {
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
+                    vc.mainView = self
+                    let routeCount = DBManager.sharedInstance.getDataFromDB().count
+                    if(indexPath?.row == routeCount || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
-                        vc.mainView = self
-                        let routeCount = DBManager.sharedInstance.getDataFromDB().count
-                        if(indexPath?.row == routeCount || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
+                        self.isPurchased = isAppPurchased()
+                        
+                        if self.products.count == 0
+                        {
+                            self.isPurchased = true
                             
-                            self.isPurchased = isAppPurchased()
-                            
-                            if self.products.count == 0
-                            {
-                                self.isPurchased = true
-                                
-                            }
-                            
-                            print("App Purchased: \(self.isPurchased)")
-                            if self.useInAppPurchase {
-                                if !self.isPurchased {
-                                    if routeCount >= 8 {
-                                        self.tryToBuyApp()
-                                    }
-                                    else {
-                                        self.present(vc, animated: false, completion: nil)
-                                    }
+                        }
+                        
+                        print("App Purchased: \(self.isPurchased)")
+                        if self.useInAppPurchase {
+                            if !self.isPurchased {
+                                if routeCount >= 8 {
+                                    self.tryToBuyApp()
                                 }
-                                else
-                                {
+                                else {
                                     self.present(vc, animated: false, completion: nil)
                                 }
                             }
-                            else {
+                            else
+                            {
                                 self.present(vc, animated: false, completion: nil)
                             }
                         }
                         else {
-                            vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
                             self.present(vc, animated: false, completion: nil)
                         }
-            //        })
+                    }
+                    else {
+                        vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
+                        self.present(vc, animated: false, completion: nil)
+                    }
+                    //        })
                 }
             }
             else {
@@ -260,9 +258,20 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationManager.stopUpdatingLocation()
-        let latestLocation: AnyObject = locations[locations.count - 1]
+    
+    func tracingLocationDidFailWithError(_ error: NSError) {
+        locationServicesEnabled = false
+        txtWeather.text = "Please enable GPS Services for Trekkingy".localized
+    }
+    
+    func tracingHeading(_ currentHeading: CLHeading) {
+        
+    }
+    
+    
+    //func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func tracingLocation(_ currentLocation: CLLocation) {
+        let latestLocation: AnyObject = currentLocation //locations[locations.count - 1]
         var language = ""
         let lat = latestLocation.coordinate.latitude
         let lon = latestLocation.coordinate.longitude
@@ -289,7 +298,7 @@ class ViewController: UIViewController, RouteSaveExtension, CLLocationManagerDel
                 {
                     self.txtWeather.text = "Error on getting forecast data".localized
                 }
-                self.locationManager.stopUpdatingLocation()
+                LocationService.sharedInstance.stopUpdatingLocation()
             })
         }
         

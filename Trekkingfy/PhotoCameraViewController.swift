@@ -34,13 +34,9 @@ class PhotoCameraViewController: UIViewController {
     var currentLocation:Point?
     var currentNote:String?
     var currentImage:UIImage?
-    
     var boxView:UIView!
     let myButton: UIButton = UIButton()
-    
-    
     var imageOrientation = UIImageOrientation.right
-    
     var session: AVCaptureSession?
     var stillImageOutput: AVCaptureStillImageOutput?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?

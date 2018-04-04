@@ -44,6 +44,7 @@
 		93B315171ED02DDD00DCA53E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B315151ED02DDD00DCA53E /* LaunchScreen.storyboard */; };
 		93B315401ED030D800DCA53E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B3153F1ED030D800DCA53E /* Route.swift */; };
 		93B315441ED0328D00DCA53E /* RouteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B315431ED0328D00DCA53E /* RouteViewCell.swift */; };
+		93BA117E2074E06F00FA73A7 /* FingerAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BA117D2074E06F00FA73A7 /* FingerAnimationView.swift */; };
 		93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C3014D1F18BD10005B2F87 /* UIImageColor.swift */; };
 		93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */; };
 		93C41F431ED5D384006D5DA8 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C41F421ED5D384006D5DA8 /* arrow.png */; };
@@ -104,6 +105,7 @@
 		93B3152E1ED02DDD00DCA53E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93B3153F1ED030D800DCA53E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Route.swift; path = Models/Route.swift; sourceTree = "<group>"; };
 		93B315431ED0328D00DCA53E /* RouteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouteViewCell.swift; path = Views/UI/RouteViewCell.swift; sourceTree = "<group>"; };
+		93BA117D2074E06F00FA73A7 /* FingerAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerAnimationView.swift; sourceTree = "<group>"; };
 		93C3014D1F18BD10005B2F87 /* UIImageColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColor.swift; sourceTree = "<group>"; };
 		93C41F401ED5BEAA006D5DA8 /* SOSModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SOSModeViewController.swift; path = Views/ViewController/SOSModeViewController.swift; sourceTree = "<group>"; };
 		93C41F421ED5D384006D5DA8 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				938FC52C1ED622420024B980 /* UserLocation.swift */,
 				93C3014D1F18BD10005B2F87 /* UIImageColor.swift */,
 				9372BBF61F3A236D00791BC9 /* Tools.swift */,
+				93BA117D2074E06F00FA73A7 /* FingerAnimationView.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				9372BBF71F3A236D00791BC9 /* Tools.swift in Sources */,
 				93CC6F541ED83A6C002DB6D8 /* PhotoCameraViewController.swift in Sources */,
 				93C3014E1F18BD10005B2F87 /* UIImageColor.swift in Sources */,
+				93BA117E2074E06F00FA73A7 /* FingerAnimationView.swift in Sources */,
 				93B3150D1ED02DDD00DCA53E /* AppDelegate.swift in Sources */,
 				93A8669E1ED0CF1C0074BDD6 /* NewRouteViewController.swift in Sources */,
 				93C41F411ED5BEAA006D5DA8 /* SOSModeViewController.swift in Sources */,

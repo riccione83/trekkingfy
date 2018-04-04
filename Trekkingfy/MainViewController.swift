@@ -152,7 +152,12 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                     if(DBManager.sharedInstance.getDataFromDB().count == 0) {
                         self.deleteModeActive = false
                     }
-                    self.routesGrid.reloadData()
+                    
+                    UIView.transition(with: self.routesGrid, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                        //Do the data reload here
+                        self.routesGrid.reloadData()
+                    }, completion: nil)
+                    
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (UIAlertAction) in

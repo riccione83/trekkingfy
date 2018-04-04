@@ -22,6 +22,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     @IBOutlet var imagePositionGrid: UICollectionView!
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var barGraphHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var fingetTipAnimationView: FingerAnimationView!
     
     
     var mainView:RouteSaveExtension? = nil
@@ -43,12 +44,16 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     var lblNotGood = false
     var lblBad = false
     var lastImagePositionGridHeight:CGFloat = 0.0
+    var isFingerShowed = false
+    var isAltitudeBarHidden = false
     
     @IBAction func showGraphTapped() {
         
         guard lastImagePositionGridHeight != 0.0 else {return}
         
-        UIView.animate(withDuration: 0.6, animations: {
+        isAltitudeBarHidden = false
+        
+        UIView.animate(withDuration: 0.3, animations: {
             self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.lastImagePositionGridHeight)
             self.label.alpha = 1.0
             self.graphView.alpha = 1.0
@@ -60,27 +65,34 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     @IBAction func swipeDownGraph() {
         
-        hideGraph()
+        hideGraph(completition: {_ in })
     }
     
     
-    func hideGraph() {
+    func hideGraph(completition:@escaping (_ success:Bool) -> ()) {
         
-        guard lastImagePositionGridHeight == 0.0 else {return}
+        guard lastImagePositionGridHeight == 0.0 else { return }
+        
+        isAltitudeBarHidden = true
         
         lastImagePositionGridHeight = self.imagePositionGrid.frame.height
         
-        UIView.animate(withDuration: 0.6, animations: {
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
+            
+            self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.imagePositionGrid.frame.height + self.graphView.frame.height)
             self.label.alpha = 0.0
             self.graphView.alpha = 0.0
             
-            self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.imagePositionGrid.frame.height + self.graphView.frame.height)
-        }, completion: nil)
+        }) { (success) in
+            
+            completition(true)
+            
+        }
     }
     
     @IBAction func graphTapped() {
         
-        hideGraph()
+        hideGraph(completition: {_ in })
     }
     
     @IBAction func returnToMainAndSave(_ sender: Any) {
@@ -268,10 +280,10 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     private func updateAltimeterGraph() {
         
+        if isAltitudeBarHidden { return }
+        
         let d = currentRoute?.Altitudes.map( { $0.altitude })
-        
         var numberOfPoint = 5
-        
         let orientation = UIDevice.current.orientation
         
         if(orientation == UIDeviceOrientation.landscapeLeft || orientation == UIDeviceOrientation.landscapeRight) { // || orientation == UIDeviceOrientation.faceUp) {
@@ -284,10 +296,22 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
             graphBarView.set(data: data, withLabels: self.generateSequentialLabels(data.count, texts:data))
         }
         
-        if currentRoute?.ID != -1 && data.count >= numberOfPoint {
-            hideGraph()
+        if currentRoute?.ID == -1 && data.count >= numberOfPoint && !isFingerShowed {
+            isFingerShowed = true
+            hideGraph(completition: {_ in
+                self.fingetTipAnimationView.isHidden = false
+                UIView.animateKeyframes(withDuration: 2.0, delay: 1.0, options: [.repeat, .autoreverse], animations: {
+                    UIView.setAnimationRepeatCount(2)
+                    self.fingetTipAnimationView.center.y += 150
+                }) { (success) in
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.fingetTipAnimationView.alpha = 0.0
+                    }, completion: { (success) in
+                        self.fingetTipAnimationView.isHidden = true
+                    })
+                }
+            })
         }
-        
     }
     
     private func setupUI() {
@@ -295,7 +319,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        // navigationBar.topItem?.title = "Route".localized
+         navigationBar.topItem?.title = "Route".localized
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
@@ -413,31 +437,32 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
                 }
             }
             
-            
-            if(currentLocation.horizontalAccuracy <= 10) {
-                if(!lblGood) {
-                    addLabel(withText: "GPS: Good".localized, value: 1.0)
-                    lblGood = true
-                    lblNotGood = false
-                    lblBad = false
-                    GPSFixed = true
-                    //locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
-                    // LocationService.sharedInstance.locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+            if !isAltitudeBarHidden {
+                if(currentLocation.horizontalAccuracy <= 10) {
+                    if(!lblGood) {
+                        addLabel(withText: "GPS: Good".localized, value: 1.0)
+                        lblGood = true
+                        lblNotGood = false
+                        lblBad = false
+                        GPSFixed = true
+                        //locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                        // LocationService.sharedInstance.locationManager.distanceFilter = CLLocationDistance(exactly: 20)!  //kCLDistanceFilterNone
+                    }
                 }
-            }
-            else if(currentLocation.horizontalAccuracy <= 170) {
-                if( !lblNotGood) {
-                    addLabel(withText: "GPS: Not Good".localized, value: 0.5)
+                else if(currentLocation.horizontalAccuracy <= 170) {
+                    if( !lblNotGood) {
+                        addLabel(withText: "GPS: Not Good".localized, value: 0.5)
+                        lblGood = false
+                        lblNotGood = true
+                        lblBad = false
+                    }
+                }
+                else if (!lblBad){
+                    addLabel(withText: "GPS: Bad".localized, value: 0.0)
                     lblGood = false
-                    lblNotGood = true
-                    lblBad = false
+                    lblNotGood = false
+                    lblBad = true
                 }
-            }
-            else if (!lblBad){
-                addLabel(withText: "GPS: Bad".localized, value: 0.0)
-                lblGood = false
-                lblNotGood = false
-                lblBad = true
             }
         }
     }

@@ -259,7 +259,7 @@
                                 <rect key="frame" x="0.0" y="87.999999999999972" width="375" height="397.33333333333326"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-4L-cwC">
-                                <rect key="frame" x="0.0" y="483.33333333333331" width="375" height="132.66666666666669"/>
+                                <rect key="frame" x="0.0" y="483.33333333333331" width="375" height="132.33333333333331"/>
                                 <color key="backgroundColor" red="0.151082673" green="0.72857738490000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Xu-aC-KBY">
                                     <size key="itemSize" width="80" height="80"/>
@@ -313,8 +313,8 @@
                                     <outletCollection property="gestureRecognizers" destination="ucf-HG-jO0" appends="YES" id="Gi1-Qk-eZH"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cub-qv-4xZ">
-                                <rect key="frame" x="0.0" y="614" width="375" height="198"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cub-qv-4xZ">
+                                <rect key="frame" x="0.0" y="613.66666666666663" width="375" height="198.33333333333337"/>
                                 <color key="backgroundColor" red="0.151082673" green="0.72857738490000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -345,6 +345,14 @@
                                     <constraint firstAttribute="height" constant="30" id="teu-6x-SAZ"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfj-wk-1AQ" customClass="FingerAnimationView" customModule="Trekkingfy" customModuleProvider="target">
+                                <rect key="frame" x="123.66666666666669" y="459.33333333333326" width="128" height="240"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="7fO-ln-xdD"/>
+                                    <constraint firstAttribute="width" constant="128" id="VTs-6P-pwf"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -363,10 +371,12 @@
                             <constraint firstAttribute="trailing" secondItem="M26-dH-so7" secondAttribute="trailing" id="MZX-SX-9I6"/>
                             <constraint firstAttribute="bottom" secondItem="cub-qv-4xZ" secondAttribute="bottom" id="Mon-KA-wJD"/>
                             <constraint firstAttribute="trailing" secondItem="cub-qv-4xZ" secondAttribute="trailing" id="Ney-wv-Y25"/>
+                            <constraint firstItem="M26-dH-so7" firstAttribute="top" secondItem="wfj-wk-1AQ" secondAttribute="top" constant="-5" id="OUI-8c-NSJ"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="Tzk-EP-Lk6"/>
                             <constraint firstAttribute="trailing" secondItem="Tg8-4L-cwC" secondAttribute="trailing" id="c2d-t4-j41"/>
                             <constraint firstItem="cub-qv-4xZ" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="1.5" id="f9S-8w-gcM"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="top" secondItem="neN-yp-O4S" secondAttribute="bottom" constant="-2" id="fyo-yU-3vl"/>
+                            <constraint firstItem="wfj-wk-1AQ" firstAttribute="centerX" secondItem="lKm-Ia-ofa" secondAttribute="centerX" id="hNJ-DL-Kl2"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="top" secondItem="M26-dH-so7" secondAttribute="bottom" constant="-1" id="icE-rG-Tlm"/>
                             <constraint firstItem="M26-dH-so7" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="ovj-tI-sbF"/>
                         </constraints>
@@ -389,6 +399,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="barGraphHeightConstraint" destination="f9S-8w-gcM" id="DYS-u7-oSk"/>
+                        <outlet property="fingetTipAnimationView" destination="wfj-wk-1AQ" id="kuA-Px-UDY"/>
                         <outlet property="graphView" destination="cub-qv-4xZ" id="Kyl-5x-ToW"/>
                         <outlet property="imagePositionGrid" destination="Tg8-4L-cwC" id="D9h-28-VWm"/>
                         <outlet property="mapView" destination="neN-yp-O4S" id="EVv-QZ-8eO"/>
@@ -444,7 +455,7 @@
                                     <color key="textColor" red="0.199973762" green="0.2000150383" blue="0.19997116919999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Title" id="xD8-Bk-DbZ">
+                                    <navigationItem title="Route" id="xD8-Bk-DbZ">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="zD0-rH-hWp">
                                             <connections>
                                                 <action selector="btnReturn:" destination="xmm-7k-cXq" id="GYn-zW-qhA"/>

@@ -18,7 +18,7 @@
 "Hrg-xA-8dh.title" = "Modo SOS";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "IbZ-oJ-hkL"; */
-"IbZ-oJ-hkL.title" = "Titolo";
+"IbZ-oJ-hkL.title" = "Itinerario";
 
 /* Class = "UILabel"; text = "Loading..."; ObjectID = "JGH-0d-GVd"; */
 "JGH-0d-GVd.text" = "Caricamento...";
@@ -63,7 +63,7 @@
 "u7Q-q1-6Ae.text" = "Localizza";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "xD8-Bk-DbZ"; */
-"xD8-Bk-DbZ.title" = "Titolo";
+"xD8-Bk-DbZ.title" = "Itinerario";
 
 /* Class = "UIButton"; normalTitle = "Navigate"; ObjectID = "ywE-xC-SH2"; */
 "ywE-xC-SH2.normalTitle" = "Naviga";

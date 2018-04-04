@@ -41,7 +41,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
         
         if CLLocationManager.authorizationStatus() == .notDetermined {
-            locationManager.requestWhenInUseAuthorization()
+           // locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
         }
         
         locationManager.desiredAccuracy =  kCLLocationAccuracyBest // The accuracy

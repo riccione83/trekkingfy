@@ -248,7 +248,18 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
                     }
                 }
             }
-            imagePositionGrid.reloadData()
+            //imagePositionGrid.reloadData()
+            imagePositionGrid.performBatchUpdates({
+                imagePositionGrid.insertItems(at: [IndexPath(row: currentRoute!.Images.count - 1 , section: 0)])
+                if self.isAltitudeBarHidden {
+                    self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.imagePositionGrid.frame.height + self.graphView.frame.height)
+                }
+            }) { (success) in
+                if self.isAltitudeBarHidden {
+                               self.imagePositionGrid.frame = CGRect(x: self.imagePositionGrid.frame.origin.x, y: self.imagePositionGrid.frame.origin.y, width: self.imagePositionGrid.frame.width, height: self.imagePositionGrid.frame.height + self.graphView.frame.height)
+                }
+            }
+            
             mapView.showsUserLocation = true
             inStop = false
         }
@@ -319,7 +330,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-         navigationBar.topItem?.title = "Route".localized
+        navigationBar.topItem?.title = "Route".localized
         
         graphBarView = ScrollableGraphView(frame: self.graphView.frame)
         graphBarView = createDarkGraph(self.graphView.frame)
@@ -587,7 +598,6 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         oldPositions = []
         mapWasCentered = false
         
@@ -713,6 +723,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         
         return newImage
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         

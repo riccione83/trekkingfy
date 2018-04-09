@@ -153,10 +153,13 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                         self.deleteModeActive = false
                     }
                     
-                    UIView.transition(with: self.routesGrid, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    self.routesGrid.deleteItems(at: [indexPath!])
+                    
+                  /*  UIView.transition(with: self.routesGrid, duration: 1.0, options: .transitionCrossDissolve, animations: {
                         //Do the data reload here
                         self.routesGrid.reloadData()
                     }, completion: nil)
+ */
                     
                 }))
                 

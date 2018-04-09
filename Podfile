@@ -8,7 +8,7 @@ target 'Trekkingfy' do
   # Pods for Trekkingfy
 
   pod 'ScrollableGraphView', '~> 3.1.0'
-  pod 'IQKeyboardManagerSwift', '~> 4.0.10'
+  pod 'IQKeyboardManagerSwift' #, '~> 6.0.0'
   pod 'RealmSwift'
   pod 'Firebase/Core'
 end

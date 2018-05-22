@@ -101,6 +101,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         self.timerUpdateLocation?.invalidate()
         self.timerUpdateLocation = nil
         UIApplication.shared.isIdleTimerDisabled = false
+        LocationService.sharedInstance.stopUpdatingLocation()
         
         if(currentRoute?.ID == -1) {
             self.mapView.showsUserLocation = false
@@ -316,6 +317,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
                     self.fingetTipAnimationView.center.y += 150
                 }) { (success) in
                     UIView.animate(withDuration: 0.5, animations: {
+                        self.fingetTipAnimationView.center.y -= 150
                         self.fingetTipAnimationView.alpha = 0.0
                     }, completion: { (success) in
                         self.fingetTipAnimationView.isHidden = true

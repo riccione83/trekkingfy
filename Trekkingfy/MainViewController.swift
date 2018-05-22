@@ -71,14 +71,19 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
         routesGrid.reloadData()
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationServicesEnabled = true
-        default:
-            locationServicesEnabled = false
-            txtWeather.text = "Please enable GPS Services for Trekkingy".localized
-        }
+    /*  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+     switch status {
+     case .authorizedAlways, .authorizedWhenInUse:
+     locationServicesEnabled = true
+     default:
+     locationServicesEnabled = false
+     txtWeather.text = "Please enable GPS Services for Trekkingy".localized
+     }
+     }
+     */
+    
+    override func viewDidAppear(_ animated: Bool) {
+        LocationService.sharedInstance.delegate = self
     }
     
     override func viewDidLoad() {
@@ -127,6 +132,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
             return
         }
         let p = gestureReconizer.location(in: self.routesGrid)
+        
         let indexPath = self.routesGrid.indexPathForItem(at: p)
         
         if(indexPath == nil) {
@@ -137,9 +143,9 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
             return
         }
         
-        if(deleteModeActive && DBManager.sharedInstance.getDataFromDB().count > 0) { //routes.count > 0) {
+        if(deleteModeActive && DBManager.sharedInstance.getDataFromDB().count > 0) {
             
-            if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {//routes.count) {
+            if((indexPath?.row)! < DBManager.sharedInstance.getDataFromDB().count) {
                 
                 //Here
                 let alert = UIAlertController(title: "Deleting".localized, message: "Are you sure to delete this route?".localized, preferredStyle: UIAlertControllerStyle.alert)
@@ -155,21 +161,12 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                     
                     self.routesGrid.deleteItems(at: [indexPath!])
                     
-                  /*  UIView.transition(with: self.routesGrid, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                        //Do the data reload here
-                        self.routesGrid.reloadData()
-                    }, completion: nil)
- */
-                    
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (UIAlertAction) in
                 }))
                 
                 self.present(alert, animated: true, completion: nil)
-                
-                
-                //Here
             }
             
         }
@@ -215,7 +212,6 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                         vc.currentRoute = DBManager.sharedInstance.getDataFromDB()[(indexPath?.row)!]
                         self.present(vc, animated: false, completion: nil)
                     }
-                    //        })
                 }
             }
             else {
@@ -226,7 +222,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
     
     func tryToBuyApp(){
         let product = products[0]
-        let alert = UIAlertController(title: product.localizedTitle, message: "With the Full App Purchased you can save all you Route, forever.".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: product.localizedTitle, message: "With the Full App Purchased you can save all you Routes, forever.".localized, preferredStyle: UIAlertControllerStyle.alert)
         
         alert.addAction(UIAlertAction(title: "Buy the Full App".localized, style: .default, handler: { (UIAlertAction) in
             print("Start to buy the full App")
@@ -269,17 +265,16 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
     
     func tracingLocationDidFailWithError(_ error: NSError) {
         locationServicesEnabled = false
-        txtWeather.text = "Please enable GPS Services for Trekkingy".localized
+        txtWeather.text = "Please enable GPS Services for Trekkingfy".localized
     }
     
     func tracingHeading(_ currentHeading: CLHeading) {
         
     }
     
-    
-    //func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     func tracingLocation(_ currentLocation: CLLocation) {
-        let latestLocation: AnyObject = currentLocation //locations[locations.count - 1]
+        
+        let latestLocation: AnyObject = currentLocation
         var language = ""
         let lat = latestLocation.coordinate.latitude
         let lon = latestLocation.coordinate.longitude
@@ -307,6 +302,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                     self.txtWeather.text = "Error on getting forecast data".localized
                 }
                 LocationService.sharedInstance.stopUpdatingLocation()
+                self.locationServicesEnabled = true
             })
         }
         
@@ -387,7 +383,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
         
-        
         if(indexPath.row == DBManager.sharedInstance.getDataFromDB().count || (DBManager.sharedInstance.getDataFromDB().count-1 == -1)) {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCellIdentifier", for: indexPath) as! RouteViewCell
         }
@@ -409,28 +404,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             
             let created = DBManager.sharedInstance.getDataFromDB()[indexPath.row].createdAt ///.to_string()
             let date =  formatter.string(from: created)
-            cell.lblCreatedAt.text = date //formatter.date(from: created)!.to_string()
+            cell.lblCreatedAt.text = date
+            
             cell.txtRouteName.text = DBManager.sharedInstance.getDataFromDB()[indexPath.row].Name
             
             cell.imgCarousel.alpha = 0.3
             if(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count>0) {
-                
-                //let rnd = arc4random_uniform(UInt32(DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images.count))
-                //cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[Int(rnd)].data as Data)
                 cell.imgCarousel.image = UIImage(data: DBManager.sharedInstance.getDataFromDB()[indexPath.row].Images[0].data as Data)
             }
             else
             {
-                //let index = arc4random_uniform(3) + 1
-                //let image_name = "route_\(index)"
                 let image_name = "route_1"
                 cell.imgCarousel.image = UIImage(named: image_name)
             }
             
             if(deleteModeActive) {
                 cell.imgClose.isHidden = false
-                //cell.backgroundColor = UIColor.red
-                
                 cell.layer.shadowColor = UIColor.lightGray.cgColor
                 cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
                 cell.layer.shadowRadius = 2.0

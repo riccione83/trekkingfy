@@ -23,13 +23,13 @@ class DBManager {
             schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 2 {
-                        migration.enumerateObjects(ofType: Route.className()) { (_, newRoute) in
-                            newRoute?["Name"] = "Route".localized
-                        }
+                    migration.enumerateObjects(ofType: Route.className()) { (_, newRoute) in
+                        newRoute?["Name"] = "Route".localized
+                    }
                 }
         })
         Realm.Configuration.defaultConfiguration = config
-    
+        
         _ = try! Realm.performMigration()
         
         database = try! Realm()
@@ -68,11 +68,8 @@ class DBManager {
     }
     
     func deleteFromDb(object: Route) {
-        
         try! database.write {
-            
             database.delete(object)
         }
     }
-    
 }

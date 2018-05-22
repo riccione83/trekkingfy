@@ -46,7 +46,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
         
         locationManager.desiredAccuracy =  kCLLocationAccuracyBest // The accuracy
-        //locationManager.distanceFilter = 100 // The minimum distance (measured in meters) if needed
+        locationManager.distanceFilter = 5 // The minimum distance (measured in meters) if needed
         locationManager.delegate = self
         self.startUpdatingLocation()
     }

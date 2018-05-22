@@ -28,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="168" width="375" height="644"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GjW-wt-hoR">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="649.66666666666663"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Jk5-3v-94u">
                                             <size key="itemSize" width="164" height="159"/>
@@ -220,7 +220,7 @@
                             <constraint firstItem="haw-lX-8Er" firstAttribute="top" secondItem="yuQ-LO-HbZ" secondAttribute="bottom" id="Qw8-fd-Msc"/>
                             <constraint firstItem="yuQ-LO-HbZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gIG-wZ-L9Z"/>
                             <constraint firstItem="haw-lX-8Er" firstAttribute="trailing" secondItem="yuQ-LO-HbZ" secondAttribute="trailing" id="hbl-Zv-Mj5"/>
-                            <constraint firstItem="GjW-wt-hoR" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="mGl-zV-39U"/>
+                            <constraint firstItem="GjW-wt-hoR" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="mGl-zV-39U"/>
                             <constraint firstAttribute="trailing" secondItem="haw-lX-8Er" secondAttribute="trailing" id="nXb-Br-qaJ"/>
                             <constraint firstItem="haw-lX-8Er" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qh1-Wi-a7a"/>
                             <constraint firstAttribute="bottom" secondItem="haw-lX-8Er" secondAttribute="bottom" id="tWm-B7-svO"/>
@@ -256,10 +256,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="neN-yp-O4S">
-                                <rect key="frame" x="0.0" y="88" width="375" height="455"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="416"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-4L-cwC">
-                                <rect key="frame" x="0.0" y="541" width="375" height="113.66666666666663"/>
+                                <rect key="frame" x="0.0" y="502.00000000000006" width="375" height="148.66666666666669"/>
                                 <color key="backgroundColor" red="0.151082673" green="0.72857738490000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Xu-aC-KBY">
                                     <size key="itemSize" width="80" height="80"/>
@@ -314,7 +314,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cub-qv-4xZ">
-                                <rect key="frame" x="0.0" y="652.66666666666663" width="375" height="159.33333333333337"/>
+                                <rect key="frame" x="0.0" y="648.66666666666663" width="375" height="163.33333333333337"/>
                                 <color key="backgroundColor" red="0.151082673" green="0.72857738490000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -340,13 +340,13 @@
                                 </items>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TopBarImage" translatesAutoresizingMaskIntoConstraints="NO" id="M26-dH-so7">
-                                <rect key="frame" x="0.0" y="512" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="473" width="375" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="teu-6x-SAZ"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfj-wk-1AQ" customClass="FingerAnimationView" customModule="Trekkingfy" customModuleProvider="target">
-                                <rect key="frame" x="123.66666666666669" y="517" width="128" height="240"/>
+                                <rect key="frame" x="123.66666666666669" y="478" width="128" height="240"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="7fO-ln-xdD"/>
@@ -359,7 +359,7 @@
                         <constraints>
                             <constraint firstItem="S3c-8y-iZH" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="4dF-3D-fdb"/>
                             <constraint firstAttribute="trailing" secondItem="cub-qv-4xZ" secondAttribute="trailing" id="6Mg-lP-Or3"/>
-                            <constraint firstItem="neN-yp-O4S" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="4" id="6zd-pv-yTT"/>
+                            <constraint firstItem="neN-yp-O4S" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="2.8" id="6zd-pv-yTT"/>
                             <constraint firstItem="cub-qv-4xZ" firstAttribute="top" secondItem="Tg8-4L-cwC" secondAttribute="bottom" constant="-2" id="866-bg-Ave"/>
                             <constraint firstItem="neN-yp-O4S" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="9VY-fa-Ohy"/>
                             <constraint firstItem="cub-qv-4xZ" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="BBu-gE-sMQ"/>
@@ -374,7 +374,7 @@
                             <constraint firstItem="M26-dH-so7" firstAttribute="top" secondItem="wfj-wk-1AQ" secondAttribute="top" constant="-5" id="OUI-8c-NSJ"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="leading" secondItem="lKm-Ia-ofa" secondAttribute="leading" id="Tzk-EP-Lk6"/>
                             <constraint firstAttribute="trailing" secondItem="Tg8-4L-cwC" secondAttribute="trailing" id="c2d-t4-j41"/>
-                            <constraint firstItem="cub-qv-4xZ" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="1.4" id="f9S-8w-gcM"/>
+                            <constraint firstItem="cub-qv-4xZ" firstAttribute="height" secondItem="Tg8-4L-cwC" secondAttribute="height" multiplier="1.1" id="f9S-8w-gcM"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="top" secondItem="neN-yp-O4S" secondAttribute="bottom" constant="-2" id="fyo-yU-3vl"/>
                             <constraint firstItem="wfj-wk-1AQ" firstAttribute="centerX" secondItem="lKm-Ia-ofa" secondAttribute="centerX" id="hNJ-DL-Kl2"/>
                             <constraint firstItem="Tg8-4L-cwC" firstAttribute="top" secondItem="M26-dH-so7" secondAttribute="bottom" constant="-1" id="icE-rG-Tlm"/>

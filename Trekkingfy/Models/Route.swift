@@ -34,8 +34,8 @@ import RealmSwift
 
 @objc class DataPoint: Object {
     
-    @objc var lat:Double = 0.0
-    @objc var lon:Double = 0.0
+    @objc dynamic var lat:Double = 0.0
+    @objc dynamic var lon:Double = 0.0
     
     func toPoint() -> Point {
         let v:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: self.lat, longitude: self.lon)
@@ -51,7 +51,7 @@ import RealmSwift
 
 @objc class DataImage: Object {
     
-    @objc var data:NSData = NSData()
+    @objc dynamic var data:NSData = NSData()
     
     convenience init(data:NSData) {
         self.init()
@@ -61,7 +61,7 @@ import RealmSwift
 
 @objc class DataAltitude: Object {
     
-    @objc var altitude:Double = 0.0
+    @objc dynamic var altitude:Double = 0.0
     
     convenience init(altitude:Double) {
         self.init()
@@ -71,7 +71,7 @@ import RealmSwift
 
 @objc class DataText: Object {
     
-    @objc var text = ""
+    @objc dynamic var text = ""
     
     convenience init(text:String) {
         self.init()
@@ -81,14 +81,14 @@ import RealmSwift
 
 @objc class Route: Object {
     
-    @objc var ID = -1
-    @objc var Name = ""
+    @objc dynamic var ID = -1
+    @objc dynamic var Name = ""
     var Images = List<DataImage>()
     var ImagesPositions = List<DataPoint>()
     var ImageDescriptions = List<DataText>()
     var Positions = List<DataPoint>()
     var Altitudes =  List<DataAltitude>()
-    @objc var createdAt =  Date()
+    @objc dynamic var createdAt =  Date()
 
     override static func primaryKey() -> String? {
         return "ID"

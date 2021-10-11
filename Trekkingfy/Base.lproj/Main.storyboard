@@ -138,7 +138,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yuQ-LO-HbZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="168"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trekkingfy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="25" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SwP-08-a2k">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trekkingfy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="SwP-08-a2k">
                                         <rect key="frame" x="105.66666666666667" y="118" width="163.66666666666663" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="yEA-CZ-MhW"/>
@@ -154,7 +154,7 @@
                                             <constraint firstAttribute="height" constant="80" id="tEG-kB-Ng8"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGH-0d-GVd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="JGH-0d-GVd">
                                         <rect key="frame" x="130" y="89.666666666666671" width="237" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -252,7 +252,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="neN-yp-O4S">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="neN-yp-O4S">
                                 <rect key="frame" x="0.0" y="88" width="375" height="416"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tg8-4L-cwC">
@@ -401,6 +401,7 @@
                         <outlet property="imagePositionGrid" destination="Tg8-4L-cwC" id="D9h-28-VWm"/>
                         <outlet property="mapView" destination="neN-yp-O4S" id="EVv-QZ-8eO"/>
                         <outlet property="navigationBar" destination="S3c-8y-iZH" id="j8n-E2-fNG"/>
+                        <outlet property="saveBtn" destination="UH4-XS-wxf" id="EO2-Ly-X62"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uq-2A-ii6" userLabel="First Responder" sceneMemberID="firstResponder"/>

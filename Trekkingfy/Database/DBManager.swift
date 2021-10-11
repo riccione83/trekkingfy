@@ -20,9 +20,9 @@ class DBManager {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 2,
+            schemaVersion: 4,
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 2 {
+                if oldSchemaVersion < 4 {
                     migration.enumerateObjects(ofType: Route.className()) { (_, newRoute) in
                         newRoute?["Name"] = "Route".localized
                     }
@@ -54,11 +54,14 @@ class DBManager {
     }
     
     func addData(object: Route) {
-        
         try! database.write {
-            database.add(object, update: .all)
+            database.add(object, update: .modified)
             print("Added new object")
         }
+    }
+    
+    func getDatabase() -> Realm {
+        return database
     }
     
     func deleteAllDatabase()  {

@@ -23,6 +23,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var barGraphHeightConstraint: NSLayoutConstraint!
     @IBOutlet var fingetTipAnimationView: FingerAnimationView!
+    @IBOutlet weak var saveBtn: UIBarButtonItem!
     
     
     var mainView:RouteSaveExtension? = nil
@@ -283,6 +284,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     override func viewDidAppear(_ animated: Bool) {
         
+        print(currentRoute?.Positions)
         if(!inStop) {
             LocationService.sharedInstance.delegate = self
             LocationService.sharedInstance.startUpdatingLocation()
@@ -420,17 +422,28 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         
         if(!inStop) {
             mapView.showsUserLocation = true
-            if(!mapWasCentered) {
+            if(!mapWasCentered && currentRoute?.ID == -1) {
                 mapWasCentered = true
                 let region = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, 0.01, 0.01)
                 mapView.setRegion(region, animated: true)
             }
             
-            if(GPSFixed) {
+            if(GPSFixed && currentRoute?.ID == -1) {
                 let pos = DataPoint(lat: currentLocation.coordinate.latitude, lon: currentLocation.coordinate.longitude)
-                currentRoute?.Positions.append(pos)
-                currentRoute?.Altitudes.append(DataAltitude(altitude: currentLocation.altitude))
-                updateLines(newPoint: currentLocation)
+                
+                do {
+                    let realm = DBManager.sharedInstance.getDatabase() //try! Realm()
+                        try! realm.write {
+                            self.currentRoute?.Positions.append(pos)
+                            self.currentRoute?.Altitudes.append(DataAltitude(altitude: currentLocation.altitude))
+                            self.updateLines(newPoint: currentLocation)
+                        }
+                    } catch let error {
+                        print("Could not add message due to error:\n\(error)")
+                    }
+                
+    
+           
             }
             
             if((currentRoute?.Positions.count)!>0) {
@@ -610,6 +623,8 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         
         if(currentRoute == nil) {
             currentRoute = Route()
+        } else {
+            saveBtn.title="Close"
         }
         
         setupUI()

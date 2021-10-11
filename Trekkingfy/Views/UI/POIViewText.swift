@@ -68,7 +68,7 @@ class POIViewText: UIView {
         // *******************************************************
         
         let l = str.characters.count
-        let attributes = [NSFontAttributeName: font]
+        let attributes = [NSAttributedStringKey.font: font]
         
         let characters: [String] = str.characters.map { String($0) } // An array of single character strings, each character in str
         var arcs: [CGFloat] = [] // This will be the arcs subtended by each character
@@ -76,7 +76,7 @@ class POIViewText: UIView {
         
         // Calculate the arc subtended by each letter and their total
         for i in 0 ..< l {
-            arcs += [chordToArc(characters[i].size(attributes: attributes).width, radius: r)]
+            arcs += [chordToArc(characters[i].size(withAttributes: attributes).width, radius: r)]
             totalArc += arcs[i]
         }
         
@@ -120,9 +120,9 @@ class POIViewText: UIView {
         // *******************************************************
         
         // Set the text attributes
-        let attributes = [NSForegroundColorAttributeName: c,
+        let attributes = [NSAttributedStringKey.foregroundColor: c,
                           //NSBackgroundColorAttributeName: UIColor.gray,
-                          NSFontAttributeName: font]
+                          NSAttributedStringKey.font: font]
         // Save the context
         context.saveGState()
         // Undo the inversion of the Y-axis (or the text goes backwards!)
@@ -132,7 +132,7 @@ class POIViewText: UIView {
         // Rotate the coordinate system
         context.rotate(by: -slantAngle)
         // Calculate the width of the text
-        let offset = str.size(attributes: attributes)
+        let offset = str.size(withAttributes: attributes)
         // Move the origin by half the size of the text
         context.translateBy (x: -offset.width / 3, y: -offset.height / 3) // Move the origin to the centre of the text (negating the y-axis manually)
         // Draw the text

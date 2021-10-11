@@ -56,7 +56,7 @@ class DBManager {
     func addData(object: Route) {
         
         try! database.write {
-            database.add(object, update: false)
+            database.add(object, update: .all)
             print("Added new object")
         }
     }

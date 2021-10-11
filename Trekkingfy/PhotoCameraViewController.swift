@@ -71,12 +71,12 @@ class PhotoCameraViewController: UIViewController {
     
     @IBAction func takePhoto(_ sender: Any) {
         
-        if let videoConnection = stillImageOutput!.connection(withMediaType: AVMediaTypeVideo) {
+        if let videoConnection = stillImageOutput!.connection(with: AVMediaType.video) {
             
             stillImageOutput?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (sampleBuffer, error) -> Void in
                 
                 if sampleBuffer != nil {
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer!)
                     let dataProvider = CGDataProvider(data: imageData! as CFData)
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
                     
@@ -192,15 +192,19 @@ class PhotoCameraViewController: UIViewController {
     
         session =  AVCaptureSession()
         
-        session!.sessionPreset = AVCaptureSessionPresetPhoto
+        session!.sessionPreset = AVCaptureSession.Preset.photo
         
-        let backCamera = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
         
         var error: NSError?
         var input: AVCaptureDeviceInput!
         
+        guard (backCamera != nil) else {
+            return
+        }
+        
         do {
-            input = try AVCaptureDeviceInput(device: backCamera)
+            input = try AVCaptureDeviceInput(device: backCamera!)
             
         }
         catch let error1 as NSError {
@@ -215,10 +219,10 @@ class PhotoCameraViewController: UIViewController {
             stillImageOutput = AVCaptureStillImageOutput()
             stillImageOutput?.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
             
-            if session!.canAddOutput(stillImageOutput) {
-                session!.addOutput(stillImageOutput)
-                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-                videoPreviewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
+            if session!.canAddOutput(stillImageOutput!) {
+                session!.addOutput(stillImageOutput!)
+                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session!)
+                videoPreviewLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 previewView.bringSubview(toFront: photoBackgroundButton)
                 previewView.bringSubview(toFront: btnTakePhoto)

@@ -129,12 +129,12 @@ class SOSModeViewController: UIViewController, LocationManagerDelegate {//CLLoca
     
     private func turnFlashlight(on: Bool) {
         
-        if let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo), device.hasTorch {
+        if let device = AVCaptureDevice.default(for: AVMediaType.video), device.hasTorch {
             do {
                 try device.lockForConfiguration()
                 if(on) {
                     device.torchMode = .on
-                    try device.setTorchModeOnWithLevel(1.0)
+                    try device.setTorchModeOn(level: 1.0)
                     
                 }
                 else {

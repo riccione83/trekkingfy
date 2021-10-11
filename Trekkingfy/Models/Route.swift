@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import RealmSwift
 
-extension Date {
+ extension Date {
     
     func to_string() -> String {
         let dateFormatter = DateFormatter()
@@ -19,8 +19,7 @@ extension Date {
         return newDate //New formatted Date string
     }
 }
-
-class Point {
+ class Point {
     
      var lat:Double = 0.0
      var lon:Double = 0.0
@@ -33,10 +32,10 @@ class Point {
 }
 
 
-class DataPoint: Object {
+@objc class DataPoint: Object {
     
-    dynamic var lat:Double = 0.0
-    dynamic var lon:Double = 0.0
+    @objc var lat:Double = 0.0
+    @objc var lon:Double = 0.0
     
     func toPoint() -> Point {
         let v:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: self.lat, longitude: self.lon)
@@ -50,9 +49,9 @@ class DataPoint: Object {
     }
 }
 
-class DataImage: Object {
+@objc class DataImage: Object {
     
-    dynamic var data:NSData = NSData()
+    @objc var data:NSData = NSData()
     
     convenience init(data:NSData) {
         self.init()
@@ -60,9 +59,9 @@ class DataImage: Object {
     }
 }
 
-class DataAltitude: Object {
+@objc class DataAltitude: Object {
     
-    dynamic var altitude:Double = 0.0
+    @objc var altitude:Double = 0.0
     
     convenience init(altitude:Double) {
         self.init()
@@ -70,9 +69,9 @@ class DataAltitude: Object {
     }
 }
 
-class DataText: Object {
+@objc class DataText: Object {
     
-    dynamic var text = ""
+    @objc var text = ""
     
     convenience init(text:String) {
         self.init()
@@ -80,16 +79,16 @@ class DataText: Object {
     }
 }
 
-class Route: Object {
+@objc class Route: Object {
     
-    dynamic var ID = -1
-    dynamic var Name = ""
+    @objc var ID = -1
+    @objc var Name = ""
     var Images = List<DataImage>()
     var ImagesPositions = List<DataPoint>()
     var ImageDescriptions = List<DataText>()
     var Positions = List<DataPoint>()
     var Altitudes =  List<DataAltitude>()
-    dynamic var createdAt =  Date()
+    @objc var createdAt =  Date()
 
     override static func primaryKey() -> String? {
         return "ID"

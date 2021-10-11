@@ -268,7 +268,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     @IBAction func btnSOSClicked(_ sender: Any) {     
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "SOSModeViewController") as! SOSModeViewController
-        
+        vc.modalPresentationStyle = .fullScreen
         //Check here - FIX
         if(currentRoute?.Positions.count == 0) {
             currentRoute?.Positions.append(DataPoint(lat: (LocationService.sharedInstance.currentLocation?.coordinate.latitude)!, lon: (LocationService.sharedInstance.currentLocation?.coordinate.longitude)!))
@@ -543,7 +543,7 @@ class NewRouteViewController: UIViewController,UICollectionViewDelegate, UIColle
         self.view.addConstraints([rightConstraint, topConstraint, heightConstraint, widthConstraint])
     }
     
-    func didTap(_ gesture: UITapGestureRecognizer) {
+    @objc func didTap(_ gesture: UITapGestureRecognizer) {
         
     }
     

@@ -35,7 +35,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
     @IBAction func btnTrashModeClicked(_ sender: Any) {
     }
     
-    func handlePurchaseNotification(_ notification: Notification) {
+    @objc func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
         
         for (_, product) in products.enumerated() {
@@ -127,7 +127,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                                                object: nil)
     }
     
-    func handleShortPress(gestureReconizer: UITapGestureRecognizer) {
+    @objc func handleShortPress(gestureReconizer: UITapGestureRecognizer) {
         if gestureReconizer.state != UIGestureRecognizerState.ended {
             return
         }
@@ -178,6 +178,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "newRouteView") as! NewRouteViewController
                     vc.mainView = self
+                    vc.modalPresentationStyle = .fullScreen
                     let routeCount = DBManager.sharedInstance.getDataFromDB().count
                     if(indexPath?.row == routeCount || (DBManager.sharedInstance.getDataFromDB().count-1) == -1) {
                         
@@ -240,7 +241,7 @@ class ViewController: UIViewController, RouteSaveExtension,UIGestureRecognizerDe
         
     }
     
-    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
         if gestureReconizer.state != UIGestureRecognizerState.ended {
             return
         }
